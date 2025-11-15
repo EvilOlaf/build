@@ -1,7 +1,7 @@
 function extension_prepare_config__linux_source_package_extension() {
 	display_alert "Packaging kernel source enabled. This will enforce ARTIFACT_IGNORE_CACHE=yes in order to prepare the source code." "${EXTENSION}" "info"
 	declare -g ARTIFACT_IGNORE_CACHE=yes	# enforce building from scratch
-	declare -g KERNEL_GIT=shallow			# download necessary branch only
+	declare -g KERNEL_GIT=shallow			# download necessary branch only if no full tree is present already, speed things up
 }
 
 function add_host_dependencies__add_fakeroot() {
@@ -51,7 +51,10 @@ function armbian_kernel_config__create_ksrc_package() {
 		rsync --remove-source-files -rq "${sources_pkg_dir}.deb" "${DEB_STORAGE}/"
 
 		te=$(date +%s)
-		display_alert "Make the linux-source package" "$(($te - $ts)) sec." "info"
+		display_alert "Made the linux-source package in" "$(($te - $ts)) seconds." "info"
 		rm -rf "${tmp_src_dir}"
+	else
+		# Well...where is the config file??
+		:
 	fi
 }
