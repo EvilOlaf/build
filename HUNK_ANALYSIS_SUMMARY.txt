@@ -1,0 +1,113 @@
+================================================================================
+          HUNK-LEVEL ANALYSIS: SUNXI-6.16 VS LINUX KERNEL 6.18
+================================================================================
+
+ANALYSIS COMPLETED: 2025-12-06 18:19:08
+
+OVERVIEW:
+------------------------------------------------------------------------
+This analysis breaks down all 444 patches from sunxi-6.16 into individual
+hunks (code chunks) and compares them against Linux kernel 6.18 to identify
+which specific changes are present in mainline.
+
+RESULTS:
+------------------------------------------------------------------------
+Total Patches Analyzed:         444
+Total Hunks Extracted:        1,739
+Hunks Found in Kernel:           87 (5.0%)
+Hunks Not Found:              1,652 (95.0%)
+
+INTERPRETATION:
+------------------------------------------------------------------------
+✓ 87 hunks (5%) contain code that appears in Linux 6.18
+✗ 1,652 hunks (95%) contain code not found in Linux 6.18
+
+This confirms that the vast majority of sunxi-6.16 patches are NOT in
+mainline kernel 6.18, as they are vendor-specific or distribution-specific
+modifications.
+
+TOP FILES WITH FOUND HUNKS:
+------------------------------------------------------------------------
+ 1. drivers/gpu/drm/sun4i/sun8i_mixer.c              11 hunks
+ 2. drivers/gpu/drm/sun4i/sun8i_ui_layer.c            6 hunks
+ 3. arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi      4 hunks
+ 4. drivers/gpu/drm/sun4i/sun8i_vi_layer.c            4 hunks
+ 5. drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c 3 hunks
+ 6. arch/arm/boot/dts/allwinner/sun8i-a83t.dtsi       3 hunks
+ 7. drivers/media/i2c/ov5640.c                        3 hunks
+ 8. drivers/gpu/drm/sun4i/sun8i_mixer.h               3 hunks
+ 9. drivers/power/supply/axp20x_battery.c             2 hunks
+10. arch/arm/boot/dts/allwinner/sun8i-a83t-tbs-a711.dts 2 hunks
+
+CATEGORIES OF FOUND HUNKS:
+------------------------------------------------------------------------
+• Display (DRM) drivers:         ~30 hunks (Display Engine 3.3 support)
+• Device tree updates:           ~25 hunks (A83T, H6, H616 boards)
+• USB/TypeC fixes:               ~10 hunks (DWC3, TCPM)
+• Sound card additions:           ~5 hunks (HDMI audio)
+• Power management:               ~5 hunks (Battery driver)
+• Network/DMA drivers:            ~5 hunks (STMMAC, sun6i-dma)
+• Camera/media:                   ~5 hunks (OV5640, GC2145)
+• Other drivers:                  ~2 hunks (Bluetooth, touchscreen)
+
+EXAMPLE FOUND HUNKS:
+------------------------------------------------------------------------
+✓ DRM DE33 mixer support for Display Engine 3.3
+✓ Device tree HDMI sound card additions
+✓ USB DWC3 suspend/disconnect fixes (reverts)
+✓ TypeC TCPM source caps registration fix (revert)
+✓ sun6i-dma H616 support
+✓ ARM CPU hotplug fix for A83T
+✓ Power LED configuration for Orange Pi Zero
+
+METHODOLOGY:
+------------------------------------------------------------------------
+1. Each patch is parsed into individual hunks (chunks of changes)
+2. For each hunk, extract meaningful added lines
+3. Check if the target file exists in kernel 6.18
+4. Search for added lines in the kernel file
+5. Hunk is "found" if ≥70% of meaningful lines are present
+
+LIMITATIONS:
+------------------------------------------------------------------------
+⚠ This is content-based matching and may miss:
+  • Code modified during upstreaming
+  • Code moved/refactored to different files
+  • Functionally equivalent but differently written code
+  • Code in backported or cherry-picked form
+
+GENERATED FILES:
+------------------------------------------------------------------------
+sunxi-6.16_hunk_analysis.md    - Complete report (646 lines, 57KB)
+                                 Lists all 87 found hunks with details
+
+tools/compare_patch_hunks.py   - Python tool for hunk comparison
+                                 Reusable for other patch directories
+
+USAGE:
+------------------------------------------------------------------------
+# View the complete report
+cat sunxi-6.16_hunk_analysis.md
+
+# Run hunk analysis on other patch directories
+python3 tools/compare_patch_hunks.py patch/kernel/archive/sunxi-6.12 \
+    --kernel-version 6.18 \
+    --output sunxi-6.12_hunks.md
+
+# See first 50 found hunks
+grep "^|.*✓" sunxi-6.16_hunk_analysis.md | head -50
+
+CONCLUSION:
+------------------------------------------------------------------------
+Only 5% of code hunks from sunxi-6.16 patches are found in Linux 6.18,
+confirming these are primarily vendor/distribution-specific modifications
+for Allwinner hardware support. The found hunks are mostly:
+  - Display driver improvements
+  - Device tree additions
+  - USB/power management fixes
+
+Most patches remain out-of-tree and specific to Armbian builds.
+
+================================================================================
+For detailed results, see: sunxi-6.16_hunk_analysis.md
+================================================================================
