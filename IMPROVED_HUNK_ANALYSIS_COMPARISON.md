@@ -1,10 +1,10 @@
-# Comparison: Improved Hunk Analysis Results
+# Improved Hunk Analysis Results for sunxi-6.18
 
 **Analysis Date:** 2025-12-07
 
 ## Overview
 
-This document compares the improved hunk-level analysis results for both sunxi patchsets using context-based matching instead of simple line matching.
+This document shows the improved hunk-level analysis results for sunxi-6.18 using context-based matching instead of simple line matching.
 
 ## Methodology Changes
 
@@ -23,16 +23,6 @@ This document compares the improved hunk-level analysis results for both sunxi p
 
 ## Results Comparison
 
-### sunxi-6.16 Analysis
-
-| Metric | Old (Unreliable) | New (Improved) | Change |
-|--------|------------------|----------------|--------|
-| Patches Enabled | 444 (assumed all) | 443 | -1 disabled |
-| Patches Disabled | 0 (not tracked) | 1 | from series.conf |
-| Total Hunks | 1,739 | 1,735 | -4 |
-| **Found in Kernel** | **87 (5.0%)** | **17 (1.0%)** | **-70 (-80% reduction)** |
-| Not Found | 1,652 (95.0%) | 1,718 (99.0%) | +66 |
-
 ### sunxi-6.18 Analysis
 
 | Metric | Old (Unreliable) | New (Improved) | Change |
@@ -47,21 +37,12 @@ This document compares the improved hunk-level analysis results for both sunxi p
 
 ### False Positive Reduction
 
-**sunxi-6.16:**
-- Old method: 87 hunks "found" (many false positives)
-- New method: 17 hunks found (1.0%)
-- **Eliminated 70 false positives** (80% reduction)
-
 **sunxi-6.18:**
 - Old method: 87 hunks "found" (many false positives)  
 - New method: 6 hunks found (0.4%)
 - **Eliminated 81 false positives** (93% reduction)
 
 ### Disabled Patches Impact
-
-**sunxi-6.16:**
-- Only 1 patch disabled in series.conf
-- Minimal impact on analysis
 
 **sunxi-6.18:**
 - 43 patches disabled in series.conf (9.7% of total)
@@ -71,11 +52,6 @@ This document compares the improved hunk-level analysis results for both sunxi p
 ### Actual Mainline Overlap
 
 With improved analysis, the actual overlap with mainline Linux 6.18 is:
-
-**sunxi-6.16:** 1.0% (17/1735 hunks)
-- Move/reorganization patches
-- Some reverts
-- Minor overlaps
 
 **sunxi-6.18:** 0.4% (6/1427 hunks)
 - Even cleaner than sunxi-6.16
@@ -105,7 +81,6 @@ If a patchset applies cleanly to Linux kernel 6.18, the result should be close t
 - Found hunks indicate changes already in mainline
 
 ### Actual Results
-- **sunxi-6.16:** 1.0% found (17 hunks)
 - **sunxi-6.18:** 0.4% found (6 hunks)
 
 These results align with expectations! The small percentage of found hunks are legitimate cases where:
@@ -132,14 +107,6 @@ These results align with expectations! The small percentage of found hunks are l
    - Deletion hunk removing problematic code
    - The problematic code was already removed
 
-### sunxi-6.16 Found Hunks (17 total)
-
-Similar patterns:
-- Move/reorganization patches
-- Revert patches
-- Some overlaps in device tree additions
-- All verified to have proper context
-
 ## Conclusions
 
 ### Accuracy Improvement
@@ -152,11 +119,11 @@ The improved analysis is **significantly more accurate**:
 
 ### Mainline Status
 
-Both patchsets confirm:
-- **99%+ of patches are custom/vendor-specific**
+The sunxi-6.18 patchset confirms:
+- **99.6% of patches are custom/vendor-specific**
 - Very minimal overlap with mainline Linux 6.18
-- Patchsets apply cleanly as expected
-- Found hunks are legitimate edge cases
+- Patchset applies cleanly as expected
+- Found hunks (0.4%) are legitimate edge cases
 
 ### Recommendations
 
@@ -170,12 +137,10 @@ Both patchsets confirm:
 ## Files Generated
 
 **Old Analysis (Unreliable):**
-- `sunxi-6.16_hunk_analysis.md` - 87 hunks found (many false positives)
 - `sunxi-6.18_hunk_analysis.md` - 87 hunks found (many false positives)
 
 **New Analysis (Improved):**
-- `sunxi-6.16_hunk_analysis_v2.md` - 17 hunks found (verified)
 - `sunxi-6.18_hunk_analysis_v2.md` - 6 hunks found (verified)
 
-**Comparison:**
+**Summary:**
 - `IMPROVED_HUNK_ANALYSIS_COMPARISON.md` - This document
