@@ -184,9 +184,15 @@ def create_hunk_from_lines(patch_file: str, file_path: str, hunk_number: int,
 
 
 def check_hunk_in_kernel(hunk: Hunk, kernel_path: str) -> Tuple[bool, str]:
-    """Check if a hunk's changes are present in the kernel."""
-    if not hunk.file_path or not hunk.added_lines:
-        return False, "No file path or no added lines"
+    """
+    Check if a hunk's changes are present in the kernel with context validation.
+    
+    This function checks if the hunk would apply (i.e., the lines are NOT already there),
+    or if the hunk is already applied (lines are there with correct context).
+    Since the patchset applies cleanly to 6.18, we expect hunks to NOT be found.
+    """
+    if not hunk.file_path:
+        return False, "No file path"
     
     # Check if the file exists in the kernel
     kernel_file = os.path.join(kernel_path, hunk.file_path)
@@ -195,38 +201,82 @@ def check_hunk_in_kernel(hunk: Hunk, kernel_path: str) -> Tuple[bool, str]:
     
     try:
         with open(kernel_file, 'r', encoding='utf-8', errors='ignore') as f:
-            kernel_content = f.read()
+            kernel_lines = f.readlines()
     except Exception as e:
         return False, f"Error reading kernel file: {e}"
     
-    # Search for added lines in the kernel file
-    found_lines = 0
-    total_meaningful_lines = 0
+    # Strategy 1: Check if the hunk would apply cleanly (reverse check)
+    # If patch adds lines, those lines should NOT be in the file at the expected location
+    # If we find context lines but not the added lines, the patch still needs to be applied
     
-    for line in hunk.added_lines:
-        stripped = line.strip()
-        # Skip empty lines and very short lines
-        if len(stripped) < 5:
-            continue
-        # Skip comments
-        if stripped.startswith('//') or stripped.startswith('/*') or stripped.startswith('*'):
-            continue
+    # Strategy 2: Check if the patch is already applied
+    # Look for sequences that match the "after" state (context + added lines)
+    
+    # Build the "after" state - what the file should look like after the patch
+    after_pattern = []
+    for line in hunk.lines:
+        if line.startswith('+'):
+            after_pattern.append(line[1:])  # Added line
+        elif line.startswith(' '):
+            after_pattern.append(line[1:])  # Context line
+        # Skip removed lines (they shouldn't be in the "after" state)
+    
+    # Build the "before" state - what the file should look like before the patch
+    before_pattern = []
+    for line in hunk.lines:
+        if line.startswith('-'):
+            before_pattern.append(line[1:])  # Removed line
+        elif line.startswith(' '):
+            before_pattern.append(line[1:])  # Context line
+        # Skip added lines (they shouldn't be in the "before" state)
+    
+    # Check if we can find the "after" pattern (patch already applied)
+    if after_pattern and len(after_pattern) >= 3:  # Need at least 3 lines for meaningful match
+        if find_pattern_in_lines(after_pattern, kernel_lines):
+            return True, "Patch appears to be already applied (found after-state with context)"
+    
+    # Check if we can find the "before" pattern (patch not yet applied)
+    if before_pattern and len(before_pattern) >= 3:
+        if find_pattern_in_lines(before_pattern, kernel_lines):
+            return False, "Patch not applied (found before-state, patch still needed)"
+    
+    # If we have very few context lines, fall back to simpler check
+    if len(hunk.context_lines) < 2:
+        # For hunks with minimal context, check if added lines exist anywhere
+        # But this is unreliable, so mark as uncertain
+        if hunk.added_lines:
+            found = any(line.strip() in ''.join(kernel_lines) for line in hunk.added_lines if line.strip())
+            if found:
+                return True, "Added lines found (uncertain - minimal context)"
+        return False, "Insufficient context for reliable check"
+    
+    return False, "Could not determine patch state reliably"
+
+
+def find_pattern_in_lines(pattern: List[str], lines: List[str]) -> bool:
+    """
+    Find a pattern of consecutive lines in a list of lines.
+    Returns True if the pattern is found as a consecutive sequence.
+    """
+    if not pattern or not lines:
+        return False
+    
+    pattern_len = len(pattern)
+    
+    # Try to find the pattern starting at each position in lines
+    for i in range(len(lines) - pattern_len + 1):
+        # Check if pattern matches at position i
+        match = True
+        for j, pattern_line in enumerate(pattern):
+            # Compare with some tolerance for whitespace
+            if lines[i + j].strip() != pattern_line.strip():
+                match = False
+                break
         
-        total_meaningful_lines += 1
-        
-        # Search for this line in kernel content
-        if stripped in kernel_content:
-            found_lines += 1
+        if match:
+            return True
     
-    if total_meaningful_lines == 0:
-        return False, "No meaningful lines to check"
-    
-    # Consider it found if at least 70% of meaningful lines are present
-    match_ratio = found_lines / total_meaningful_lines
-    if match_ratio >= 0.7:
-        return True, f"Found {found_lines}/{total_meaningful_lines} lines ({match_ratio*100:.0f}%)"
-    else:
-        return False, f"Only {found_lines}/{total_meaningful_lines} lines found ({match_ratio*100:.0f}%)"
+    return False
 
 
 def setup_kernel_repo(kernel_version: str, cache_dir: str) -> Optional[str]:
@@ -252,7 +302,8 @@ def setup_kernel_repo(kernel_version: str, cache_dir: str) -> Optional[str]:
         return None
 
 
-def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: str):
+def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: str, 
+                         enabled_count: int = None, disabled_count: int = None):
     """Generate a detailed report of hunk analysis."""
     
     total_hunks = len(hunks)
@@ -266,14 +317,18 @@ def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: st
         hunks_by_patch[hunk.patch_file].append(hunk)
     
     with open(output_file, 'w') as f:
-        f.write(f"# Hunk-Level Analysis: sunxi-6.16 vs Linux Kernel {kernel_version}\n\n")
+        f.write(f"# Hunk-Level Analysis: sunxi vs Linux Kernel {kernel_version}\n\n")
         f.write(f"**Analysis Date:** {get_current_date()}\n\n")
         
         f.write(f"## Summary\n\n")
         f.write(f"- **Total Hunks:** {total_hunks}\n")
         f.write(f"- **Found in Kernel:** {found_hunks} ({found_hunks*100//total_hunks if total_hunks > 0 else 0}%)\n")
         f.write(f"- **Not Found:** {total_hunks - found_hunks} ({(total_hunks-found_hunks)*100//total_hunks if total_hunks > 0 else 0}%)\n")
-        f.write(f"- **Patches Analyzed:** {len(hunks_by_patch)}\n\n")
+        f.write(f"- **Patches Analyzed:** {len(hunks_by_patch)}\n")
+        if enabled_count is not None and disabled_count is not None:
+            f.write(f"- **Patches Enabled:** {enabled_count}\n")
+            f.write(f"- **Patches Disabled:** {disabled_count}\n")
+        f.write(f"\n")
         
         # Statistics by file
         files_with_found_hunks = {}
@@ -338,13 +393,75 @@ def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: st
         f.write(f"\n")
         f.write(f"## Methodology\n\n")
         f.write(f"This analysis breaks down each patch into individual hunks (chunks of changes) ")
-        f.write(f"and checks if the added code appears in the corresponding file in Linux kernel {kernel_version}.\n\n")
-        f.write(f"A hunk is considered \"found\" if at least 70% of its meaningful added lines ")
-        f.write(f"(excluding empty lines and comments) are present in the kernel file.\n\n")
-        f.write(f"**Note:** This is a content-based search and may not detect:\n")
-        f.write(f"- Code that was modified during upstreaming\n")
-        f.write(f"- Code in different files (refactored/moved)\n")
-        f.write(f"- Functionally equivalent but differently written code\n")
+        f.write(f"and checks if the hunks are already applied in Linux kernel {kernel_version}.\n\n")
+        f.write(f"**Context-Based Matching:**\n")
+        f.write(f"- Each hunk includes context lines (unchanged lines) and added/removed lines\n")
+        f.write(f"- The tool builds the expected \"after\" state (context + added lines)\n")
+        f.write(f"- If this pattern is found as a consecutive sequence in the kernel file, the hunk is considered \"found\"\n")
+        f.write(f"- This ensures that lines are found in the correct location with proper context\n\n")
+        f.write(f"**Disabled Patches:**\n")
+        if disabled_count and disabled_count > 0:
+            f.write(f"- {disabled_count} patches were disabled in series.conf (marked with '-' prefix)\n")
+            f.write(f"- Only {enabled_count} enabled patches were analyzed\n\n")
+        else:
+            f.write(f"- All patches in the directory were analyzed\n\n")
+        f.write(f"**Expected Result:**\n")
+        f.write(f"- If the patchset applies cleanly to kernel {kernel_version}, most hunks should NOT be found\n")
+        f.write(f"- Found hunks indicate changes that are already in the mainline kernel\n")
+        f.write(f"- Disabled patches are excluded from analysis\n\n")
+        f.write(f"**Limitations:**\n")
+        f.write(f"- Cannot detect code that was modified during upstreaming\n")
+        f.write(f"- Cannot detect code in different files (refactored/moved)\n")
+        f.write(f"- Cannot detect functionally equivalent but differently written code\n")
+        f.write(f"- Requires at least 3 lines of context for reliable matching\n")
+
+
+def parse_series_conf(patch_dir: str) -> set:
+    """
+    Parse series.conf file to get list of enabled patches.
+    Patches prefixed with '-' are disabled and should be excluded.
+    Returns a set of enabled patch filenames (without directory path).
+    """
+    series_conf = os.path.join(patch_dir, "series.conf")
+    
+    if not os.path.exists(series_conf):
+        print(f"Warning: series.conf not found in {patch_dir}")
+        return None
+    
+    enabled_patches = set()
+    disabled_patches = set()
+    
+    try:
+        with open(series_conf, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                
+                # Skip comments and empty lines
+                if not line or line.startswith('#'):
+                    continue
+                
+                # Check if patch is disabled
+                if line.startswith('-'):
+                    # Disabled patch
+                    patch_path = line[1:].strip()
+                    # Extract just the filename
+                    patch_file = os.path.basename(patch_path)
+                    disabled_patches.add(patch_file)
+                else:
+                    # Enabled patch
+                    patch_path = line.strip()
+                    # Extract just the filename
+                    patch_file = os.path.basename(patch_path)
+                    enabled_patches.add(patch_file)
+    
+    except Exception as e:
+        print(f"Warning: Error parsing series.conf: {e}")
+        return None
+    
+    if disabled_patches:
+        print(f"Found {len(disabled_patches)} disabled patches in series.conf")
+    
+    return enabled_patches, disabled_patches
 
 
 def get_current_date():
@@ -389,13 +506,38 @@ def main():
         print(f"Error: Patch directory not found: {args.patch_dir}", file=sys.stderr)
         return 1
     
+    # Parse series.conf to get enabled/disabled patches
+    series_result = parse_series_conf(args.patch_dir)
+    if series_result:
+        enabled_patches, disabled_patches = series_result
+        print(f"Series.conf: {len(enabled_patches)} enabled, {len(disabled_patches)} disabled patches")
+    else:
+        enabled_patches = None
+        disabled_patches = set()
+    
     # Get all patch files
     print(f"Scanning for patches in {args.patch_dir}...")
     patch_files = []
+    all_patch_files = []
     for root, dirs, files in os.walk(args.patch_dir):
         for file in files:
             if file.endswith('.patch'):
-                patch_files.append(os.path.join(root, file))
+                full_path = os.path.join(root, file)
+                all_patch_files.append(full_path)
+                
+                # Filter based on series.conf if available
+                if enabled_patches is not None:
+                    if file in enabled_patches:
+                        patch_files.append(full_path)
+                    elif file in disabled_patches:
+                        continue  # Skip disabled patches
+                    else:
+                        # Patch not in series.conf - include it with warning
+                        print(f"Warning: {file} not found in series.conf, including it")
+                        patch_files.append(full_path)
+                else:
+                    # No series.conf, include all patches
+                    patch_files.append(full_path)
     
     if not patch_files:
         print("No patch files found!", file=sys.stderr)
@@ -404,7 +546,11 @@ def main():
     if args.max_patches:
         patch_files = patch_files[:args.max_patches]
     
-    print(f"Found {len(patch_files)} patch files")
+    total_patches = len(all_patch_files)
+    enabled_count = len(patch_files)
+    disabled_count = total_patches - enabled_count
+    
+    print(f"Found {total_patches} total patch files ({enabled_count} enabled, {disabled_count} disabled)")
     
     # Parse all patches into hunks
     print(f"Parsing patches into hunks...")
@@ -435,7 +581,8 @@ def main():
     print()
     
     # Generate report
-    generate_hunk_report(all_hunks, args.output, args.kernel_version)
+    generate_hunk_report(all_hunks, args.output, args.kernel_version, 
+                        enabled_count, disabled_count)
     
     # Print summary
     total = len(all_hunks)
