@@ -1,4 +1,4 @@
-# Patch Analysis Report: sunxi-6.16 vs Linux Kernel 6.18
+# Patch Analysis Report: sunxi-6.18 vs Linux Kernel 6.18
 
 **Patch Directory:** `patch/kernel/archive/sunxi-6.18`
 

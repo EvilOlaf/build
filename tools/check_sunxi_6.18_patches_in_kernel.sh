@@ -1,5 +1,7 @@
 #!/bin/bash
-# Script to check if sunxi-6.16 patches are in Linux kernel 6.18
+# Script to check if sunxi-6.18 patches are in Linux kernel 6.18
+# Note: Most patches in sunxi-6.18 have placeholder commit IDs (000000...)
+# This script demonstrates the approach but won't find patches by commit ID
 # Generated on 2025-12-07 04:17:42
 
 set -e

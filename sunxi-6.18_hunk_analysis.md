@@ -1,4 +1,4 @@
-# Hunk-Level Analysis: sunxi-6.16 vs Linux Kernel 6.18
+# Hunk-Level Analysis: sunxi-6.18 vs Linux Kernel 6.18
 
 **Analysis Date:** 2025-12-07 04:18:38
 
