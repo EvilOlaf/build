@@ -21,6 +21,7 @@ import hashlib
 class Hunk:
     """Represents a single hunk (chunk) from a patch."""
     patch_file: str
+    patch_dir: str  # Directory where the patch is located (e.g., patches.megous)
     file_path: str
     hunk_number: int
     old_start: int
@@ -167,8 +168,15 @@ def create_hunk_from_lines(patch_file: str, file_path: str, hunk_number: int,
         elif line.startswith(' '):
             context_lines.append(line[1:])
     
+    # Extract directory from patch file path
+    patch_dir = os.path.basename(os.path.dirname(patch_file))
+    if not patch_dir or patch_dir == 'archive':
+        # Handle edge cases
+        patch_dir = "unknown"
+    
     return Hunk(
         patch_file=os.path.basename(patch_file),
+        patch_dir=patch_dir,
         file_path=file_path,
         hunk_number=hunk_number,
         old_start=old_start,
@@ -316,6 +324,16 @@ def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: st
             hunks_by_patch[hunk.patch_file] = []
         hunks_by_patch[hunk.patch_file].append(hunk)
     
+    # Group by directory
+    hunks_by_dir = {}
+    patches_by_dir = {}
+    for hunk in hunks:
+        if hunk.patch_dir not in hunks_by_dir:
+            hunks_by_dir[hunk.patch_dir] = []
+            patches_by_dir[hunk.patch_dir] = set()
+        hunks_by_dir[hunk.patch_dir].append(hunk)
+        patches_by_dir[hunk.patch_dir].add(hunk.patch_file)
+    
     with open(output_file, 'w') as f:
         f.write(f"# Hunk-Level Analysis: sunxi vs Linux Kernel {kernel_version}\n\n")
         f.write(f"**Analysis Date:** {get_current_date()}\n\n")
@@ -328,6 +346,20 @@ def generate_hunk_report(hunks: List[Hunk], output_file: str, kernel_version: st
         if enabled_count is not None and disabled_count is not None:
             f.write(f"- **Patches Enabled:** {enabled_count}\n")
             f.write(f"- **Patches Disabled:** {disabled_count}\n")
+        f.write(f"\n")
+        
+        # Statistics by directory
+        f.write(f"## Patches by Directory\n\n")
+        f.write(f"| Directory | Patches | Hunks | Found | Not Found | Found % |\n")
+        f.write(f"|-----------|---------|-------|-------|-----------|----------|\n")
+        for dir_name in sorted(hunks_by_dir.keys()):
+            dir_hunks = hunks_by_dir[dir_name]
+            dir_patches = len(patches_by_dir[dir_name])
+            dir_total = len(dir_hunks)
+            dir_found = sum(1 for h in dir_hunks if hasattr(h, 'found') and h.found)
+            dir_not_found = dir_total - dir_found
+            dir_found_pct = (dir_found * 100 // dir_total) if dir_total > 0 else 0
+            f.write(f"| {dir_name} | {dir_patches} | {dir_total} | {dir_found} | {dir_not_found} | {dir_found_pct}% |\n")
         f.write(f"\n")
         
         # Statistics by file
@@ -498,6 +530,11 @@ def main():
         type=int,
         help="Maximum number of patches to analyze (for testing)"
     )
+    parser.add_argument(
+        "--only-disabled",
+        action="store_true",
+        help="Analyze only disabled patches (those marked with '-' in series.conf)"
+    )
     
     args = parser.parse_args()
     
@@ -515,6 +552,13 @@ def main():
         enabled_patches = None
         disabled_patches = set()
     
+    # Determine which patches to analyze based on --only-disabled flag
+    if args.only_disabled:
+        print(f"\n** Analyzing ONLY DISABLED patches **\n")
+        target_patches = disabled_patches
+    else:
+        target_patches = enabled_patches
+    
     # Get all patch files
     print(f"Scanning for patches in {args.patch_dir}...")
     patch_files = []
@@ -526,7 +570,11 @@ def main():
                 all_patch_files.append(full_path)
                 
                 # Filter based on series.conf if available
-                if enabled_patches is not None:
+                if args.only_disabled:
+                    # Only include disabled patches
+                    if disabled_patches and file in disabled_patches:
+                        patch_files.append(full_path)
+                elif enabled_patches is not None:
                     if file in enabled_patches:
                         patch_files.append(full_path)
                     elif file in disabled_patches:
@@ -547,10 +595,15 @@ def main():
         patch_files = patch_files[:args.max_patches]
     
     total_patches = len(all_patch_files)
-    enabled_count = len(patch_files)
-    disabled_count = total_patches - enabled_count
-    
-    print(f"Found {total_patches} total patch files ({enabled_count} enabled, {disabled_count} disabled)")
+    if args.only_disabled:
+        analyzed_count = len(patch_files)
+        print(f"Found {total_patches} total patch files ({analyzed_count} disabled patches being analyzed)")
+        enabled_count = 0
+        disabled_count = analyzed_count
+    else:
+        enabled_count = len(patch_files)
+        disabled_count = total_patches - enabled_count
+        print(f"Found {total_patches} total patch files ({enabled_count} enabled, {disabled_count} disabled)")
     
     # Parse all patches into hunks
     print(f"Parsing patches into hunks...")
