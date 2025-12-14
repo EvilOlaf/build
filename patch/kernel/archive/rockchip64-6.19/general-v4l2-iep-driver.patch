@@ -155,7 +155,7 @@ diff --git a/arch/arm/boot/dts/rockchip/rk3288.dtsi b/arch/arm/boot/dts/rockchip
 index 111111111111..222222222222 100644
 --- a/arch/arm/boot/dts/rockchip/rk3288.dtsi
 +++ b/arch/arm/boot/dts/rockchip/rk3288.dtsi
-@@ -990,14 +990,25 @@ crypto: crypto@ff8a0000 {
+@@ -983,14 +983,25 @@ crypto: crypto@ff8a0000 {
  		reset-names = "crypto-rst";
  	};
  
@@ -249,8 +249,8 @@ diff --git a/drivers/media/platform/rockchip/Kconfig b/drivers/media/platform/ro
 index 111111111111..222222222222 100644
 --- a/drivers/media/platform/rockchip/Kconfig
 +++ b/drivers/media/platform/rockchip/Kconfig
-@@ -5,3 +5,4 @@ comment "Rockchip media platform drivers"
- source "drivers/media/platform/rockchip/rga/Kconfig"
+@@ -6,3 +6,4 @@ source "drivers/media/platform/rockchip/rga/Kconfig"
+ source "drivers/media/platform/rockchip/rkcif/Kconfig"
  source "drivers/media/platform/rockchip/rkisp1/Kconfig"
  source "drivers/media/platform/rockchip/rkvdec/Kconfig"
 +source "drivers/media/platform/rockchip/iep/Kconfig"
@@ -258,8 +258,8 @@ diff --git a/drivers/media/platform/rockchip/Makefile b/drivers/media/platform/r
 index 111111111111..222222222222 100644
 --- a/drivers/media/platform/rockchip/Makefile
 +++ b/drivers/media/platform/rockchip/Makefile
-@@ -2,3 +2,4 @@
- obj-y += rga/
+@@ -3,3 +3,4 @@ obj-y += rga/
+ obj-y += rkcif/
  obj-y += rkisp1/
  obj-y += rkvdec/
 +obj-y += iep/
