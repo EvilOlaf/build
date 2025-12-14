@@ -26,13 +26,13 @@ function mainline_kernel_decide_version__upstream_release_candidate_number() {
 
 # # Example: 6.7-rc7 was released by Linus, but kernel.org git and google git mirrors took a while to catch up; change the source to pull directly from Linus.
 # # This was necessary for a few days in late December 2023, but no longer; tag was pushed on 28/Dec/2023.
-# function mainline_kernel_decide_version__750_use_torvalds_for_6.7-rc7() {
-# 	if [[ "${KERNELBRANCH}" == 'tag:v6.7-rc7' ]]; then
-# 		display_alert "Using Linus kernel repo for 6.7-rc7" "${KERNELBRANCH}" "warn"
-# 		declare -g KERNELSOURCE="https://github.com/torvalds/linux.git"
-# 		display_alert "mainline-kernel: missing torvalds tag on 6.7-rc7" "Using KERNELSOURCE='${KERNELSOURCE}' for KERNELBRANCH='${KERNELBRANCH}'" "info"
-# 	fi
-# }
+ function mainline_kernel_decide_version__750_use_torvalds_for_6.7-rc7() {
+ 	if [[ "${KERNELBRANCH}" == 'tag:v6.19-rc1' ]]; then
+ 		display_alert "Using Linus kernel repo for 6.19-rc1" "${KERNELBRANCH}" "warn"
+ 		declare -g KERNELSOURCE="https://github.com/torvalds/linux.git"
+ 		display_alert "mainline-kernel: missing torvalds tag on 6.9-rc1" "Using KERNELSOURCE='${KERNELSOURCE}' for KERNELBRANCH='${KERNELBRANCH}'" "info"
+ 	fi
+ }
 
 ### Last hooks, defaults to branch if not set by previous hooks. Use mainline_kernel_decide_version__900 or higher.
 function mainline_kernel_decide_version__900_defaults() {
