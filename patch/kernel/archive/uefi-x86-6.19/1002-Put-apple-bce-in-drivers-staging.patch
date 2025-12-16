@@ -60,7 +60,7 @@ index 000000000000..111111111111
 +	        and other system devices depend on this virtual USB host controller
 +	      - Audio: a driver for the T2 audio interface.
 +	 
-+	  If "M" is selected, the module will be called apple-bce.'
+	  If "M" is selected, the module will be called apple-bce.
 diff --git a/drivers/staging/apple-bce/Makefile b/drivers/staging/apple-bce/Makefile
 index 111111111111..222222222222 100644
 --- a/drivers/staging/apple-bce/Makefile
