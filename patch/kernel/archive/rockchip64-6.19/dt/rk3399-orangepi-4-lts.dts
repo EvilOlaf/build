@@ -1314,11 +1314,11 @@
 };
 
 &cpu_crit {
-	temperatue = <90000>;
+	temperature = <90000>;
 };
 
 &gpu_crit {
-	temperatue = <90000>;
+	temperature = <90000>;
 };
 
 &cpu_thermal {
