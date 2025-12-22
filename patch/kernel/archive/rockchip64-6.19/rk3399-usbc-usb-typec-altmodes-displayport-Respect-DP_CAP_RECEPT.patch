@@ -51,9 +51,7 @@ index 111111111111..222222222222 100644
  	/* Determining the initial pin assignment. */
  	if (!DP_CONF_GET_PIN_ASSIGN(dp->data.conf)) {
  		/* Is USB together with DP preferred */
-@@ -830,21 +830,43 @@ int dp_altmode_probe(struct typec_altmode *alt)
- {
- 	const struct typec_altmode *port = typec_altmode_get_partner(alt);
+@@ -814,17 +832,39 @@ int dp_altmode_probe(struct typec_altmode *alt)
  	struct typec_altmode *plug = typec_altmode_get_plug(alt, TYPEC_PLUG_SOP_P);
  	struct fwnode_handle *fwnode;
  	struct dp_altmode *dp;
@@ -98,8 +96,6 @@ index 111111111111..222222222222 100644
  
  	dp = devm_kzalloc(&alt->dev, sizeof(*dp), GFP_KERNEL);
  	if (!dp)
- 		return -ENOMEM;
- 
 -- 
 Armbian
 
