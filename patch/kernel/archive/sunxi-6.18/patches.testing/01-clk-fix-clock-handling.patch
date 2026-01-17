@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Doe <john.doe@somewhere.on.planet>
+Date: Tue, 9 Dec 2025 16:43:16 +0000
+Subject: Patching kernel sun55iw3 files drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+
+Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+---
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 13 +++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+index 20dad06b37ca..79181185a0dc 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+@@ -1184,10 +1184,19 @@ static SUNXI_CCU_MUX_DATA_WITH_GATE(fanout2_clk, "fanout2", fanout_parents,
+ 				    0xf3c,
+ 				    6, 3,	/* mux */
+ 				    BIT(23),	/* gate */
+ 				    0);
+ 
++static const struct clk_parent_data usb3_ref_parents[] = { { .fw_name = "hosc" }, { .hw = &pll_periph0_200M_clk.hw }, { .hw = &pll_periph1_200M_clk.hw } };
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE(usb3_ref_clk, "usb3-ref",
++		usb3_ref_parents, 0x0A84,
++		0, 5,	/* M */
++		24, 3,	/* mux */
++		BIT(31),	/* gate */
++		0);
++
++
+ /*
+  * Contains all clocks that are controlled by a hardware register. They
+  * have a (sunxi) .common member, which needs to be initialised by the common
+  * sunxi CCU code, to be filled with the MMIO base address and the shared lock.
+  */
+@@ -1352,10 +1361,11 @@ static struct ccu_common *sun55i_a523_ccu_clks[] = {
+ 	&fanout_27M_clk.common,
+ 	&fanout_pclk_clk.common,
+ 	&fanout0_clk.common,
+ 	&fanout1_clk.common,
+ 	&fanout2_clk.common,
++	&usb3_ref_clk.common,
+ };
+ 
+ static struct clk_hw_onecell_data sun55i_a523_hw_clks = {
+ 	.hws	= {
+ 		[CLK_PLL_DDR0]		= &pll_ddr_clk.common.hw,
+@@ -1536,12 +1546,13 @@ static struct clk_hw_onecell_data sun55i_a523_hw_clks = {
+ 		[CLK_FANOUT_PCLK]	= &fanout_pclk_clk.common.hw,
+ 		[CLK_FANOUT0]		= &fanout0_clk.common.hw,
+ 		[CLK_FANOUT1]		= &fanout1_clk.common.hw,
+ 		[CLK_FANOUT2]		= &fanout2_clk.common.hw,
+ 		[CLK_NPU]		= &npu_clk.common.hw,
++		[CLK_USB3_REF]		= &usb3_ref_clk.common.hw,
+ 	},
+-	.num	= CLK_NPU + 1,
++	.num	= CLK_USB3_REF + 1,
+ };
+ 
+ static struct ccu_reset_map sun55i_a523_ccu_resets[] = {
+ 	[RST_MBUS]		= { 0x540, BIT(30) },
+ 	[RST_BUS_NSI]		= { 0x54c, BIT(16) },
+-- 
+Created with Armbian build tools https://github.com/armbian/build
+

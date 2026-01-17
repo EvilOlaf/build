@@ -1,0 +1,106 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Doe <john.doe@somewhere.on.planet>
+Date: Tue, 6 Jan 2026 13:46:53 +0000
+Subject: Patching kernel sunxi64 files
+ arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+
+Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+---
+ arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts | 55 +++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts b/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+index 84a41becc15d..9b28ab175dbc 100644
+--- a/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
++++ b/arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+@@ -105,11 +105,11 @@ &ehci1 {
+ 
+ &gmac1 {
+ 	phy-mode = "rgmii-id";
+ 	phy-handle = <&ext_rgmii_phy>;
+ 	phy-supply = <&reg_cldo4>;
+-
++//	pinctrl-0 = <&gmac1_pins_default>;
+ 	tx-internal-delay-ps = <0>;
+ 	rx-internal-delay-ps = <300>;
+ 
+ 	status = "okay";
+ };
+@@ -182,10 +182,36 @@ &pio {
+ 	vcc-pg-supply = <&reg_bldo1>;
+ 	vcc-ph-supply = <&reg_cldo3>;	/* via VCC-IO */
+ 	vcc-pi-supply = <&reg_cldo3>;
+ 	vcc-pj-supply = <&reg_cldo1>;
+ 	vcc-pk-supply = <&reg_cldo1>;
++
++	spi0_pins: spi0-pins {
++		pins = "PC2","PC4", "PC12";
++		allwinner,pinmux = <4>;
++		function = "spi0";
++		drive-strength = <10>;
++	};
++
++	spi0_cs_pin: spi0-cs0-pin {
++		pins = "PC3";
++		allwinner,pinmux = <4>;
++		function = "spi0";
++		drive-strength = <10>;
++		bias-pull-up;   /* cs, hold, wp should be pulled up */
++	};
++
++//	gmac1_pins_default: gmac1@0 {
++//		pins = "PJ0", "PJ1", "PJ2", "PJ3",
++//			"PJ4", "PJ5", "PJ6", "PJ7",
++//			"PJ8", "PJ9", "PJ10", "PJ11",
++//			"PJ12","PJ13", "PJ14", "PJ15";
++//		drive-strength = <40>;
++//		allwinner,pinmux = <5>;
++//		function = "gmac1";
++//		bias-pull-up;
++//	};
+ };
+ 
+ &r_i2c0 {
+ 	status = "okay";
+ 
+@@ -440,10 +466,37 @@ bluetooth {
+ 		host-wakeup-gpios = <&r_pio 1 4 GPIO_ACTIVE_HIGH>; /* PM4 */
+ 		shutdown-gpios = <&r_pio 1 2 GPIO_ACTIVE_HIGH>; /* PM2 */
+ 	};
+ };
+ 
++&combophy {
++       resets = <&ccu RST_BUS_PCIE_USB3>;
++    	phy_use_sel = <0>;
++	status = "okay";
++};
++
++&spi0 {
++	pinctrl-0 = <&spi0_pins>, <&spi0_cs_pin>;
++	pinctrl-names = "default";
++	status = "okay";
++	xm25qu128c: flash@0 {
++		compatible = "xmc,xm25qu128c", "jedec,spi-nor";
++		reg = <0>;
++		spi-max-frequency = <24000000>;
++		vcc-supply = <&reg_cldo1>;
++		status = "okay";
++	};
++};
++
++&pcie {
++	reset-gpios = <&pio 7 11 GPIO_ACTIVE_HIGH>;
++	wake-gpios = <&pio 7 12 GPIO_ACTIVE_HIGH>;
++	num-lanes = <2>;
++	pcie3v3-supply = <&reg_pcie_vcc3v3>; 
++	status = "okay";
++};
++
+ &usb_otg {
+ 	/*
+ 	 * The OTG controller is connected to one of the type-A ports.
+ 	 * There is a regulator, controlled by a GPIO, to provide VBUS power
+ 	 * to the port, and a VBUSDET GPIO, to detect externally provided
+-- 
+Created with Armbian build tools https://github.com/armbian/build
+

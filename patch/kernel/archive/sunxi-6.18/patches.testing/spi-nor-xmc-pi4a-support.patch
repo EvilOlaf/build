@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Doe <john.doe@somewhere.on.planet>
+Date: Thu, 8 Jan 2026 09:54:15 +0000
+Subject: Patching kernel sunxi64 files drivers/mtd/spi-nor/xmc.c
+
+Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+---
+ drivers/mtd/spi-nor/xmc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/mtd/spi-nor/xmc.c b/drivers/mtd/spi-nor/xmc.c
+index d5a06054b0dd..c45d02693b6c 100644
+--- a/drivers/mtd/spi-nor/xmc.c
++++ b/drivers/mtd/spi-nor/xmc.c
+@@ -17,10 +17,15 @@ static const struct flash_info xmc_nor_parts[] = {
+ 	}, {
+ 		.id = SNOR_ID(0x20, 0x70, 0x18),
+ 		.name = "XM25QH128A",
+ 		.size = SZ_16M,
+ 		.no_sfdp_flags = SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
++	}, {
++		.id = SNOR_ID(0x20, 0x41, 0x18),
++		.name = "XM25QU128C",
++		.size = SZ_16M,
++		.no_sfdp_flags = SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
+ 	},
+ };
+ 
+ /* XMC (Wuhan Xinxin Semiconductor Manufacturing Corp.) */
+ const struct spi_nor_manufacturer spi_nor_xmc = {
+-- 
+Created with Armbian build tools https://github.com/armbian/build
+

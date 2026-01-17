@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: John Doe <john.doe@somewhere.on.planet>
+Date: Sat, 1 Nov 2025 16:57:06 +0000
+Subject: Patching u-boot sun55iw3 files include/configs/sun55i.h
+
+Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+---
+ include/configs/sun55i.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/configs/sun55i.h b/include/configs/sun55i.h
+index 70649366c1c..0fcf8bdb9d2 100644
+--- a/include/configs/sun55i.h
++++ b/include/configs/sun55i.h
+@@ -5,7 +5,8 @@
+  */
+ #ifndef __CONFIG_H
+ #define __CONFIG_H
+ 
+ #include <configs/sunxi-common.h>
++#define CFG_SYS_UBOOT_BASE CONFIG_TEXT_BASE
+ 
+ #endif /* __CONFIG_H */
+-- 
+Created with Armbian build tools https://github.com/armbian/build
+
