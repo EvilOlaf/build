@@ -1952,7 +1952,7 @@ index 000000000000..30a9d591544f
 +	msg->address_hi = upper_32_bits(msi_target);
 +	msg->data = data->hwirq;
 +
-+	dev_debug(pcie->dev, "msi#%d address_hi %#x address_lo %#x\n",
++	pr_debug(pcie->dev, "msi#%d address_hi %#x address_lo %#x\n",
 +		(int)data->hwirq, msg->address_hi, msg->address_lo);
 +}
 +
