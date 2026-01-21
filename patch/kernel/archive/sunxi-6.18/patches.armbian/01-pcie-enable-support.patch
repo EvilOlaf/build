@@ -1953,7 +1953,7 @@ index 000000000000..30a9d591544f
 +	msg->data = data->hwirq;
 +
 +	pr_debug("-%s:[DEBUG]: msi#%d address_hi %#x address_lo %#x\n",
-+		sunxi_log_dev_name(pcie->dev), (int)data->hwirq, msg->address_hi, msg->address_lo);
++		dev_name(pcie->dev), (int)data->hwirq, msg->address_hi, msg->address_lo);
 +}
 +
 +/*
