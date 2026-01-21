@@ -5,7 +5,7 @@ Subject: Patching kernel sun55iw3 files drivers/pci/Kconfig
  drivers/pci/Makefile drivers/pci/pcie-sunxi/Kconfig
  drivers/pci/pcie-sunxi/Makefile drivers/pci/pcie-sunxi/pcie-sunxi-dma.c
  drivers/pci/pcie-sunxi/pcie-sunxi-dma.h
- drivers/pci/pcie-sunxi/pcie-sunxi-plat.c
+ drivers/pci/pcie-sunxi/pcie-sunxi-plat.c include/sunxi-gpio.h
  drivers/pci/pcie-sunxi/pcie-sunxi-rc.c drivers/pci/pcie-sunxi/pcie-sunxi.h
 
 Signed-off-by: John Doe <john.doe@somewhere.on.planet>
@@ -19,7 +19,8 @@ Signed-off-by: John Doe <john.doe@somewhere.on.planet>
  drivers/pci/pcie-sunxi/pcie-sunxi-plat.c | 1246 ++++++++++
  drivers/pci/pcie-sunxi/pcie-sunxi-rc.c   |  855 +++++++
  drivers/pci/pcie-sunxi/pcie-sunxi.h      |  397 +++
- 9 files changed, 3083 insertions(+)
+ include/sunxi-gpio.h                     | 188 +++++
+ 10 files changed, 3268 insertions(+)
 
 diff --git a/drivers/pci/Kconfig b/drivers/pci/Kconfig
 index f94f5d384362..d14567933640 100644
@@ -98,7 +99,7 @@ new file mode 100644
 index 000000000000..c2f9525f38ac
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-dma.c
-@@ -0,0 +1,199 @@
+@@ -0,0 +1,198 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +/*
@@ -110,7 +111,6 @@ index 000000000000..c2f9525f38ac
 + */
 +
 +#define SUNXI_MODNAME "pcie-edma"
-+#include <sunxi-log.h>
 +#include <linux/delay.h>
 +#include <linux/fs.h>
 +#include <linux/gpio.h>
@@ -590,7 +590,7 @@ new file mode 100644
 index 000000000000..dccafdb1c2b7
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-plat.c
-@@ -0,0 +1,1234 @@
+@@ -0,0 +1,1233 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +/*
@@ -606,7 +606,6 @@ index 000000000000..dccafdb1c2b7
 + */
 +
 +#define SUNXI_MODNAME "pcie"
-+#include <sunxi-log.h>
 +#include <linux/clk.h>
 +#include <linux/delay.h>
 +#include <linux/gpio.h>
@@ -1831,7 +1830,7 @@ new file mode 100644
 index 000000000000..30a9d591544f
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-rc.c
-@@ -0,0 +1,865 @@
+@@ -0,0 +1,864 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +// SPDX_License-Identifier: GPL-2.0
@@ -1875,7 +1874,6 @@ index 000000000000..30a9d591544f
 + */
 +
 +#define SUNXI_MODNAME "pcie-rc"
-+#include <sunxi-log.h>
 +#include <linux/irq.h>
 +#include <linux/irqdomain.h>
 +#include <linux/irqchip/chained_irq.h>
