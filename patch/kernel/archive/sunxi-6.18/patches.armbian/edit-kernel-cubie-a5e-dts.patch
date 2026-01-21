@@ -10,10 +10,10 @@ Signed-off-by: John Doe <john.doe@somewhere.on.planet>
  1 file changed, 85 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-index 7f16223d723f..4c67eda14ddf 100644
+index 7f16223d723f..1e3df8af0450 100644
 --- a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
 +++ b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-@@ -74,10 +74,42 @@ reg_usb_vbus: vbus {
+@@ -74,10 +74,43 @@ reg_usb_vbus: vbus {
  		regulator-max-microvolt = <5000000>;
  		vin-supply = <&reg_vcc5v>;
  		gpio = <&r_pio 0 8 GPIO_ACTIVE_HIGH>;	/* PL8 */
@@ -83,7 +83,7 @@ index 7f16223d723f..4c67eda14ddf 100644
  &r_i2c0 {
  	status = "okay";
  
-@@ -419,5 +467,43 @@ &usb_otg {
+@@ -419,5 +467,42 @@ &usb_otg {
  &usbphy {
  	usb0_vbus-supply = <&reg_vcc5v>;
  	usb1_vbus-supply = <&reg_usb_vbus>;
@@ -91,40 +91,40 @@ index 7f16223d723f..4c67eda14ddf 100644
  };
 +
 +&spi0 {
-+    pinctrl-0 = <&spi0_pins>, <&spi0_cs_pin>;
-+       pinctrl-names = "default"; 
-+       status = "okay";
-+       w25q128: flash@0 {
-+           compatible = "winbond,w25q128fw", "jedec,spi-nor"; 
-+           reg = <0>;
-+           spi-max-frequency = <24000000>;
-+           vcc-supply = <&reg_cldo1>;
-+           status = "okay";
-+       };
++	pinctrl-0 = <&spi0_pins>, <&spi0_cs_pin>;
++	   pinctrl-names = "default"; 
++	   status = "okay";
++	   w25q128: flash@0 {
++		   compatible = "winbond,w25q128fw", "jedec,spi-nor"; 
++		   reg = <0>;
++		   spi-max-frequency = <24000000>;
++		   vcc-supply = <&reg_cldo1>;
++		   status = "okay";
++	   };
 +};
 +
 +/* PCIE and USB Switch */
 +&combophy { 
-+    resets = <&ccu RST_BUS_PCIE_USB3>;
-+    phy_use_sel = <0>; /* 0:PCIE; 1:USB3 */
-+    status = "okay";
++	resets = <&ccu RST_BUS_PCIE_USB3>;
++	phy_use_sel = <0>; /* 0:PCIE; 1:USB3 */
++	status = "okay";
 +};
 +
 +&pcie {
-+    reset-gpios = <&pio 7 11 GPIO_ACTIVE_HIGH>;
-+    wake-gpios = <&pio 7 12 GPIO_ACTIVE_HIGH>;
-+    num-lanes  = <1>;
-+    clk-freq-100M;
-+    pcie3v3-supply = <&reg_pcie_3v3>;  
-+    status = "okay";
++	reset-gpios = <&pio 7 11 GPIO_ACTIVE_HIGH>;
++	wake-gpios = <&pio 7 12 GPIO_ACTIVE_HIGH>;
++	num-lanes  = <1>;
++	clk-freq-100M;
++	pcie3v3-supply = <&reg_pcie_3v3>;  
++	status = "okay";
 +};
 +
 +&usbc1 {
-+    device_type = "usbc1";
-+    usb_regulator_io = "nocare";
-+    usb_wakeup_suspend = <1>;
-+    wakeup-source;
-+    status = "okay";
++	device_type = "usbc1";
++	usb_regulator_io = "nocare";
++	usb_wakeup_suspend = <1>;
++	wakeup-source;
++	status = "okay";
 +};
 -- 
 Created with Armbian build tools https://github.com/armbian/build
