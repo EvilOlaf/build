@@ -1,9 +1,9 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Tue, 9 Dec 2025 16:43:16 +0000
 Subject: Patching kernel sun55iw3 files drivers/clk/sunxi-ng/ccu-sun55i-a523.c
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 13 +++++++++-
  include/dt-bindings/clock/sun55i-a523-ccu.h  |   1 +

@@ -1,9 +1,9 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 16 Nov 2025 13:44:00 +0000
 Subject: Patching u-boot sun55iw3 files include/configs/sunxi-common.h
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  include/configs/sunxi-common.h | 7 +++++++
  1 file changed, 7 insertions(+)

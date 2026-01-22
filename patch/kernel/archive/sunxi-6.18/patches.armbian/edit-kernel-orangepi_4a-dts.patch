@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Tue, 6 Jan 2026 13:46:53 +0000
 Subject: Patching kernel sunxi64 files
  arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts | 15 +++++++++-
  1 file changed, 15 insertions(+)

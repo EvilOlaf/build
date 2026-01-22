@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sat, 25 Oct 2025 20:32:35 +0000
 Subject: Patching u-boot sun55iw3 files drivers/phy/allwinner/Kconfig
  drivers/phy/allwinner/Makefile drivers/phy/allwinner/phy-sun55i-pcie-usb3.c
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/phy/allwinner/Kconfig                |   8 +
  drivers/phy/allwinner/Makefile               |   1 +
@@ -56,7 +56,7 @@ index 00000000000..fa06209e6a4
 + * sun55i-inno-combophy.c:	chenhuaqiang <chenhuaqiang@allwinnertech.com>
 + */
 +
-+#include <test/common.h>
++
 +#include <clk-uclass.h>
 +#include <dm.h>
 +#include <log.h>

@@ -1,9 +1,9 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 12 Jan 2026 13:45:24 +0000
 Subject: Patching u-boot sunxi64 files configs/orangepi_4a_defconfig
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  configs/orangepi_4a_defconfig | 20 ++++++++++
  1 file changed, 20 insertions(+)
@@ -28,7 +28,7 @@ index 6a44dd97959..2efc2c9fac2 100644
 +CONFIG_CMD_PCI=y
 +CONFIG_CMD_PART=y
 +CONFIG_CMD_GPIO=y
-+CONFIG_CMD_LSBK=y
++CONFIG_CMD_LSBLK=y
 +CONFIG_CMD_CAT=y
 +CONFIG_BLKMAP=y
 +CONFIG_MTD=y

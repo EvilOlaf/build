@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Thu, 23 Oct 2025 09:10:08 +0000
 Subject: Patching u-boot sun55iw3 files
  dts/upstream/src/arm64/allwinner/sun55i-a523.dtsi
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  dts/upstream/src/arm64/allwinner/sun55i-a523.dtsi | 66 ++++++++++
  1 file changed, 66 insertions(+)

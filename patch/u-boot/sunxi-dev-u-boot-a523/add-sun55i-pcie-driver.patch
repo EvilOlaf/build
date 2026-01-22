@@ -1,11 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Thu, 30 Oct 2025 22:33:03 +0000
 Subject: Patching u-boot sun55iw3 files drivers/pci/Kconfig
  drivers/pci/Makefile drivers/pci/pcie-sun55i-plat.c drivers/pci/pcie-sun55i.c
  drivers/pci/pcie-sun55i.h
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/pci/Kconfig            |   8 +
  drivers/pci/Makefile           |   1 +
@@ -60,7 +60,7 @@ index 00000000000..fea5d0c08d0
 + * pcie-sun55i-plat.c:	chenhuaqiang <chenhuaqiang@allwinnertech.com>
 + */
 +
-+#include <test/common.h>
++
 +#include "pci.h"
 +#include "pcie-sun55i.h"
 +#include <linux/types.h>
@@ -508,7 +508,7 @@ index 00000000000..8822cfed950
 + * Copyright (c) 2021 sun55i, Inc.
 + */
 +
-+#include <test/common.h>
++
 +#include <dm.h>
 +#include <syscon.h>
 +#include <asm/io.h>

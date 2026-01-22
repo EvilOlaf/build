@@ -1,26 +1,24 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 10 Nov 2025 22:10:36 +0000
 Subject: Patching u-boot sun55iw3 files arch/arm/mach-sunxi/spl_spi_sunxi.c
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
- arch/arm/mach-sunxi/spl_spi_sunxi.c | 110 ++++++----
- 1 file changed, 71 insertions(+), 39 deletions(-)
+ arch/arm/mach-sunxi/spl_spi_sunxi.c | 108 ++++++----
+ 1 file changed, 69 insertions(+), 39 deletions(-)
 
 diff --git a/arch/arm/mach-sunxi/spl_spi_sunxi.c b/arch/arm/mach-sunxi/spl_spi_sunxi.c
 index 5f72e809952..584b61daf6d 100644
 --- a/arch/arm/mach-sunxi/spl_spi_sunxi.c
 +++ b/arch/arm/mach-sunxi/spl_spi_sunxi.c
-@@ -99,35 +99,46 @@
+@@ -99,35 +99,44 @@
  
  #define SPI0_CLK_DIV_BY_2           0x1000
  #define SPI0_CLK_DIV_BY_4           0x1001
  #define SPI0_CLK_DIV_BY_32          0x100f
  
-+#if IS_ENABLED(CONFIG_MACH_SUN55I_A523)
 +#define SUN55I_BUF_STA_REG 0x400
-+#endif
 +
  /*****************************************************************************/
  
@@ -62,7 +60,7 @@ index 5f72e809952..584b61daf6d 100644
  	/* Older generations use PC23 for CS, newer ones use PC3. */
  	if (IS_ENABLED(CONFIG_MACH_SUN4I) || IS_ENABLED(CONFIG_MACH_SUN7I) ||
  	    IS_ENABLED(CONFIG_MACH_SUN8I_R40))
-@@ -142,10 +153,15 @@ static bool is_sun6i_gen_spi(void)
+@@ -142,10 +151,15 @@ static bool is_sun6i_gen_spi(void)
  	       IS_ENABLED(CONFIG_SUN50I_GEN_H6) ||
  	       IS_ENABLED(CONFIG_SUNXI_GEN_NCAT2) ||
  	       IS_ENABLED(CONFIG_MACH_SUN8I_V3S);
@@ -78,7 +76,7 @@ index 5f72e809952..584b61daf6d 100644
  	if (IS_ENABLED(CONFIG_MACH_SUN8I_R40))
  		return 0x01C05000;
  
-@@ -225,11 +241,11 @@ static void spi0_enable_clock(void)
+@@ -225,11 +239,11 @@ static void spi0_enable_clock(void)
  static void spi0_disable_clock(void)
  {
  	uintptr_t base = spi0_base_address();
@@ -91,7 +89,7 @@ index 5f72e809952..584b61daf6d 100644
  	else
  		clrbits_le32(base + SUN4I_SPI0_CTL, SUN4I_CTL_MASTER |
  					     SUN4I_CTL_ENABLE);
-@@ -255,11 +271,12 @@ static void spi0_disable_clock(void)
+@@ -255,11 +269,12 @@ static void spi0_disable_clock(void)
  static void spi0_init(void)
  {
  	unsigned int pin_function = SUNXI_GPC_SPI0;
@@ -105,7 +103,7 @@ index 5f72e809952..584b61daf6d 100644
  		 IS_ENABLED(CONFIG_MACH_SUN8I_R528))
  		pin_function = SUNIV_GPC_SPI0;
  
-@@ -270,11 +287,12 @@ static void spi0_init(void)
+@@ -270,11 +285,12 @@ static void spi0_init(void)
  static void spi0_deinit(void)
  {
  	/* New SoCs can disable pins, older could only set them as input */
@@ -119,7 +117,7 @@ index 5f72e809952..584b61daf6d 100644
  	spi0_disable_clock();
  	spi0_pinmux_setup(pin_function);
  }
-@@ -282,46 +300,50 @@ static void spi0_deinit(void)
+@@ -282,46 +298,50 @@ static void spi0_deinit(void)
  /*****************************************************************************/
  
  #define SPI_READ_MAX_SIZE 60 /* FIFO size, minus 4 bytes of the header */
@@ -202,7 +200,7 @@ index 5f72e809952..584b61daf6d 100644
  static void spi0_read_data(void *buf, u32 addr, u32 len)
  {
  	u8 *buf8 = buf;
-@@ -331,20 +353,30 @@ static void spi0_read_data(void *buf, u32 addr, u32 len)
+@@ -331,20 +351,30 @@ static void spi0_read_data(void *buf, u32 addr, u32 len)
  	while (len > 0) {
  		chunk_len = len;
  		if (chunk_len > SPI_READ_MAX_SIZE)

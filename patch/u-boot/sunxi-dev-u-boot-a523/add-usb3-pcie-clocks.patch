@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sat, 25 Oct 2025 10:54:53 +0000
 Subject: Patching u-boot sun55iw3 files drivers/clk/sunxi/clk_a523.c
  dts/upstream/include/dt-bindings/clock/sun55i-a523-ccu.h
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/clk/sunxi/clk_a523.c                             | 3 +++
  dts/upstream/include/dt-bindings/clock/sun55i-a523-ccu.h | 1 +

@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 5 Jan 2026 21:41:18 +0000
 Subject: Patching kernel sunxi64 files
  arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi | 84 ++++++++++
  1 file changed, 84 insertions(+)

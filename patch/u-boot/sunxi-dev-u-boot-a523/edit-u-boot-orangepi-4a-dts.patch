@@ -1,53 +1,42 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 4 Jan 2026 21:16:16 +0000
 Subject: Patching u-boot sun55iw3 files
  dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
- dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts | 39 ++++++++--
- 1 file changed, 34 insertions(+), 5 deletions(-)
+ dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts | 38 ++++++++--
+ 1 file changed, 38 insertions(+)
 
 diff --git a/dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts b/dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts
 index d07bb9193b4..c7ad0008163 100644
 --- a/dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts
 +++ b/dts/upstream/src/arm64/allwinner/sun55i-t527-orangepi-4a.dts
-@@ -93,15 +93,10 @@
- 
- &ehci1 {
- 	status = "okay";
- };
- 
--&gpu {
--	mali-supply = <&reg_dcdc2>;
--	status = "okay";
--};
--
- &mmc0 {
- 	vmmc-supply = <&reg_cldo3>;
- 	cd-gpios = <&pio 5 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* PF6 */
- 	bus-width = <4>;
- 	status = "okay";
-@@ -152,10 +147,17 @@
+@@ -152,10 +152,22 @@
  	vcc-pg-supply = <&reg_bldo1>;
  	vcc-ph-supply = <&reg_cldo3>;	/* via VCC-IO */
  	vcc-pi-supply = <&reg_cldo3>;
  	vcc-pj-supply = <&reg_cldo1>;
  	vcc-pk-supply = <&reg_cldo1>;
 +
-+	spi0_pin_default: spi0_pin_default{
-+		pins = "PC2","PC3","PC4","PC12";
-+		allwinner,pinmux = <0>;
-+		function = "gpio_in";
-+		drive-strength = <10>;
-+	};
++			spi0_pc_pins: spi0-pc-pins {
++				pins = "PC2", "PC4", "PC12";
++				function = "spi0";
++				allwinner,pinmux = <4>;
++			};
++
++			spi0_cs0_pc_pin: spi0-cs0-pc-pin {
++				pins = "PC3";
++				function = "spi0";
++				allwinner,pinmux = <4>;
++			};
  };
  
  &r_i2c0 {
  	status = "okay";
  
-@@ -368,10 +370,36 @@
+@@ -368,10 +390,36 @@
  		host-wakeup-gpios = <&r_pio 1 4 GPIO_ACTIVE_HIGH>; /* PM4 */
  		shutdown-gpios = <&r_pio 1 2 GPIO_ACTIVE_HIGH>; /* PM2 */
  	};
@@ -59,13 +48,13 @@ index d07bb9193b4..c7ad0008163 100644
 +};
 +
 +&spi0 {
-+	pinctrl-0 = <&spi0_pin_default>;
++	pinctrl-0 = <&spi0_pc_pins>, <&spi0_cs0_pc_pin>;
 +	pinctrl-names = "default";
 +	status = "okay";
 +	xm25qu128c: flash@0 {
 +		compatible = "xmc,xm25qu128c", "jedec,spi-nor";
 +		reg = <0>;
-+		spi-max-frequency = <24000000>;
++		spi-max-frequency = <20000000>;
 +		vcc-supply = <&reg_cldo1>;
 +		status = "okay";
 +	};

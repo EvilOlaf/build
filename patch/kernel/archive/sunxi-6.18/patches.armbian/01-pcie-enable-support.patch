@@ -1,5 +1,5 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 14 Dec 2025 11:07:45 +0000
 Subject: Patching kernel sun55iw3 files drivers/pci/Kconfig
  drivers/pci/Makefile drivers/pci/pcie-sunxi/Kconfig
@@ -8,7 +8,7 @@ Subject: Patching kernel sun55iw3 files drivers/pci/Kconfig
  drivers/pci/pcie-sunxi/pcie-sunxi-plat.c include/sunxi-gpio.h
  drivers/pci/pcie-sunxi/pcie-sunxi-rc.c drivers/pci/pcie-sunxi/pcie-sunxi.h
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/pci/Kconfig                      |    1 +
  drivers/pci/Makefile                     |    1 +

@@ -1,15 +1,15 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Fri, 27 Jun 2025 12:40:09 +0200
 Subject: Patching kernel sun55iw3 files drivers/phy/allwinner/Kconfig
  drivers/phy/allwinner/Makefile drivers/phy/allwinner/sunxi-inno-combophy.c
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/phy/allwinner/Kconfig               |    8 +
  drivers/phy/allwinner/Makefile              |    1 +
- drivers/phy/allwinner/sunxi-inno-combophy.c | 1163 ++++++++++
- 3 files changed, 1172 insertions(+)
+ drivers/phy/allwinner/sunxi-inno-combophy.c | 1166 ++++++++++
+ 3 files changed, 1175 insertions(+)
 
 diff --git a/drivers/phy/allwinner/Kconfig b/drivers/phy/allwinner/Kconfig
 index d3614169de5c..eba609eb531f 100644
@@ -45,7 +45,7 @@ new file mode 100644
 index 000000000000..8ff4b17f8d87
 --- /dev/null
 +++ b/drivers/phy/allwinner/sunxi-inno-combophy.c
-@@ -0,0 +1,1163 @@
+@@ -0,0 +1,1166 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +/*
@@ -274,114 +274,117 @@ index 000000000000..8ff4b17f8d87
 +
 +static int pcie_usb3_sub_system_init(struct platform_device *pdev)
 +{
-+    struct device *dev = &pdev->dev;
-+    struct sunxi_combphy *combphy = platform_get_drvdata(pdev);
-+    int ret;
-+    bool already_enabled = false;
-+    u32 val;
++	struct device *dev = &pdev->dev;
++	struct sunxi_combphy *combphy = platform_get_drvdata(pdev);
++	int ret;
++	bool already_enabled = false;
++	u32 val;
 +
-+    if (combphy->initialized)
-+        return 0;
++	if (combphy->initialized)
++		return 0;
 +
-+    if (combphy->phy_ctl) {
-+        val = readl(combphy->phy_ctl + PCIE_COMBO_PHY_CTL);
-+        if (val & PHY_RSTN) {
-+            dev_info(dev, "PCIe PHY already enabled by Bootloader. Keeping it active.\n");
-+            already_enabled = true;
-+        }
-+    }
++	if (combphy->phy_ctl) {
++		val = readl(combphy->phy_ctl + PCIE_COMBO_PHY_CTL);
++		if (val & PHY_RSTN) {
++			dev_info(dev, "PCIe PHY already enabled by Bootloader. Keeping it active.\n");
++			already_enabled = true;
++		}
++	}
 +
-+    if (!IS_ERR(combphy->select3v3_supply)) {
-+        ret = regulator_enable(combphy->select3v3_supply);
-+        if (ret) {
-+            dev_err(dev, "Failed to enable 3.3V supply: %d\n", ret);
-+            return ret;
-+        }
-+    }
++	if (!IS_ERR(combphy->select3v3_supply)) {
++		ret = regulator_enable(combphy->select3v3_supply);
++		if (ret) {
++			dev_err(dev, "Failed to enable 3.3V supply: %d\n", ret);
++			return ret;
++		}
++	}
 +
-+    if (!already_enabled) {
-+        ret = reset_control_deassert(combphy->reset);
-+        if (ret)
-+            return ret;
++	if (!already_enabled) {
++		ret = reset_control_deassert(combphy->reset);
++		if (ret)
++			goto err_disable_regulator;
 +
-+        if (combphy->drvdata->need_noppu_rst) {
-+            ret = reset_control_deassert(combphy->noppu_reset);
-+            if (ret) {
-+                if (!IS_ERR(combphy->reset))
-+                    reset_control_assert(combphy->reset);
-+                return ret;
-+            }
-+        }
-+    }
++		if (combphy->drvdata->need_noppu_rst) {
++			ret = reset_control_deassert(combphy->noppu_reset);
++			if (ret)
++				goto err_assert_reset;
++		}
++	}
 +
-+    if (combphy->user == PHY_USE_BY_USB3) {
-+        if (!IS_ERR(combphy->phyclk_ref)) {
-+            ret = clk_prepare_enable(combphy->phyclk_ref);
-+            if (ret)
-+                return ret;
-+        }
-+    } else if (combphy->user == PHY_USE_BY_PCIE || combphy->user == PHY_USE_BY_PCIE_USB3_U2) {
-+        if (!already_enabled) {
-+            ret = clk_set_rate(combphy->phyclk_ref, 100000000);
-+            if (ret)
-+                dev_err(dev, "failed to set phyclk_ref freq 100M!\n");
-+        }
++	/* Clock Setup */
++	if (combphy->user == PHY_USE_BY_USB3 || 
++	    combphy->user == PHY_USE_BY_PCIE || 
++	    combphy->user == PHY_USE_BY_PCIE_USB3_U2) {
++		
++		if (!already_enabled && combphy->user != PHY_USE_BY_USB3) {
++			ret = clk_set_rate(combphy->phyclk_ref, 100000000);
++			if (ret)
++				dev_err(dev, "failed to set phyclk_ref freq 100M!\n");
++		}
 +
-+        if (!IS_ERR(combphy->phyclk_ref)) {
-+            ret = clk_prepare_enable(combphy->phyclk_ref);
-+            if (ret)
-+                return ret;
-+        }
-+    }
++		if (!IS_ERR(combphy->phyclk_ref)) {
++			ret = clk_prepare_enable(combphy->phyclk_ref);
++			if (ret)
++				goto err_assert_noppu;
++		}
++	}
 +
-+    if (combphy->drvdata->has_cfg_clk) {
-+        if (!already_enabled) {
-+            ret = clk_set_rate(combphy->phyclk_cfg, 200000000);
-+            if (ret)
-+                dev_err(dev, "failed to set phyclk_cfg freq 200M!\n");
-+        }
++	if (combphy->drvdata->has_cfg_clk) {
++		if (!already_enabled) {
++			ret = clk_set_rate(combphy->phyclk_cfg, 200000000);
++			if (ret)
++				dev_err(dev, "failed to set phyclk_cfg freq 200M!\n");
++		}
 +
-+        if (!IS_ERR(combphy->phyclk_cfg)) {
-+            ret = clk_prepare_enable(combphy->phyclk_cfg);
-+            if (ret)
-+                return ret;
-+        }
-+    }
++		if (!IS_ERR(combphy->phyclk_cfg)) {
++			ret = clk_prepare_enable(combphy->phyclk_cfg);
++			if (ret)
++				goto err_disable_phyclk_ref;
++		}
++	}
 +
-+    if (combphy->drvdata->has_phy_ahb_clk) {
-+        ret = clk_prepare_enable(combphy->phy_hclk);
-+        if (ret) {
-+            dev_err(dev, "cannot prepare/enable phy_hclk\n");
-+            return ret;
-+        }
-+    }
++	if (combphy->drvdata->has_phy_ahb_clk) {
++		ret = clk_prepare_enable(combphy->phy_hclk);
++		if (ret) goto err_disable_phyclk_cfg;
++	}
 +
-+    if (combphy->drvdata->has_pcie_axi_clk) {
-+        ret = clk_prepare_enable(combphy->phy_axi);
-+        if (ret) {
-+            dev_err(dev, "cannot prepare/enable phy_axi clock\n");
-+            return ret;
-+        }
-+    }
++	if (combphy->drvdata->has_pcie_axi_clk) {
++		ret = clk_prepare_enable(combphy->phy_axi);
++		if (ret) goto err_disable_phy_hclk;
++	}
 +
-+    if (combphy->drvdata->has_phy_mbus_clk) {
-+        ret = clk_prepare_enable(combphy->phy_mclk);
-+        if (ret) {
-+            dev_err(dev, "cannot prepare/enable phy_mclk \n");
-+            return ret;
-+        }
-+    }
++	if (combphy->drvdata->has_phy_mbus_clk) {
++		ret = clk_prepare_enable(combphy->phy_mclk);
++		if (ret) goto err_disable_phy_axi;
++	}
 +
-+    if (!already_enabled) {
-+        pcie_usb3_sub_system_enable(combphy);
-+    }
++	if (!already_enabled) {
++		pcie_usb3_sub_system_enable(combphy);
++	}
 +
-+    if (combphy->vernum == COMBO_VERSION_ANY)
-+        dev_err(dev, "this is unknown version number\n");
++	combphy->initialized = true;
++	return 0;
 +
-+    combphy->initialized = true;
++/* Error Unwinding Path */
++err_disable_phy_axi:
++	clk_disable_unprepare(combphy->phy_axi);
++err_disable_phy_hclk:
++	clk_disable_unprepare(combphy->phy_hclk);
++err_disable_phyclk_cfg:
++	clk_disable_unprepare(combphy->phyclk_cfg);
++err_disable_phyclk_ref:
++	clk_disable_unprepare(combphy->phyclk_ref);
++err_assert_noppu:
++	if (!already_enabled && combphy->drvdata->need_noppu_rst)
++		reset_control_assert(combphy->noppu_reset);
++err_assert_reset:
++	if (!already_enabled)
++		reset_control_assert(combphy->reset);
++err_disable_regulator:
++	if (!IS_ERR(combphy->select3v3_supply))
++		regulator_disable(combphy->select3v3_supply);
 +
-+    return 0;
++	return ret;
 +}
 +
 +static int pcie_usb3_sub_system_exit(struct platform_device *pdev)

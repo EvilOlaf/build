@@ -1,20 +1,20 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 25 Aug 2025 10:45:25 +0000
 Subject: Patching kernel sun55iw3 files drivers/iommu/Kconfig
  drivers/iommu/Makefile drivers/iommu/sun55i-iommu-pgtable.c
  drivers/iommu/sun55i-iommu-pgtable.h drivers/iommu/sun55i-iommu.c
  drivers/iommu/sun55i-iommu.h
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  drivers/iommu/Kconfig                |   10 +
  drivers/iommu/Makefile               |    3 +
  drivers/iommu/sun55i-iommu-pgtable.c |  476 +++
  drivers/iommu/sun55i-iommu-pgtable.h |  125 +
- drivers/iommu/sun55i-iommu.c         | 1585 ++++++++++
+ drivers/iommu/sun55i-iommu.c         | 1589 ++++++++++
  drivers/iommu/sun55i-iommu.h         |   57 +
- 6 files changed, 2256 insertions(+)
+ 6 files changed, 2260 insertions(+)
 
 diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
 index 0a33d995d15d..6018b0f3bb53 100644
@@ -673,7 +673,7 @@ new file mode 100644
 index 000000000000..9830cca8b876
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu.c
-@@ -0,0 +1,1585 @@
+@@ -0,0 +1,1589 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +/*******************************************************************************
@@ -1022,6 +1022,9 @@ index 000000000000..9830cca8b876
 +
 +void sun55i_iommu_register_fault_cb(sunxi_iommu_fault_cb cb, unsigned int master_id)
 +{
++	if (master_id >= ARRAY_SIZE(sunxi_iommu_fault_notify_cbs))
++		return;
++
 +	sunxi_iommu_fault_notify_cbs[master_id] = cb;
 +}
 +EXPORT_SYMBOL_GPL(sun55i_iommu_register_fault_cb);
@@ -1057,6 +1060,8 @@ index 000000000000..9830cca8b876
 +	unsigned long mflag;
 +
 +	if (!iommu)
++		return;
++	if (master_id >= ARRAY_SIZE(master_id_bitmap))
 +		return;
 +
 +	spin_lock_irqsave(&iommu->iommu_lock, mflag);
@@ -1238,7 +1243,7 @@ index 000000000000..9830cca8b876
 +	struct sunxi_iommu_domain *sunxi_domain;
 +	const struct sunxi_iommu_plat_data *plat_data;
 +	size_t iova_start, iova_end;
-+	u32 iova_tail_size;
++	int iova_tail_size;
 +	unsigned long flags;
 +
 +	sunxi_domain = container_of(domain, struct sunxi_iommu_domain, domain);
@@ -1258,12 +1263,11 @@ index 000000000000..9830cca8b876
 +	sun55i_tlb_invalid(iova_start, iova_end);
 +	sun55i_ptw_cache_invalid(iova_start, iova_end);
 +
-+	for (; iova_start < iova_end; ) {
-+		iova_tail_size = sunxi_pgtable_delete_l2_tables(
-+			 sunxi_domain->pgtable, iova_start, iova_end);
-+		sun55i_ptw_cache_invalid(iova_start, 0);
-+		iova_start += iova_tail_size;
-+	}
++	iova_tail_size = sunxi_pgtable_delete_l2_tables(
++		sunxi_domain->pgtable, iova_start, iova_end);
++	if (iova_tail_size < 0)
++		break;
++	sun55i_ptw_cache_invalid(iova_start, iova_start + iova_tail_size);
 +	spin_unlock_irqrestore(&sunxi_domain->dt_lock, flags);
 +
 +	return size;

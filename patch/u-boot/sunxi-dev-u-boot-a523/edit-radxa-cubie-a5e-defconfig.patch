@@ -1,9 +1,9 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 19 Oct 2025 11:39:07 +0200
 Subject: Patching u-boot sun55iw3 files configs/radxa-cubie-a5e_defconfig
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
  configs/radxa-cubie-a5e_defconfig | 55 ++++++++++
  1 file changed, 55 insertions(+)
@@ -28,7 +28,7 @@ index 9d204ef5548..d95dd543f3d 100644
 +CONFIG_CMD_PCI=y
 +CONFIG_CMD_PART=y
 +CONFIG_CMD_GPIO=y
-+CONFIG_CMD_LSBK=y
++CONFIG_CMD_LSBLK=y
 +CONFIG_CMD_CAT=y
 +CONFIG_BLKMAP=y
 +CONFIG_MTD=y

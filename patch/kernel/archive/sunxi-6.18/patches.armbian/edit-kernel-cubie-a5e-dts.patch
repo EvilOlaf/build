@@ -1,16 +1,17 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: John Doe <john.doe@somewhere.on.planet>
+From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 11 Jan 2026 12:11:10 +0000
 Subject: Patching kernel sunxi64 files
  arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
 
-Signed-off-by: John Doe <john.doe@somewhere.on.planet>
+Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
- arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts | 85 ++++++++++
- 1 file changed, 85 insertions(+)
+---
+ arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts | 58 ++++++++++
+ 1 file changed, 58 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
-index 7f16223d723f..1e3df8af0450 100644
+index 52bca6fff41a..7de561ca1635 100644
 --- a/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
 +++ b/arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
 @@ -74,10 +74,43 @@ reg_usb_vbus: vbus {
@@ -57,51 +58,12 @@ index 7f16223d723f..1e3df8af0450 100644
  &ehci0 {
  	status = "okay";
  };
-@@ -174,10 +207,25 @@ &pio {
- 	vcc-pg-supply = <&reg_bldo1>;
- 	vcc-ph-supply = <&reg_cldo3>;	/* via VCC-IO */
- 	vcc-pi-supply = <&reg_cldo3>;
- 	vcc-pj-supply = <&reg_cldo4>;
- 	vcc-pk-supply = <&reg_cldo1>;
-+
-+	spi0_pins: spi0-pins {
-+		pins = "PC2","PC4", "PC12";
-+		allwinner,pinmux = <4>;
-+		function = "spi0";
-+		drive-strength = <10>;
-+	};
-+
-+	spi0_cs_pin: spi0-cs0-pin {
-+		pins = "PC3";
-+		allwinner,pinmux = <4>;
-+		function = "spi0";
-+		drive-strength = <10>;
-+		bias-pull-up;   /* cs, hold, wp should be pulled up */
-+	};
+@@ -432,5 +465,30 @@ w25q128: flash@0 {
+ 		spi-max-frequency = <24000000>;
+ 		vcc-supply = <&reg_cldo1>;
+ 		status = "okay";
+ 	};
  };
- 
- &r_i2c0 {
- 	status = "okay";
- 
-@@ -419,5 +467,42 @@ &usb_otg {
- &usbphy {
- 	usb0_vbus-supply = <&reg_vcc5v>;
- 	usb1_vbus-supply = <&reg_usb_vbus>;
- 	status = "okay";
- };
-+
-+&spi0 {
-+	pinctrl-0 = <&spi0_pins>, <&spi0_cs_pin>;
-+	   pinctrl-names = "default"; 
-+	   status = "okay";
-+	   w25q128: flash@0 {
-+		   compatible = "winbond,w25q128fw", "jedec,spi-nor"; 
-+		   reg = <0>;
-+		   spi-max-frequency = <24000000>;
-+		   vcc-supply = <&reg_cldo1>;
-+		   status = "okay";
-+	   };
-+};
 +
 +/* PCIE and USB Switch */
 +&combophy { 
@@ -126,6 +88,7 @@ index 7f16223d723f..1e3df8af0450 100644
 +	wakeup-source;
 +	status = "okay";
 +};
++
 -- 
 Created with Armbian build tools https://github.com/armbian/build
 
