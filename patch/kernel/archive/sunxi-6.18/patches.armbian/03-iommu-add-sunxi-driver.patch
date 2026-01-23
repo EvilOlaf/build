@@ -1244,7 +1244,7 @@ index 000000000000..9830cca8b876
 +	struct sunxi_iommu_domain *sunxi_domain;
 +	const struct sunxi_iommu_plat_data *plat_data;
 +	size_t iova_start, iova_end;
-+	int iova_tail_size;
++	u32 iova_tail_size;
 +	unsigned long flags;
 +
 +	sunxi_domain = container_of(domain, struct sunxi_iommu_domain, domain);
@@ -1259,16 +1259,16 @@ index 000000000000..9830cca8b876
 +		if (gather->end < iova_end)
 +			gather->end = iova_end;
 +	}
-+
 +	spin_lock_irqsave(&sunxi_domain->dt_lock, flags);
 +	sun55i_tlb_invalid(iova_start, iova_end);
 +	sun55i_ptw_cache_invalid(iova_start, iova_end);
 +
-+	iova_tail_size = sunxi_pgtable_delete_l2_tables(
-+		sunxi_domain->pgtable, iova_start, iova_end);
-+	if (iova_tail_size < 0)
-+		break;
-+	sun55i_ptw_cache_invalid(iova_start, iova_start + iova_tail_size);
++	for (; iova_start < iova_end; ) {
++		iova_tail_size = sunxi_pgtable_delete_l2_tables(
++			 sunxi_domain->pgtable, iova_start, iova_end);
++		sun55i_ptw_cache_invalid(iova_start, 0);
++		iova_start += iova_tail_size;
++	}
 +	spin_unlock_irqrestore(&sunxi_domain->dt_lock, flags);
 +
 +	return size;
@@ -2014,7 +2014,6 @@ index 000000000000..9830cca8b876
 +}
 +
 +static const struct iommu_ops sunxi_iommu_ops = {
-+	.pgsize_bitmap = SZ_4K,
 +	.domain_alloc_paging	= sunxi_iommu_domain_alloc_paging,
 +	.probe_device	    = sun55i_iommu_probe_device,
 +	.probe_finalize = sun55i_iommu_probe_device_finalize,
@@ -2030,6 +2029,7 @@ index 000000000000..9830cca8b876
 +		.iova_to_phys	= sunxi_iommu_iova_to_phys,
 +		.free			= sun55i_iommu_domain_free,
 +	}
++
 +};
 +
 +static int sun55i_iommu_probe(struct platform_device *pdev)
