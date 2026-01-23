@@ -12,10 +12,10 @@ Signed-off-by: Marvin Wewer <mwewer37@proton.me>
  drivers/iommu/Makefile               |    3 +
  drivers/iommu/sun55i-iommu-pgtable.c |  476 +++
  drivers/iommu/sun55i-iommu-pgtable.h |  125 +
- drivers/iommu/sun55i-iommu.c         | 1589 ++++++++++
+ drivers/iommu/sun55i-iommu.c         | 1584 ++++++++++
  drivers/iommu/sun55i-iommu.h         |   57 +
  include/sunxi-iommu.h                |  50 ++
- 6 files changed, 2310 insertions(+)
+ 6 files changed, 2305 insertions(+)
 
 diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
 index 0a33d995d15d..6018b0f3bb53 100644
@@ -674,7 +674,7 @@ new file mode 100644
 index 000000000000..9830cca8b876
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu.c
-@@ -0,0 +1,1589 @@
+@@ -0,0 +1,1584 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/* Copyright(c) 2020 - 2023 Allwinner Technology Co.,Ltd. All rights reserved. */
 +/*******************************************************************************
@@ -1023,9 +1023,6 @@ index 000000000000..9830cca8b876
 +
 +void sun55i_iommu_register_fault_cb(sunxi_iommu_fault_cb cb, unsigned int master_id)
 +{
-+	if (master_id >= ARRAY_SIZE(sunxi_iommu_fault_notify_cbs))
-+		return;
-+
 +	sunxi_iommu_fault_notify_cbs[master_id] = cb;
 +}
 +EXPORT_SYMBOL_GPL(sun55i_iommu_register_fault_cb);
@@ -1061,8 +1058,6 @@ index 000000000000..9830cca8b876
 +	unsigned long mflag;
 +
 +	if (!iommu)
-+		return;
-+	if (master_id >= ARRAY_SIZE(master_id_bitmap))
 +		return;
 +
 +	spin_lock_irqsave(&iommu->iommu_lock, mflag);
@@ -1259,6 +1254,7 @@ index 000000000000..9830cca8b876
 +		if (gather->end < iova_end)
 +			gather->end = iova_end;
 +	}
++
 +	spin_lock_irqsave(&sunxi_domain->dt_lock, flags);
 +	sun55i_tlb_invalid(iova_start, iova_end);
 +	sun55i_ptw_cache_invalid(iova_start, iova_end);
@@ -2029,7 +2025,6 @@ index 000000000000..9830cca8b876
 +		.iova_to_phys	= sunxi_iommu_iova_to_phys,
 +		.free			= sun55i_iommu_domain_free,
 +	}
-+
 +};
 +
 +static int sun55i_iommu_probe(struct platform_device *pdev)
