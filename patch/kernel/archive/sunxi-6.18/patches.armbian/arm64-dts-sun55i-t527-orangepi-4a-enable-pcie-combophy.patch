@@ -1,8 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Tue, 6 Jan 2026 13:46:53 +0000
-Subject: Patching kernel sunxi64 files
- arch/arm64/boot/dts/allwinner/sun55i-t527-orangepi-4a.dts
+Subject: arm64: dts: allwinner: t527-orangepi-4a: enable PCIe combophy
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -41,4 +40,3 @@ index 84a41becc15d..a8cd0654aa44 100644
  	 * to the port, and a VBUSDET GPIO, to detect externally provided
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-

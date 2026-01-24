@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Tue, 9 Dec 2025 16:43:16 +0000
-Subject: Patching kernel sun55iw3 files drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+Subject: clk: sunxi-ng: add A523 USB3 ref clock and reset
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -89,4 +89,3 @@ index 20dad06b37ca..79181185a0dc 100644
  	[RST_BUS_NSI]		= { 0x54c, BIT(16) },
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-

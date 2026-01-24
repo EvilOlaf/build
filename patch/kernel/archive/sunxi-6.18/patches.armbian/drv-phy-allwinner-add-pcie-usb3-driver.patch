@@ -1,8 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Fri, 27 Jun 2025 12:40:09 +0200
-Subject: Patching kernel sun55iw3 files drivers/phy/allwinner/Kconfig
- drivers/phy/allwinner/Makefile drivers/phy/allwinner/sunxi-inno-combophy.c
+Subject: phy: allwinner: add INNO PCIe/USB3 combo PHY driver
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -1214,4 +1213,3 @@ index 000000000000..8ff4b17f8d87
 +MODULE_LICENSE("GPL v2");
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-

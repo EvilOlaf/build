@@ -1,10 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 25 Aug 2025 10:45:25 +0000
-Subject: Patching kernel sun55iw3 files drivers/iommu/Kconfig
- drivers/iommu/Makefile drivers/iommu/sun55i-iommu-pgtable.c
- drivers/iommu/sun55i-iommu-pgtable.h drivers/iommu/sun55i-iommu.c
- drivers/iommu/sun55i-iommu.h include/sunxi-iommu.h
+Subject: iommu: sunxi: add sun55i (A523) IOMMU driver
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -2381,4 +2378,3 @@ index 000000000000..d3cf820e475b
 \ No newline at end of file
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-

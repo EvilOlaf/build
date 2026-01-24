@@ -1,8 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Sun, 11 Jan 2026 12:11:10 +0000
-Subject: Patching kernel sunxi64 files
- arch/arm64/boot/dts/allwinner/sun55i-a527-cubie-a5e.dts
+Subject: arm64: dts: allwinner: a527-cubie-a5e: enable PCIe/USB-C combophy
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -91,4 +90,3 @@ index 52bca6fff41a..7de561ca1635 100644
 +
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-

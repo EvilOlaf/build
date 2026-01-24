@@ -1,8 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Marvin Wewer <mwewer37@proton.me>
 Date: Mon, 5 Jan 2026 21:41:18 +0000
-Subject: Patching kernel sunxi64 files
- arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi
+Subject: arm64: dts: allwinner: sun55i-a523: add iommu and PCIe/USB-C nodes
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
@@ -132,4 +131,3 @@ index 3bc042be5ab5..8e9138fc5162 100644
  			resets = <&r_ccu RST_BUS_R_PPU1>;
 -- 
 Created with Armbian build tools https://github.com/armbian/build
-
