@@ -11,12 +11,10 @@ Signed-off-by: Marvin Wewer <mwewer37@proton.me>
  3 files changed, 1175 insertions(+)
 
 diff --git a/drivers/phy/allwinner/Kconfig b/drivers/phy/allwinner/Kconfig
-index d3614169de5c..eba609eb531f 100644
+index 111111111111..222222222222 100644
 --- a/drivers/phy/allwinner/Kconfig
 +++ b/drivers/phy/allwinner/Kconfig
-@@ -65,5 +65,13 @@ config AC200_PHY_CTL
- 	depends on RESET_CONTROLLER
- 	help
+@@ -67,3 +67,11 @@ config AC200_PHY_CTL
  	  Enable this to support the Ethernet PHY operation of the AC200
  	  mixed signal chip. This driver just enables and configures the
  	  PHY, the PHY itself is supported by a standard driver.
@@ -29,19 +27,17 @@ index d3614169de5c..eba609eb531f 100644
 +	  Enable this to support the Allwinner PCIe/USB3.0 combo PHY
 +	  with INNOSILICON IP block.
 diff --git a/drivers/phy/allwinner/Makefile b/drivers/phy/allwinner/Makefile
-index 0eecec7a908a..2cd19ec442a9 100644
+index 111111111111..222222222222 100644
 --- a/drivers/phy/allwinner/Makefile
 +++ b/drivers/phy/allwinner/Makefile
-@@ -2,5 +2,6 @@
- obj-$(CONFIG_PHY_SUN4I_USB)		+= phy-sun4i-usb.o
- obj-$(CONFIG_PHY_SUN6I_MIPI_DPHY)	+= phy-sun6i-mipi-dphy.o
+@@ -4,3 +4,4 @@ obj-$(CONFIG_PHY_SUN6I_MIPI_DPHY)	+= phy-sun6i-mipi-dphy.o
  obj-$(CONFIG_PHY_SUN9I_USB)		+= phy-sun9i-usb.o
  obj-$(CONFIG_PHY_SUN50I_USB3)		+= phy-sun50i-usb3.o
  obj-$(CONFIG_AC200_PHY_CTL)		+= ac200-ephy-ctl.o
 +obj-$(CONFIG_AW_INNO_COMBOPHY)	+= sunxi-inno-combophy.o
 diff --git a/drivers/phy/allwinner/sunxi-inno-combophy.c b/drivers/phy/allwinner/sunxi-inno-combophy.c
 new file mode 100644
-index 000000000000..8ff4b17f8d87
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/phy/allwinner/sunxi-inno-combophy.c
 @@ -0,0 +1,1166 @@
@@ -1212,4 +1208,5 @@ index 000000000000..8ff4b17f8d87
 +MODULE_VERSION("0.0.20");
 +MODULE_LICENSE("GPL v2");
 -- 
-Created with Armbian build tools https://github.com/armbian/build
+Armbian
+

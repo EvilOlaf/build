@@ -5,44 +5,16 @@ Subject: clk: sunxi-ng: add A523 USB3 ref clock and reset
 
 Signed-off-by: Marvin Wewer <mwewer37@proton.me>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 13 +++++++++-
- include/dt-bindings/clock/sun55i-a523-ccu.h  |   1 +
- include/dt-bindings/reset/sun55i-a523-ccu.h  |   1 +
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c      | 13 +++++++++-
+ include/dt-bindings/clock/sun55i-a523-ccu.h |  1 +
+ include/dt-bindings/reset/sun55i-a523-ccu.h |  1 +
  3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/clock/sun55i-a523-ccu.h b/include/dt-bindings/clock/sun55i-a523-ccu.h
-index 54808fcfd556..02cc8c430705 100644
---- a/include/dt-bindings/clock/sun55i-a523-ccu.h
-+++ b/include/dt-bindings/clock/sun55i-a523-ccu.h
-@@ -184,7 +184,8 @@
- #define CLK_FANOUT_PCLK		175
- #define CLK_FANOUT0		176
- #define CLK_FANOUT1		177
- #define CLK_FANOUT2		178
- #define CLK_NPU			179
-+#define CLK_USB3_REF		180
- 
- #endif /* _DT_BINDINGS_CLK_SUN55I_A523_CCU_H_ */
-diff --git a/include/dt-bindings/reset/sun55i-a523-ccu.h b/include/dt-bindings/reset/sun55i-a523-ccu.h
-index 70df503f34fe..e5d788078ad3 100644
---- a/include/dt-bindings/reset/sun55i-a523-ccu.h
-+++ b/include/dt-bindings/reset/sun55i-a523-ccu.h
-@@ -82,7 +82,8 @@
- #define RST_BUS_VIDEO_OUT0	73
- #define RST_BUS_VIDEO_OUT1	74
- #define RST_BUS_LEDC		75
- #define RST_BUS_CSI		76
- #define RST_BUS_ISP		77
-+#define RST_BUS_USB_3		78
- 
- #endif /* _DT_BINDINGS_RST_SUN55I_A523_CCU_H_ */
 diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-index 20dad06b37ca..79181185a0dc 100644
+index 111111111111..222222222222 100644
 --- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
 +++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-@@ -1184,10 +1184,19 @@ static SUNXI_CCU_MUX_DATA_WITH_GATE(fanout2_clk, "fanout2", fanout_parents,
- 				    0xf3c,
- 				    6, 3,	/* mux */
+@@ -1186,6 +1186,15 @@ static SUNXI_CCU_MUX_DATA_WITH_GATE(fanout2_clk, "fanout2", fanout_parents,
  				    BIT(23),	/* gate */
  				    0);
  
@@ -58,11 +30,7 @@ index 20dad06b37ca..79181185a0dc 100644
  /*
   * Contains all clocks that are controlled by a hardware register. They
   * have a (sunxi) .common member, which needs to be initialised by the common
-  * sunxi CCU code, to be filled with the MMIO base address and the shared lock.
-  */
-@@ -1352,10 +1361,11 @@ static struct ccu_common *sun55i_a523_ccu_clks[] = {
- 	&fanout_27M_clk.common,
- 	&fanout_pclk_clk.common,
+@@ -1354,6 +1363,7 @@ static struct ccu_common *sun55i_a523_ccu_clks[] = {
  	&fanout0_clk.common,
  	&fanout1_clk.common,
  	&fanout2_clk.common,
@@ -70,11 +38,7 @@ index 20dad06b37ca..79181185a0dc 100644
  };
  
  static struct clk_hw_onecell_data sun55i_a523_hw_clks = {
- 	.hws	= {
- 		[CLK_PLL_DDR0]		= &pll_ddr_clk.common.hw,
-@@ -1536,12 +1546,13 @@ static struct clk_hw_onecell_data sun55i_a523_hw_clks = {
- 		[CLK_FANOUT_PCLK]	= &fanout_pclk_clk.common.hw,
- 		[CLK_FANOUT0]		= &fanout0_clk.common.hw,
+@@ -1538,8 +1548,9 @@ static struct clk_hw_onecell_data sun55i_a523_hw_clks = {
  		[CLK_FANOUT1]		= &fanout1_clk.common.hw,
  		[CLK_FANOUT2]		= &fanout2_clk.common.hw,
  		[CLK_NPU]		= &npu_clk.common.hw,
@@ -85,7 +49,28 @@ index 20dad06b37ca..79181185a0dc 100644
  };
  
  static struct ccu_reset_map sun55i_a523_ccu_resets[] = {
- 	[RST_MBUS]		= { 0x540, BIT(30) },
- 	[RST_BUS_NSI]		= { 0x54c, BIT(16) },
+diff --git a/include/dt-bindings/clock/sun55i-a523-ccu.h b/include/dt-bindings/clock/sun55i-a523-ccu.h
+index 111111111111..222222222222 100644
+--- a/include/dt-bindings/clock/sun55i-a523-ccu.h
++++ b/include/dt-bindings/clock/sun55i-a523-ccu.h
+@@ -186,5 +186,6 @@
+ #define CLK_FANOUT1		177
+ #define CLK_FANOUT2		178
+ #define CLK_NPU			179
++#define CLK_USB3_REF		180
+ 
+ #endif /* _DT_BINDINGS_CLK_SUN55I_A523_CCU_H_ */
+diff --git a/include/dt-bindings/reset/sun55i-a523-ccu.h b/include/dt-bindings/reset/sun55i-a523-ccu.h
+index 111111111111..222222222222 100644
+--- a/include/dt-bindings/reset/sun55i-a523-ccu.h
++++ b/include/dt-bindings/reset/sun55i-a523-ccu.h
+@@ -84,5 +84,6 @@
+ #define RST_BUS_LEDC		75
+ #define RST_BUS_CSI		76
+ #define RST_BUS_ISP		77
++#define RST_BUS_USB_3		78
+ 
+ #endif /* _DT_BINDINGS_RST_SUN55I_A523_CCU_H_ */
 -- 
-Created with Armbian build tools https://github.com/armbian/build
+Armbian
+

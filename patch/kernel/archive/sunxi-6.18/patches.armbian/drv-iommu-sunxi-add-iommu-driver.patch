@@ -11,16 +11,14 @@ Signed-off-by: Marvin Wewer <mwewer37@proton.me>
  drivers/iommu/sun55i-iommu-pgtable.h |  125 +
  drivers/iommu/sun55i-iommu.c         | 1584 ++++++++++
  drivers/iommu/sun55i-iommu.h         |   57 +
- include/sunxi-iommu.h                |  50 ++
- 6 files changed, 2305 insertions(+)
+ include/sunxi-iommu.h                |   50 +
+ 7 files changed, 2305 insertions(+)
 
 diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 0a33d995d15d..6018b0f3bb53 100644
+index 111111111111..222222222222 100644
 --- a/drivers/iommu/Kconfig
 +++ b/drivers/iommu/Kconfig
-@@ -241,10 +241,20 @@ config SUN50I_IOMMU
- 	depends on ARCH_SUNXI || COMPILE_TEST
- 	select ARM_DMA_USE_IOMMU
+@@ -244,6 +244,16 @@ config SUN50I_IOMMU
  	select IOMMU_API
  	help
  	  Support for the IOMMU introduced in the Allwinner H6 SoCs.
@@ -37,15 +35,11 @@ index 0a33d995d15d..6018b0f3bb53 100644
  
  config TEGRA_IOMMU_SMMU
  	bool "NVIDIA Tegra SMMU Support"
- 	depends on ARCH_TEGRA
- 	depends on TEGRA_AHB
 diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
-index 355294fa9033..e6aeade16496 100644
+index 111111111111..222222222222 100644
 --- a/drivers/iommu/Makefile
 +++ b/drivers/iommu/Makefile
-@@ -32,5 +32,8 @@ obj-$(CONFIG_HYPERV_IOMMU) += hyperv-iommu.o
- obj-$(CONFIG_VIRTIO_IOMMU) += virtio-iommu.o
- obj-$(CONFIG_IOMMU_SVA) += iommu-sva.o
+@@ -34,3 +34,6 @@ obj-$(CONFIG_IOMMU_SVA) += iommu-sva.o
  obj-$(CONFIG_IOMMU_IOPF) += io-pgfault.o
  obj-$(CONFIG_SPRD_IOMMU) += sprd-iommu.o
  obj-$(CONFIG_APPLE_DART) += apple-dart.o
@@ -55,7 +49,7 @@ index 355294fa9033..e6aeade16496 100644
 \ No newline at end of file
 diff --git a/drivers/iommu/sun55i-iommu-pgtable.c b/drivers/iommu/sun55i-iommu-pgtable.c
 new file mode 100644
-index 000000000000..a5ff6d532905
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu-pgtable.c
 @@ -0,0 +1,476 @@
@@ -537,7 +531,7 @@ index 000000000000..a5ff6d532905
 +}
 diff --git a/drivers/iommu/sun55i-iommu-pgtable.h b/drivers/iommu/sun55i-iommu-pgtable.h
 new file mode 100644
-index 000000000000..457b8ce1af0f
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu-pgtable.h
 @@ -0,0 +1,125 @@
@@ -668,7 +662,7 @@ index 000000000000..457b8ce1af0f
 +#endif
 diff --git a/drivers/iommu/sun55i-iommu.c b/drivers/iommu/sun55i-iommu.c
 new file mode 100644
-index 000000000000..9830cca8b876
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu.c
 @@ -0,0 +1,1584 @@
@@ -2258,7 +2252,7 @@ index 000000000000..9830cca8b876
 +MODULE_AUTHOR("ouayngkun<ouyangkun@allwinnertech.com>");
 diff --git a/drivers/iommu/sun55i-iommu.h b/drivers/iommu/sun55i-iommu.h
 new file mode 100644
-index 000000000000..5dc4e96f94d1
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/iommu/sun55i-iommu.h
 @@ -0,0 +1,57 @@
@@ -2321,7 +2315,7 @@ index 000000000000..5dc4e96f94d1
 +void sun55i_enable_device_iommu(struct sunxi_iommu_dev *iommu, unsigned int master_id, bool flag);
 diff --git a/include/sunxi-iommu.h b/include/sunxi-iommu.h
 new file mode 100644
-index 000000000000..d3cf820e475b
+index 000000000000..111111111111
 --- /dev/null
 +++ b/include/sunxi-iommu.h
 @@ -0,0 +1,50 @@
@@ -2377,4 +2371,5 @@ index 000000000000..d3cf820e475b
 +#endif  /* __LINUX_SUNXI_IOMMU_H */
 \ No newline at end of file
 -- 
-Created with Armbian build tools https://github.com/armbian/build
+Armbian
+

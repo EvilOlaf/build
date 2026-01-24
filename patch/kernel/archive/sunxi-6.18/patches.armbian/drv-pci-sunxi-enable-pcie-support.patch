@@ -9,21 +9,19 @@ Signed-off-by: Marvin Wewer <mwewer37@proton.me>
  drivers/pci/Makefile                     |    1 +
  drivers/pci/pcie-sunxi/Kconfig           |   26 +
  drivers/pci/pcie-sunxi/Makefile          |    8 +
- drivers/pci/pcie-sunxi/pcie-sunxi-dma.c  |  270 ++
+ drivers/pci/pcie-sunxi/pcie-sunxi-dma.c  |  198 ++
  drivers/pci/pcie-sunxi/pcie-sunxi-dma.h  |  279 +++
- drivers/pci/pcie-sunxi/pcie-sunxi-plat.c | 1246 ++++++++++
- drivers/pci/pcie-sunxi/pcie-sunxi-rc.c   |  855 +++++++
- drivers/pci/pcie-sunxi/pcie-sunxi.h      |  397 +++
- include/sunxi-gpio.h                     | 188 +++++
- 10 files changed, 3268 insertions(+)
+ drivers/pci/pcie-sunxi/pcie-sunxi-plat.c | 1233 ++++++++++
+ drivers/pci/pcie-sunxi/pcie-sunxi-rc.c   |  864 +++++++
+ drivers/pci/pcie-sunxi/pcie-sunxi.h      |  398 +++
+ include/sunxi-gpio.h                     |  188 ++
+ 10 files changed, 3196 insertions(+)
 
 diff --git a/drivers/pci/Kconfig b/drivers/pci/Kconfig
-index f94f5d384362..d14567933640 100644
+index 111111111111..222222222222 100644
 --- a/drivers/pci/Kconfig
 +++ b/drivers/pci/Kconfig
-@@ -325,7 +325,8 @@ config VGA_ARB_MAX_GPUS
- source "drivers/pci/hotplug/Kconfig"
- source "drivers/pci/controller/Kconfig"
+@@ -321,5 +321,6 @@ source "drivers/pci/controller/Kconfig"
  source "drivers/pci/endpoint/Kconfig"
  source "drivers/pci/switch/Kconfig"
  source "drivers/pci/pwrctrl/Kconfig"
@@ -31,12 +29,10 @@ index f94f5d384362..d14567933640 100644
  
  endif
 diff --git a/drivers/pci/Makefile b/drivers/pci/Makefile
-index 67647f1880fb..599559452c09 100644
+index 111111111111..222222222222 100644
 --- a/drivers/pci/Makefile
 +++ b/drivers/pci/Makefile
-@@ -41,7 +41,8 @@ obj-$(CONFIG_PCIE_TPH)		+= tph.o
- # Endpoint library must be initialized before its users
- obj-$(CONFIG_PCI_ENDPOINT)	+= endpoint/
+@@ -43,5 +43,6 @@ obj-$(CONFIG_PCI_ENDPOINT)	+= endpoint/
  
  obj-y				+= controller/
  obj-y				+= switch/
@@ -45,7 +41,7 @@ index 67647f1880fb..599559452c09 100644
  subdir-ccflags-$(CONFIG_PCI_DEBUG) := -DDEBUG
 diff --git a/drivers/pci/pcie-sunxi/Kconfig b/drivers/pci/pcie-sunxi/Kconfig
 new file mode 100644
-index 000000000000..2cbddf969449
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/Kconfig
 @@ -0,0 +1,26 @@
@@ -77,7 +73,7 @@ index 000000000000..2cbddf969449
 +ccflags-y += -Idrivers/pci/pcie-sunxi/include
 diff --git a/drivers/pci/pcie-sunxi/Makefile b/drivers/pci/pcie-sunxi/Makefile
 new file mode 100644
-index 000000000000..e81d36d730d8
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/Makefile
 @@ -0,0 +1,8 @@
@@ -91,7 +87,7 @@ index 000000000000..e81d36d730d8
 +
 diff --git a/drivers/pci/pcie-sunxi/pcie-sunxi-dma.c b/drivers/pci/pcie-sunxi/pcie-sunxi-dma.c
 new file mode 100644
-index 000000000000..c2f9525f38ac
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-dma.c
 @@ -0,0 +1,198 @@
@@ -296,7 +292,7 @@ index 000000000000..c2f9525f38ac
 \ No newline at end of file
 diff --git a/drivers/pci/pcie-sunxi/pcie-sunxi-dma.h b/drivers/pci/pcie-sunxi/pcie-sunxi-dma.h
 new file mode 100644
-index 000000000000..9ede7fcb4212
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-dma.h
 @@ -0,0 +1,279 @@
@@ -582,7 +578,7 @@ index 000000000000..9ede7fcb4212
 \ No newline at end of file
 diff --git a/drivers/pci/pcie-sunxi/pcie-sunxi-plat.c b/drivers/pci/pcie-sunxi/pcie-sunxi-plat.c
 new file mode 100644
-index 000000000000..dccafdb1c2b7
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-plat.c
 @@ -0,0 +1,1233 @@
@@ -1822,7 +1818,7 @@ index 000000000000..dccafdb1c2b7
 \ No newline at end of file
 diff --git a/drivers/pci/pcie-sunxi/pcie-sunxi-rc.c b/drivers/pci/pcie-sunxi/pcie-sunxi-rc.c
 new file mode 100644
-index 000000000000..30a9d591544f
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi-rc.c
 @@ -0,0 +1,864 @@
@@ -2693,7 +2689,7 @@ index 000000000000..30a9d591544f
 \ No newline at end of file
 diff --git a/drivers/pci/pcie-sunxi/pcie-sunxi.h b/drivers/pci/pcie-sunxi/pcie-sunxi.h
 new file mode 100644
-index 000000000000..fee8379a9e59
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/pci/pcie-sunxi/pcie-sunxi.h
 @@ -0,0 +1,398 @@
@@ -3098,7 +3094,7 @@ index 000000000000..fee8379a9e59
 \ No newline at end of file
 diff --git a/include/sunxi-gpio.h b/include/sunxi-gpio.h
 new file mode 100644
-index 000000000000..6bb957eda5c5
+index 000000000000..111111111111
 --- /dev/null
 +++ b/include/sunxi-gpio.h
 @@ -0,0 +1,188 @@
@@ -3291,4 +3287,5 @@ index 000000000000..6bb957eda5c5
 +
 +#endif
 -- 
-Created with Armbian build tools https://github.com/armbian/build
+Armbian
+
