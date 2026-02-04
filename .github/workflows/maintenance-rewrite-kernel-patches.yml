@@ -22,20 +22,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  cleanup:
-    name: "Fix permissions from previous runs"
-    runs-on: rewrite
-    steps:
-      - name: Fix permissions
-        run: |
-          sudo chown -R runner:runner /home/runner/actions-runner/_work/build/build 2>/dev/null || true
-          sudo chmod -R u+w /home/runner/actions-runner/_work/build/build 2>/dev/null || true
-          sudo rm -rf /home/runner/actions-runner/_work/build/build/cache/git-bare 2>/dev/null || true
-
   rewrite-patches:
     name: "Rewrite ${{ inputs.board }} (${{ inputs.branch }})"
     runs-on: rewrite
-    needs: cleanup
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -110,3 +99,15 @@ jobs:
         if: steps.build_pr_body.outputs.pr_body_path != ''
         run: |
           rm -f "${{ steps.build_pr_body.outputs.pr_body_path }}" || true
+
+  cleanup:
+    name: "Fix permissions for next run"
+    runs-on: rewrite
+    needs: rewrite-patches
+    if: always()
+    steps:
+      - name: Fix permissions
+        run: |
+          sudo chown -R runner:runner /home/runner/actions-runner/_work/build/build 2>/dev/null || true
+          sudo chmod -R u+w /home/runner/actions-runner/_work/build/build 2>/dev/null || true
+          sudo rm -rf /home/runner/actions-runner/_work/build/build/cache/git-bare 2>/dev/null || true
