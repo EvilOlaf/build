@@ -36,7 +36,7 @@ jobs:
           BOARD: ${{ inputs.board }}
           BRANCH: ${{ inputs.branch }}
         run: |
-          ./compile.sh BOARD=$BOARD BRANCH=$BRANCH rewrite-kernel-patches
+          ./compile.sh BOARD=$BOARD BRANCH=$BRANCH rewrite-kernel-patches KERNEL_GIT=shallow
 
       - name: Check for changes
         id: check_changes
