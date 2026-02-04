@@ -31,6 +31,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fix permissions in cache directory
+        run: |
+          find cache -type d -exec chmod +w {} \; 2>/dev/null || true
+          find cache -type f -exec chmod +w {} \; 2>/dev/null || true
+          rm -rf cache/git-bare 2>/dev/null || true
+
       - name: Run rewrite-kernel-patches
         env:
           BOARD: ${{ inputs.board }}
