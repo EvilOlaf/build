@@ -39,12 +39,6 @@ jobs:
           restore-keys: |
             repo-cache-
 
-      - name: Fetch and checkout branch
-        run: |
-          set -euo pipefail
-          git fetch origin ${{ inputs.branch }} || true
-          git checkout ${{ inputs.branch }} || git checkout -b ${{ inputs.branch }} origin/${{ inputs.branch }}
-
       - name: Run rewrite-kernel-patches
         env:
           BOARD: ${{ inputs.board }}
