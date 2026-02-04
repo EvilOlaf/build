@@ -26,18 +26,10 @@ jobs:
     name: "Rewrite ${{ inputs.board }} (${{ inputs.branch }})"
     runs-on: rewrite
     steps:
-      - name: Checkout with caching
+      - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
-      - name: Restore cached repository
-        uses: actions/cache@v4
-        with:
-          path: .git
-          key: repo-cache-${{ inputs.branch }}
-          restore-keys: |
-            repo-cache-
 
       - name: Run rewrite-kernel-patches
         env:
