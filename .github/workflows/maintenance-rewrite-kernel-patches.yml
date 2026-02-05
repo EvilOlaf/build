@@ -28,8 +28,15 @@ jobs:
     steps:
       - name: Update existing repository
         run: |
+          cd "$GITHUB_WORKSPACE"
+
+          # Check if repo exists, if not clone it
+          if [ ! -d .git ]; then
+            git clone --filter=blob:none "https://github.com/${{ github.repository }}" .
+          fi
+
           # Reset any local changes to avoid conflicts
-          git reset --hard HEAD
+          git reset --hard HEAD 2>/dev/null || true
           git clean -fd
           # Pull latest changes from default branch
           git fetch origin
