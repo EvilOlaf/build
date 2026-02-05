@@ -26,11 +26,15 @@ jobs:
     name: "Rewrite ${{ inputs.board }} (${{ inputs.branch }})"
     runs-on: rewrite
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          clean: false
+      - name: Update existing repository
+        run: |
+          # Reset any local changes to avoid conflicts
+          git reset --hard HEAD
+          git clean -fd
+          # Pull latest changes from default branch
+          git fetch origin
+          git checkout ${{ github.ref_name }}
+          git pull origin ${{ github.ref_name }}
 
       - name: Run rewrite-kernel-patches
         env:
