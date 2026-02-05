@@ -28,13 +28,12 @@ jobs:
     steps:
       - name: Update existing repository
         run: |
-          cd "$GITHUB_WORKSPACE"
 
           # Check if repo exists, if not clone it
-          if [ ! -d .git ]; then
-            git clone --filter=blob:none "https://github.com/${{ github.repository }}" .
+          if [ ! -d build/.git ]; then
+            git clone --filter=blob:none "https://github.com/${{ github.repository }}" build
           fi
-
+          cd build
           # Reset any local changes to avoid conflicts
           git reset --hard HEAD 2>/dev/null || true
           git clean -fd
