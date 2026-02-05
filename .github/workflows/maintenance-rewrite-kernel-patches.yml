@@ -31,7 +31,7 @@ jobs:
 
           # Check if repo exists, if not clone it
           if [ ! -d build/.git ]; then
-            git clone --filter=blob:none "https://github.com/${{ github.repository }}" build
+            git clone --depth=1 --filter=blob:none "https://github.com/${{ github.repository }}" build
           fi
           cd build
           # Reset any local changes to avoid conflicts
