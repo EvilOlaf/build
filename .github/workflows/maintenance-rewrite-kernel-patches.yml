@@ -28,19 +28,17 @@ jobs:
     steps:
       - name: Update existing repository
         run: |
-
-          # Check if repo exists, if not clone it
-          if [ ! -d build/.git ]; then
-            git clone --depth=1 --filter=blob:none "https://github.com/${{ github.repository }}" build
+          # Clone or update the repository
+          if [ -d .git ]; then
+            # Repo exists: update it
+            git fetch origin
+            git checkout ${{ github.ref_name }}
+            git pull origin ${{ github.ref_name }}
+          else
+            # No repo: clone it
+            git clone --filter=blob:none "https://github.com/${{ github.repository }}" .
+            git checkout ${{ github.ref_name }}
           fi
-          cd build
-          # Reset any local changes to avoid conflicts
-          git reset --hard HEAD 2>/dev/null || true
-          git clean -fd
-          # Pull latest changes from default branch
-          git fetch origin
-          git checkout ${{ github.ref_name }}
-          git pull origin ${{ github.ref_name }}
 
       - name: Run rewrite-kernel-patches
         env:
@@ -112,6 +110,12 @@ jobs:
         if: steps.build_pr_body.outputs.pr_body_path != ''
         run: |
           rm -f "${{ steps.build_pr_body.outputs.pr_body_path }}" || true
+
+      - name: Reset working directory for next run
+        if: always()
+        run: |
+          git reset --hard HEAD
+          git clean -fd
 
 #  cleanup:
 #    name: "Fix permissions for next run"
