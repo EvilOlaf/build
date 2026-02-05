@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          clean: false
 
       - name: Run rewrite-kernel-patches
         env:
