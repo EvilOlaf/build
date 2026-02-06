@@ -52,6 +52,7 @@ jobs:
         env:
           BOARD: ${{ inputs.board }}
           BRANCH: ${{ inputs.branch }}
+          WHATTODO: ${{ inputs.whattodo }}
         run: |
           ./compile.sh BOARD=$BOARD BRANCH=$BRANCH $WHATTODO KERNEL_GIT=shallow
 
