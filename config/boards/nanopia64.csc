@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 1GB RAM SoC GBE
+INTRODUCED=2020
 BOARD_NAME="NanoPi A64"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun50iw1"

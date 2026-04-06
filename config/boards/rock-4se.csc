@@ -1,4 +1,5 @@
 # Rockchip RK3399T hexa core 1-4GB SoC GBe eMMC USB3 WiFi/BT PoE
+INTRODUCED=2023
 BOARD_NAME="Rock 4SE"
 BOARD_VENDOR="radxa"
 BOARDFAMILY="rockchip64"

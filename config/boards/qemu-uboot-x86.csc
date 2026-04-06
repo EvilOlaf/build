@@ -1,4 +1,5 @@
 # x86_64 via qemu + u-boot firmware, for q35 machine type
+INTRODUCED=2022
 declare -g UEFI_GRUB="skip" # Skip GRUB for this board
 declare -g BOARD_NAME="uefi-x86"
 declare -g BOARD_VENDOR="generic"

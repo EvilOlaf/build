@@ -1,4 +1,5 @@
 # Allwinner H6 quad core 1-3GB RAM SoC GBE eMMC
+INTRODUCED=2018
 BOARD_NAME="Pine H64 model B"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="sun50iw6"

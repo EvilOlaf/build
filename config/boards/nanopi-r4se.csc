@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 4GB RAM SoC 2 x GBE 32GB eMMC USB3 USB-C
+INTRODUCED=2023
 BOARD_NAME="NanoPi R4SE"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="rockchip64" # Used to be rk3399

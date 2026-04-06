@@ -1,4 +1,5 @@
 # Rockchip RK3506B triple core 512MB SoC 1x100MBe WIFI/BT EMMC USB2
+INTRODUCED=2025
 BOARD_NAME="Luckfox Lyra Ultra W"
 BOARD_VENDOR="luckfox"
 BOARDFAMILY="rockchip"

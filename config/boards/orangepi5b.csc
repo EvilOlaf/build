@@ -1,4 +1,5 @@
 # Rockchip RK3588S octa core 4/8/16GB RAM SoC eMMC USB3 USB-C GbE
+INTRODUCED=2025
 BOARD_NAME="Orange Pi 5B"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="rockchip-rk3588"

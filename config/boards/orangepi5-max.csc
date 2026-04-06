@@ -1,4 +1,5 @@
 # Rockchip RK3588 octa core 4/8/16GB RAM SoC SPI NVMe 2x USB2 2x USB3 2x HDMI
+INTRODUCED=2024
 BOARD_NAME="Orange Pi 5 Max"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="rockchip-rk3588"

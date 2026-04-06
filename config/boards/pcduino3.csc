@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1Gb SoC
+INTRODUCED=2019
 BOARD_NAME="pcDuino 3"
 BOARD_VENDOR="linksprite"
 BOARDFAMILY="sun7i"

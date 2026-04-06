@@ -1,4 +1,5 @@
 # Allwinner H618 quad core 1GB/2GB/4GB RAM
+INTRODUCED=2024
 BOARD_NAME="Longan Pi 3H"
 BOARD_VENDOR="mangopi"
 BOARDFAMILY="sun50iw9"

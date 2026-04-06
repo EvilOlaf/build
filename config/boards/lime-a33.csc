@@ -1,4 +1,5 @@
 # Allwinner A33 quad core 1Gb SoC
+INTRODUCED=2016
 BOARD_NAME="A33 OLinuXino"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun8i"

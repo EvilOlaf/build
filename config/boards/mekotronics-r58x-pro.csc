@@ -1,4 +1,5 @@
 # Rockchip RK3588 SoC octa core 4-16GB SoC 2x1GBe eMMC USB3 NVMe SATA WiFi/BT HDMI DP HDMI-In RS232 RS485 LCD RotaryEncoder
+INTRODUCED=2023
 declare -g BOARD_NAME="Mekotronics R58X-Pro"
 declare -g BOARD_VENDOR="mekotronics"
 declare -g BOARDFAMILY="rockchip-rk3588"

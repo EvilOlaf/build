@@ -1,4 +1,5 @@
 # Rockchip RK3588 SoC octa core 8-64GB SoC 2*2.5GBe eMMC USB3 NvME WIFI
+INTRODUCED=2023
 BOARD_NAME="ArmSoM Sige7"
 BOARD_VENDOR="armsom"
 BOARDFAMILY="rockchip-rk3588"

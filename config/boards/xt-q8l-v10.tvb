@@ -1,4 +1,5 @@
 # Rockchip RK3288 TVBox quad core 2GB eMMC SoC GBE WiFi
+INTRODUCED=2018
 BOARD_NAME="XT Q8L V10"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip"

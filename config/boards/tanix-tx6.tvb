@@ -1,4 +1,5 @@
 # Allwinner H6 quad core 2/4GB SoC WiFi eMMC
+INTRODUCED=2023
 BOARD_NAME="Tanix TX6"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun50iw6"

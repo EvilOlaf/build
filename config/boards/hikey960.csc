@@ -1,4 +1,5 @@
 # Kirin 960 octa core 3/4GB SoC eMMC USB3 WiFi/BT
+INTRODUCED=2023
 declare -g BOARD_NAME="HiKey 960"
 declare -g BOARD_VENDOR="huawei"
 declare -g BOARDFAMILY="uefi-arm64"

@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 4GB DDR4 SoC eMMC GBE USB3
+INTRODUCED=2019
 BOARD_NAME="Renegade Elite"
 BOARD_VENDOR="firefly"
 BOARDFAMILY="rockchip64" # Used to be rk3399

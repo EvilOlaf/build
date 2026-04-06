@@ -1,4 +1,5 @@
 # Allwinner H2+ quad core 512MB SoC Wi-Fi/BT
+INTRODUCED=2018
 BOARD_NAME="Banana Pi M2 Zero"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="sun8i"

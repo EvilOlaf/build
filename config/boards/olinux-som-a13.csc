@@ -1,4 +1,5 @@
 # Allwinner A13 single core 512Mb SoM
+INTRODUCED=2016
 BOARD_NAME="Olimex A13 SOM"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun5i"

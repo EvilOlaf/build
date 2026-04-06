@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 1GB/2GB RAM WiFi eMMC
+INTRODUCED=2016
 BOARD_NAME="Orange Pi+"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun8i"

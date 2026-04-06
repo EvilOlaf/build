@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 2GB-4GB 5GBE eMMC SATA USB3 Mini PCIE M.2 key-e
+INTRODUCED=2021
 BOARD_NAME="Banana Pi R2 Pro"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="rockchip64"

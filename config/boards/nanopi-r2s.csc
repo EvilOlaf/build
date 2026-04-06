@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB 2 x GBE USB2
+INTRODUCED=2020
 BOARD_NAME="Nanopi R2S"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="rockchip64"

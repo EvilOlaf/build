@@ -1,4 +1,5 @@
 # Allwinner Cortex-A55 octa core 2/4GB RAM SoC USB3 USB-C 2x GbE LCD
+INTRODUCED=2024
 BOARD_NAME="Avaota A1"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun55iw3-syterkit"

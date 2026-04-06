@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 2GB RAM SoC GBE
+INTRODUCED=2016
 BOARD_NAME="SoPine A64"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="sun50iw1"

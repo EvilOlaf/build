@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 2GB RAM SoC WiFi/BT eMMC GBE
+INTRODUCED=2017
 BOARD_NAME="Banana Pi M64"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="sun50iw1"

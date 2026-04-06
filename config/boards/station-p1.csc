@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 4GB LPDDR4 SoC eMMC GBE USB3
+INTRODUCED=2019
 BOARD_NAME="Station P1"
 BOARD_VENDOR="firefly"
 BOARDFAMILY="rockchip64"

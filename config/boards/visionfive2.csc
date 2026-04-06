@@ -1,4 +1,5 @@
 # RISC-V StarFive Visionfive V2
+INTRODUCED=2022
 BOARD_NAME="VisionFive2"
 BOARD_VENDOR="star-five"
 BOARDFAMILY="starfive2"

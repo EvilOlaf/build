@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 1-4GB SoC GBe eMMC USB3
+INTRODUCED=2019
 BOARD_NAME="Rockpi 4A"
 BOARD_VENDOR="radxa"
 BOARDFAMILY="rockchip64"

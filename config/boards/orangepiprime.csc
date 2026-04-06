@@ -1,4 +1,5 @@
 # Allwinner H5 quad core 2GB RAM Wi-Fi/BT
+INTRODUCED=2017
 BOARD_NAME="Orange Pi Prime"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw2"

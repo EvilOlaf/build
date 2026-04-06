@@ -1,4 +1,5 @@
 # Rockchip RK3588 SoC octa core 4-16GB SoC 1GBe eMMC USB3 SATA WiFi/BT
+INTRODUCED=2023
 declare -g BOARD_NAME="Mekotronics R58 MiniPC"
 declare -g BOARD_VENDOR="mekotronics"
 declare -g BOARDFAMILY="rockchip-rk3588"

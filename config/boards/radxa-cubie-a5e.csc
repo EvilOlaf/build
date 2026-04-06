@@ -1,4 +1,5 @@
 # Allwinner Cortex-A55 octa core 1/2/4GB RAM SoC
+INTRODUCED=2025
 BOARD_NAME="radxa cubie a5e"
 BOARD_VENDOR="radxa"
 BOARDFAMILY="sun55iw3"

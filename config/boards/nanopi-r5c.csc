@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 4GB RAM eMMC USB3 2x 2.5GbE
+INTRODUCED=2023
 BOARD_NAME="NanoPi R5C"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="rockchip64"

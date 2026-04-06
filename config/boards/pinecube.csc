@@ -1,4 +1,5 @@
 # Sochip(Allwinner) S3 integrated 128M RAM SoC
+INTRODUCED=2020
 BOARD_NAME="Pine Cube"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="sun8i-v3s"

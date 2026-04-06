@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1Gb SoC
+INTRODUCED=2017
 BOARD_NAME="MK808C"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun7i"

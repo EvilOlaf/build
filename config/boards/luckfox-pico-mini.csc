@@ -1,4 +1,5 @@
 # Rockchip RV1103 single core 64MB SoC 1x100MBe NAND USB2
+INTRODUCED=2025
 BOARD_NAME="Luckfox Pico Mini"
 BOARD_VENDOR="luckfox"
 BOARDFAMILY="rockchip-rv1106"

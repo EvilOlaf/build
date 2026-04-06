@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 2GB SoC GBe eMMC USB3 WiFi/BT
+INTRODUCED=2021
 BOARD_NAME="Tinker Board 2"
 BOARD_VENDOR="asus"
 BOARDFAMILY="rockchip64"

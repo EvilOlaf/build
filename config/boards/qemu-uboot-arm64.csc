@@ -1,4 +1,5 @@
 # qemu via uboot on arm64, for "virt" qemu machine type
+INTRODUCED=2022
 declare -g BOARD_NAME="uefi-arm64"
 declare -g BOARD_VENDOR="generic"
 declare -g BOARDFAMILY="uefi-arm64"

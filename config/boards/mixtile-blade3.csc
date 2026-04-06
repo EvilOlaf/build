@@ -1,4 +1,5 @@
 # Rockchip RK3588 SoC octa core 16GB 4x PCIe Gen3 HDMI USB3 DP HDMIrx eMMC SD PD Mini-PCIe
+INTRODUCED=2023
 declare -g BOARD_NAME="Mixtile Blade 3"
 declare -g BOARD_VENDOR="mixtile"
 declare -g BOARDFAMILY="rockchip-rk3588"

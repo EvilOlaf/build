@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 2GB RAM SoC WIFI/BT eMMC
+INTRODUCED=2024
 BOARD_NAME="RK3328-Heltec"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip64"

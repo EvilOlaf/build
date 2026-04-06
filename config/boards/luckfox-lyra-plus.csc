@@ -1,4 +1,5 @@
 # Rockchip RK3506G2 triple core 128MB SoC 1x100MBe NAND SD USB2
+INTRODUCED=2025
 BOARD_NAME="Luckfox Lyra Plus"
 BOARD_VENDOR="luckfox"
 BOARDFAMILY="rockchip"

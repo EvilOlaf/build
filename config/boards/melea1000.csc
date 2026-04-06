@@ -1,4 +1,5 @@
 # Allwinner A10 single core 1Gb SoC
+INTRODUCED=2018
 BOARD_NAME="Mele A1000"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun4i"

@@ -1,4 +1,5 @@
 # Allwinner R40 quad core 2Gb SoC Wifi eMMC
+INTRODUCED=2017
 BOARD_NAME="Banana Pi M2 Ultra"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="sun8i"

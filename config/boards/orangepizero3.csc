@@ -1,4 +1,5 @@
 # Allwinner H618 quad core 1/2/4GB RAM SoC WiFi SPI USB-C
+INTRODUCED=2023
 BOARD_NAME="Orange Pi Zero3"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw9"

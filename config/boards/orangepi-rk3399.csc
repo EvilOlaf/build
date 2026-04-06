@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 2G/4GB RAM SoC GBE eMMC mPCI USB3 WiFi/BT
+INTRODUCED=2018
 BOARD_NAME="Orange Pi RK3399"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="rockchip64" # Used to be rk3399

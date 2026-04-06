@@ -1,4 +1,5 @@
 # Freescale / NXP iMx dual/quad core 1-2GB Gbe Wifi
+INTRODUCED=2016
 BOARD_NAME="Udoo"
 BOARD_VENDOR="seco"
 BOARDFAMILY="imx6"

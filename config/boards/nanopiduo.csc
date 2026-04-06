@@ -1,4 +1,5 @@
 # Allwinner H2+ quad core 256/512MB RAM SoC headless WiFi
+INTRODUCED=2016
 BOARD_NAME="NanoPi Duo"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun8i"

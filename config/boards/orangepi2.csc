@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 1GB RAM
+INTRODUCED=2016
 BOARD_NAME="Orange Pi 2"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun8i"

@@ -1,4 +1,5 @@
 # Rockchip RK3566 quad core 4GB-8GB GBE PCIe USB3
+INTRODUCED=2022
 BOARD_NAME="Pine Quartz64 B"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="rockchip64"

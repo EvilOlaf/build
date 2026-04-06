@@ -1,4 +1,5 @@
 # Allwinner H618 quad core 1/2/4GB RAM SoC WiFi SPI USB-C
+INTRODUCED=2025
 BOARD_NAME="KickPi K2B"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun50iw9-bpi"

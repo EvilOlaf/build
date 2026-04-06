@@ -1,4 +1,5 @@
 # Allwinner H618 quad core 1GB 2GB 4GB RAM SoC WiFi USB-C emmc
+INTRODUCED=2024
 BOARD_NAME="CherryBa M1"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun50iw9"

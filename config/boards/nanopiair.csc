@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 512MB RAM SoC headless WiFi/BT eMMC
+INTRODUCED=2016
 BOARD_NAME="NanoPi Air"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun8i"

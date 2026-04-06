@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1Gb SoC eMMC 1xSATA
+INTRODUCED=2016
 BOARD_NAME="A20 OLinuXino Micro"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun7i"

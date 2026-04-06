@@ -1,4 +1,5 @@
 # Rockchip RK3588 SoC octa core Jetson SoM
+INTRODUCED=2025
 declare -g BOARD_NAME="Mixtile Core3588E"
 declare -g BOARD_VENDOR="mixtile"
 declare -g BOARDFAMILY="rockchip-rk3588"

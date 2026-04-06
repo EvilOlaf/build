@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 2GB RAM SoC 1xSATA GBE WiFi/BT
+INTRODUCED=2016
 BOARD_NAME="Cubietruck"
 BOARD_VENDOR="cubietech"
 BOARDFAMILY="sun7i"

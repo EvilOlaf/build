@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB-4GB GBE eMMC USB3 WiFi
+INTRODUCED=2020
 BOARD_NAME="Station M1"
 BOARD_VENDOR="firefly"
 BOARDFAMILY="rockchip64"

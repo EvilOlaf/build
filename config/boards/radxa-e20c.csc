@@ -1,4 +1,5 @@
 # Rockchip RK3528 quad core 1-2GB SoC 2xGBe 8GB eMMC
+INTRODUCED=2024
 BOARD_NAME="Radxa E20C"
 BOARD_VENDOR="radxa"
 BOARDFAMILY="rk35xx"

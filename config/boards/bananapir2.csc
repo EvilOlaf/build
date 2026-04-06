@@ -1,4 +1,5 @@
 # Mediatek MT7623n quad core 2GB mPci 2xSATA 2xUSB3.0 5xGBE
+INTRODUCED=2018
 BOARD_NAME="Banana Pi R2"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="mt7623"

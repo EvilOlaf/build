@@ -1,4 +1,5 @@
 # Dual-core Cortex-A35 + Cortex-M4, 512MB DDR
+INTRODUCED=2026
 BOARD_NAME="NuMaker IoT MA35D16F90"
 BOARD_VENDOR="nuvoton"
 BOARDFAMILY="nuvoton-ma35d1"

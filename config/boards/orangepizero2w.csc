@@ -1,4 +1,5 @@
 # Allwinner H618 quad core 1GB/1.5GB/2GB/4GB RAM
+INTRODUCED=2024
 BOARD_NAME="Orange Pi Zero2W"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw9"

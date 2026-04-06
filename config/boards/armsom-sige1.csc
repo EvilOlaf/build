@@ -1,4 +1,5 @@
 # Rockchip RK3528 quad core 1-8GB SoC GBe eMMC USB3 Wifi Bt
+INTRODUCED=2023
 BOARD_NAME="ArmSoM Sige1"
 BOARD_VENDOR="armsom"
 BOARDFAMILY="rk35xx"

@@ -1,4 +1,5 @@
 # Retroid Pocket RP5 Configuration
+INTRODUCED=2024
 declare -g BOARD_NAME="Retroid Pocket RP5"
 declare -g BOARD_VENDOR="retroid"
 declare -g BOARD_MAINTAINER=""

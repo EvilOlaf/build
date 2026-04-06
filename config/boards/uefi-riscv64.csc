@@ -1,4 +1,5 @@
 # riscv64 via UEFI for all UEFI-enabled boards
+INTRODUCED=2022
 declare -g BOARD_NAME="UEFI riscv64"
 declare -g BOARD_VENDOR="generic"
 declare -g BOARDFAMILY="uefi-riscv64"

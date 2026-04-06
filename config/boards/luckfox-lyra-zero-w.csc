@@ -1,4 +1,5 @@
 # Rockchip RK3506B triple core 512MB SoC WIFI/BT NAND SD USB2
+INTRODUCED=2025
 BOARD_NAME="Luckfox Lyra Zero W"
 BOARD_VENDOR="luckfox"
 BOARDFAMILY="rockchip"

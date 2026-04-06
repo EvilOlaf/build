@@ -1,4 +1,5 @@
 # Rockchip RK3399Pro hexa core NPU 4-8GB SoC GBe eMMC USB3 PCIe
+INTRODUCED=2021
 BOARD_NAME="Rockpi N10"
 BOARD_VENDOR="radxa"
 BOARDFAMILY="rockchip64"

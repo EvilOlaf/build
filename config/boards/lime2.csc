@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1GB RAM SoC eMMC GBE 1xSATA
+INTRODUCED=2016
 BOARD_NAME="A20 OLinuXino Lime 2"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun7i"

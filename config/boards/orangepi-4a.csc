@@ -1,4 +1,5 @@
 # Allwinner Cortex-A55 octa-core 2/4GB SoC
+INTRODUCED=2026
 BOARD_NAME="Orange Pi 4A"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun55iw3"

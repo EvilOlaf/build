@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 2G/4GB SoC GBe eMMC USB3 WiFi
+INTRODUCED=2018
 BOARD_NAME="RockPro 64"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="rockchip64"

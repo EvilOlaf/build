@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 512MB RAM GBE SoC headless
+INTRODUCED=2019
 BOARD_NAME="ZeroPi"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun8i"

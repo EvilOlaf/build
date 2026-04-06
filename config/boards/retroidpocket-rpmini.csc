@@ -1,4 +1,5 @@
 # Retroid Pocket RPMini Configuration
+INTRODUCED=2024
 declare -g BOARD_NAME="Retroid Pocket RPMini"
 declare -g BOARD_VENDOR="retroid"
 declare -g BOARD_MAINTAINER=""

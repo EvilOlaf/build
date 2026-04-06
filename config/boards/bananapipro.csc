@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1GB RAM SoC 1xSATA GBE Wifi
+INTRODUCED=2019
 BOARD_NAME="Banana Pi Pro"
 BOARD_VENDOR="sinovoip"
 BOARDFAMILY="sun7i"

@@ -1,4 +1,5 @@
 # Rockchip RK3566 quad core 4GB RAM SoC WIFI/BT eMMC USB2
+INTRODUCED=2023
 BOARD_NAME="panther-x2"
 BOARD_VENDOR="panther"
 BOARDFAMILY="rk35xx"

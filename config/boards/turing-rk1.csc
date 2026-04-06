@@ -1,4 +1,5 @@
 # Rockchip RK3588 octa core 8/16/32GB RAM SoM GBE NVMe eMMC USB3
+INTRODUCED=2024
 BOARD_NAME="Turing RK1"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip-rk3588"

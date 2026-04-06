@@ -1,4 +1,5 @@
 # Allwinner H6 quad core 2GB RAM SoC GBE USB3
+INTRODUCED=2018
 BOARD_NAME="Orange Pi 3"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw6"

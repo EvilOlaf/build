@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 1GB RAM SoC GBE for 3D printers
+INTRODUCED=2020
 BOARD_NAME="Iagent Recore"
 BOARD_VENDOR="recore"
 BOARDFAMILY="sun50iw1"

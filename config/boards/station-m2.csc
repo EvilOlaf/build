@@ -1,4 +1,5 @@
 # Rockchip RK3566 quad core 2GB-8GB GBE eMMC NVMe USB3 WiFi
+INTRODUCED=2021
 BOARD_NAME="Station M2"
 BOARD_VENDOR="firefly"
 BOARDFAMILY="rk35xx"

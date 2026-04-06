@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 256/512MB RAM SoC headless
+INTRODUCED=2016
 BOARD_NAME="NanoPi Neo"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun8i"

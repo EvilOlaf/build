@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 512MB RAM WiFi
+INTRODUCED=2016
 BOARD_NAME="Orange Pi Lite"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun8i"

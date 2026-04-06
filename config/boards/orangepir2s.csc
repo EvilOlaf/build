@@ -1,4 +1,5 @@
 # Ky X1 octa core RISC-V SoC 2GB/4GB/8GB RAM, 2xGbit+2x2.5 Gbit Eth
+INTRODUCED=2026
 BOARD_NAME="Orange Pi R2S"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="spacemit"

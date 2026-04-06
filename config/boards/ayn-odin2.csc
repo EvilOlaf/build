@@ -1,4 +1,5 @@
 # Qualcomm SM8550 octa core 8GB/12GB/16GB RAM SoC eMMC USB-C WiFi/BT
+INTRODUCED=2024
 declare -g BOARD_NAME="Ayn Odin2"
 declare -g BOARD_VENDOR="ayntec"
 declare -g BOARD_MAINTAINER="FantasyGmm Squishy123 kasimling"

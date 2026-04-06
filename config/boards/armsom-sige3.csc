@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 1-8GB SoC GBe eMMC USB3
+INTRODUCED=2024
 BOARD_NAME="ArmSom Sige3"
 BOARD_VENDOR="armsom"
 BOARDFAMILY="rk35xx"

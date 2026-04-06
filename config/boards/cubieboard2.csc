@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 1Gb SoC 1xSATA
+INTRODUCED=2016
 BOARD_NAME="Cubieboard 2"
 BOARD_VENDOR="cubietech"
 BOARDFAMILY="sun7i"

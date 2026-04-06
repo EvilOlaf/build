@@ -1,4 +1,5 @@
 # Allwinner H5 quad core 256/512MB RAM SoC headless GBE
+INTRODUCED=2017
 BOARD_NAME="NanoPi Neo 2"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="sun50iw2"

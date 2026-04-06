@@ -1,4 +1,5 @@
 # Allwinner H313 TVBox with 2GB of RAM and EMMC
+INTRODUCED=2024
 BOARD_NAME="X96Q TV Box"
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun50iw9"

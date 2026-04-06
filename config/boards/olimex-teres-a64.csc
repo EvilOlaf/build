@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 2GB SoC Wi-Fi/BT Revision C
+INTRODUCED=2023
 BOARD_NAME="OLIMEX Teres A64"
 BOARD_VENDOR="olimex"
 

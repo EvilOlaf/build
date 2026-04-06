@@ -1,4 +1,5 @@
 # Allwinner H3 quad core 1GB SoC WiFi eMMC
+INTRODUCED=2016
 BOARD_NAME="Beelink X2"
 BOARD_VENDOR="beelink"
 BOARDFAMILY="sun8i"

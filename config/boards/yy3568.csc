@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 1-8GB SoC 2x1GBe eMMC USB3
+INTRODUCED=2025
 BOARD_NAME="YouYeeToo YY3568"
 BOARD_VENDOR="youyeetoo"
 BOARDFAMILY="rk35xx"

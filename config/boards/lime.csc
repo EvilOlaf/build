@@ -1,4 +1,5 @@
 # Allwinner A20 dual core 512Mb SoC
+INTRODUCED=2016
 BOARD_NAME="A20 OLinuXino Lime"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun7i"

@@ -1,4 +1,5 @@
 # Amlogic S912 octa core 3Gb RAM SoC eMMC chinese clone
+INTRODUCED=2024
 BOARD_NAME="T95Z Plus"                          #  (a q201 Chinese clone with internal amlogic ethernet 1gbit, complete with a chunk of metal inside to delay thermal throttling)
 BOARD_VENDOR="amlogic"
 BOOT_FDT_FILE="amlogic/meson-gxm-t95z-plus.dtb" # From chewitt's patches

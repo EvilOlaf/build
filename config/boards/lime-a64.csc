@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 1GB RAM SoC GBE eMMC Wi-Fi/BT
+INTRODUCED=2017
 BOARD_NAME="A64 OLinuXino"
 BOARD_VENDOR="olimex"
 BOARDFAMILY="sun50iw1"

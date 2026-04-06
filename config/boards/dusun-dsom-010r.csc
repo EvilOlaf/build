@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB-4GB 1xFE USB3 [WiFi]
+INTRODUCED=2025
 BOARD_NAME="Dusun DSOM 010R SoM"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip64"

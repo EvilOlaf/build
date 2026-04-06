@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB 2 x GBE USB2 SPI
+INTRODUCED=2020
 BOARD_NAME="Orange Pi R1 Plus LTS"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="rockchip64"

@@ -1,4 +1,5 @@
 # Amlogic S805 quad core 1GB RAM SoC GBE
+INTRODUCED=2016
 BOARD_NAME="OneCloud"
 BOARD_VENDOR="amlogic"
 BOARDFAMILY="meson8b"

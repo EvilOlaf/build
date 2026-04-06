@@ -1,4 +1,5 @@
 # Allwinner H6 quad core 1GB RAM SoC WiFi USB3
+INTRODUCED=2018
 BOARD_NAME="Orange Pi Lite 2"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw6"

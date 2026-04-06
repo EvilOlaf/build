@@ -1,4 +1,5 @@
 # Rockchip RK3588S octa core 4/8/16GB RAM SoC GBE USB3 WiFi/BT NVMe eMMC
+INTRODUCED=2023
 BOARD_NAME="Orange Pi 5 Pro"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="rockchip-rk3588"

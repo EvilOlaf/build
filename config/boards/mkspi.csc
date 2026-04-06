@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB RAM, 1x100M Ethernet, eMMC, USB3, USB2
+INTRODUCED=2024
 # Supported boards:
 # - MKS-PI - https://github.com/makerbase-mks/MKS-PI
 # - MKS-SKIPR - https://github.com/makerbase-mks/MKS-SKIPR

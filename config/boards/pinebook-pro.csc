@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 2G/4GB SoC Laptop eMMC USB3 WiFi
+INTRODUCED=2019
 BOARD_NAME="Pinebook Pro"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="rockchip64"

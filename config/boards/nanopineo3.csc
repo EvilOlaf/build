@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1/2GB GBE USB3 USB-C
+INTRODUCED=2020
 BOARD_NAME="NanoPi Neo 3"
 BOARD_VENDOR="friendlyelec"
 BOARDFAMILY="rockchip64"

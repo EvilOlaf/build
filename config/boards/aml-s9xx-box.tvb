@@ -1,4 +1,5 @@
 # Amlogic S9xx based TVBox
+INTRODUCED=2017
 BOARD_NAME="aml-s9xx-box"
 BOARDFAMILY="meson-gxl"
 BOARD_VENDOR="amlogic"

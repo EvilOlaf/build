@@ -1,4 +1,5 @@
 # Allwinner H6 quad core 1GB RAM SoC GBE
+INTRODUCED=2018
 BOARD_NAME="Orange Pi One+"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun50iw6"

@@ -1,4 +1,5 @@
 # Allwinner H2+ quad core 256MB/512MB RAM SoC WiFi SPI 2xETH
+INTRODUCED=2016
 BOARD_NAME="Orange Pi R1"
 BOARD_VENDOR="xunlong"
 BOARDFAMILY="sun8i"

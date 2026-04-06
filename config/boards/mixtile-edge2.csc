@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 4GB-8GB GBE PCIe USB3 SATA NVMe
+INTRODUCED=2024
 BOARD_NAME="Mixtile Edge 2"
 BOARD_VENDOR="mixtile"
 BOARDFAMILY="rk35xx"

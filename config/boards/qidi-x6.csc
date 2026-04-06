@@ -1,4 +1,5 @@
 # Rockchip RK3328 quad core 1GB RAM, 1x100M Ethernet, eMMC, USB3, USB2
+INTRODUCED=2026
 # Supported boards:
 # - QIDI X-6, X-7 (made by Makerbase for 'X-Plus 3', 'X-Smart 3', 'X-Max 3', 'Plus 4' and 'Q1' 3D printers)
 #

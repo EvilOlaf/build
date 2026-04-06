@@ -1,4 +1,5 @@
 # Allwinner R8(A13) single core 512Mb (NextThing C.H.I.P.) with MMC2 breakout
+INTRODUCED=2024
 BOARD_NAME="NextThing C.H.I.P."
 BOARD_VENDOR="allwinner"
 BOARDFAMILY="sun5i"

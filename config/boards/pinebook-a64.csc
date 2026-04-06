@@ -1,4 +1,5 @@
 # Allwinner A64 quad core 2GB RAM SoC WiFi/BT
+INTRODUCED=2016
 BOARD_NAME="Pinebook A64"
 BOARD_VENDOR="pine64"
 BOARDFAMILY="sun50iw1"

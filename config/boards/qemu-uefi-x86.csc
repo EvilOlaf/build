@@ -1,4 +1,5 @@
 # x86_64 via UEFI/BIOS for generic virtual board
+INTRODUCED=2024
 #
 # Usage: Use this board to run armbian on a
 #        virtualized environment (eg: QEMU/KVM)

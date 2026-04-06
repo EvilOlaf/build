@@ -1,4 +1,5 @@
 # Rockchip RK3528 quad core 1-8GB SoC GBe eMMC PCIE Wifi Bt
+INTRODUCED=2023
 BOARD_NAME="Mangopi M28K"
 BOARD_VENDOR="mangopi"
 BOARDFAMILY="rk35xx"

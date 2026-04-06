@@ -1,4 +1,5 @@
 # Rockchip RK3399 hexa core 4GB SoC eMMC GBE USB3 WiFi
+INTRODUCED=2018
 BOARD_NAME="Fine3399"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip64"

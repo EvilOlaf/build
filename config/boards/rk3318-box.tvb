@@ -1,4 +1,5 @@
 # Rockchip RK3318 quad core 2/16Gb 1xETH USB3 WiFi
+INTRODUCED=2022
 BOARD_NAME="RK3318 Box"
 BOARD_VENDOR="rockchip"
 BOARDFAMILY="rockchip64"

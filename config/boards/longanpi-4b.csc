@@ -1,4 +1,5 @@
 # Allwinner Cortex-A55 octa core 2/4GB RAM SoC USB3 PCIE USB-C 2x GbE
+INTRODUCED=2024
 BOARD_NAME="LonganPi 4B"
 BOARD_VENDOR="mangopi"
 BOARDFAMILY="sun55iw3-syterkit"

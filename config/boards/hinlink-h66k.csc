@@ -1,4 +1,5 @@
 # Rockchip RK3568 quad core 1-8GB SoC 2.5GBe eMMC USB3
+INTRODUCED=2024
 BOARD_NAME="Hinlink H66K"
 BOARD_VENDOR="hinlink"
 BOARDFAMILY="rk35xx"

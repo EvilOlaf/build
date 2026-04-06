@@ -1,4 +1,5 @@
 # Rockchip RK3576 octa core 4-16GB 2x GbE eMMC HDMI WiFi USB3 3x M.2 (B/E/M-Key)
+INTRODUCED=2026
 
 BOARD_NAME="Photonicat2"
 BOARD_VENDOR="ariaboard"

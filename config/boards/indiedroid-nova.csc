@@ -1,4 +1,5 @@
 # Rockchip RK3588S octa core 4/8/16GB RAM SoC eMMC USB3 USB-C GbE
+INTRODUCED=2023
 declare -g BOARD_NAME="Indiedroid Nova"
 declare -g BOARD_VENDOR="rockchip"
 declare -g BOARD_MAINTAINER="lanefu"

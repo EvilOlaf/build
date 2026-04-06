@@ -1,4 +1,5 @@
 # MXQ TV box based on Amlogic S805 quad core 1GB RAM SoC GBE
+INTRODUCED=2024
 BOARD_NAME="MXQ"
 BOARD_VENDOR="amlogic"
 BOARDFAMILY="meson8b"
