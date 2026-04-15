@@ -1,5 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: MichaIng <micha@dietpi.com>
+Date: Wed, 15 Apr 2026 04:07:00 +0000
+Subject: [ARCHEOLOGY] nanopi-r5s: apply static MAC addresses for all 3
+ Ethernet adapters
+
+> X-Git-Archeology: > recovered message: > U-Boot assigns the variables eth(0)addr, eth1addr, eth2addr etc as MAC addresses to device tree aliases ethernet0, ethernet1, ethernet2 etc. For Rockchip SBCs, it generates only ethaddr and eth1addr so far. To support 3 static MAC addresses for the NanoPi R5S, it needs to generate eth2addr. This is archived with a U-Boot patch, to derive eth2addr the same way like eth1addr, but inverting the 2nd last bit instead.
+> X-Git-Archeology: > recovered message: > With a kernel patch, PCIe child nodes with the needed "local-mac-address" attributes are added to respective PCIe bridge nodes, and added as ethernet1 and ethernet2 aliases respectively.
+> X-Git-Archeology: > recovered message: > In sum: U-Boot additionally generates a valid eth2addr, and additionally assigns eth1addr and eth2addr to the now existing ethernet1 and ethernet2 aliases, pointing to the 2.5 Gbit Ethernet device nodes.
+> X-Git-Archeology: > recovered message: > This commit applies as well default Ethernet LED triggers.
+> X-Git-Archeology: > recovered message: > Signed-off-by: MichaIng <micha@dietpi.com>
+> X-Git-Archeology: - Revision c29e8c178a1a1d222c7eab768fdf7056e285b237: https://github.com/armbian/build/commit/c29e8c178a1a1d222c7eab768fdf7056e285b237
+> X-Git-Archeology:   Date: Wed, 15 Apr 2026 04:07:00 +0000
+> X-Git-Archeology:   From: MichaIng <micha@dietpi.com>
+> X-Git-Archeology:   Subject: nanopi-r5s: apply static MAC addresses for all 3 Ethernet adapters
+> X-Git-Archeology:
+---
+ arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts | 25 ++++++++++
+ 1 file changed, 25 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
-index 718d1a2da8e56..09dedd1d21efa 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
 @@ -15,6 +15,8 @@ / {
@@ -69,3 +89,6 @@ index 718d1a2da8e56..09dedd1d21efa 100644
  };
  
  &pcie3x2 {
+-- 
+Armbian
+

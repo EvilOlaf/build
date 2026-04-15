@@ -1,5 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: MichaIng <micha@dietpi.com>
+Date: Wed, 15 Apr 2026 03:54:58 +0000
+Subject: [ARCHEOLOGY] nanopi-r5c: apply static MAC addresses for both Ethernet
+ adapters
+
+> X-Git-Archeology: > recovered message: > U-Boot generates and assigns two MAC addresses for Rockchip SBCs with ethernet0 and ethernet1 aliases pointing to repsective device nodes.
+> X-Git-Archeology: > recovered message: > The PCIe child nodes for both 2.5 Gbit Ethernet adapters with the needed "local-mac-address" properties are added with this patch, as well as the respective aliases.
+> X-Git-Archeology: > recovered message: > This commit applies as well default Ethernet LED triggers.
+> X-Git-Archeology: > recovered message: > Signed-off-by: MichaIng <micha@dietpi.com>
+> X-Git-Archeology: - Revision 26a6c21782cee1b9c415895bfa0cba82d36094d9: https://github.com/armbian/build/commit/26a6c21782cee1b9c415895bfa0cba82d36094d9
+> X-Git-Archeology:   Date: Wed, 15 Apr 2026 03:54:58 +0000
+> X-Git-Archeology:   From: MichaIng <micha@dietpi.com>
+> X-Git-Archeology:   Subject: nanopi-r5c: apply static MAC addresses for both Ethernet adapters
+> X-Git-Archeology:
+---
+ arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts | 27 ++++++++++
+ 1 file changed, 27 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts
-index c718b8dbb9c6b..58d893b87d121 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5c.dts
 @@ -13,6 +13,11 @@ / {
@@ -14,23 +33,23 @@ index c718b8dbb9c6b..58d893b87d121 100644
  	gpio-keys {
  		compatible = "gpio-keys";
  		pinctrl-names = "default";
-@@ -34,6 +34,7 @@ gpio-leds {
- 		led-lan {
+@@ -35,6 +40,7 @@ led-lan {
  			color = <LED_COLOR_ID_GREEN>;
  			function = LED_FUNCTION_LAN;
  			gpios = <&gpio3 RK_PA3 GPIO_ACTIVE_HIGH>;
 +			linux,default-trigger = "r8169-1-100:00:link";
  		};
  
-@@ -47,6 +48,7 @@ power_led: led-power {
- 		led-wan {
+ 		power_led: led-power {
+@@ -48,6 +54,7 @@ led-wan {
  			color = <LED_COLOR_ID_GREEN>;
  			function = LED_FUNCTION_WAN;
  			gpios = <&gpio3 RK_PA4 GPIO_ACTIVE_HIGH>;
 +			linux,default-trigger = "r8169-2-100:00:link";
  		};
  
-@@ -70,6 +75,16 @@ &pcie3x1 {
+ 		led-wlan {
+@@ -70,6 +77,16 @@ &pcie3x1 {
  	reset-gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
  	vpcie3v3-supply = <&vcc3v3_pcie>;
  	status = "okay";
@@ -47,7 +66,7 @@ index c718b8dbb9c6b..58d893b87d121 100644
  };
  
  &pcie3x2 {
-@@ -77,6 +92,16 @@ &pcie3x2 {
+@@ -77,6 +94,16 @@ &pcie3x2 {
  	reset-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
  	vpcie3v3-supply = <&vcc3v3_pcie>;
  	status = "okay";
@@ -64,3 +83,6 @@ index c718b8dbb9c6b..58d893b87d121 100644
  };
  
  &pinctrl {
+-- 
+Armbian
+

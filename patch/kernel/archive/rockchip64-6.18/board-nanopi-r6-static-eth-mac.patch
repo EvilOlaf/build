@@ -1,5 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: MichaIng <micha@dietpi.com>
+Date: Wed, 15 Apr 2026 04:07:00 +0000
+Subject: [ARCHEOLOGY] nanopi-r6s: apply static MAC addresses for all 3
+ Ethernet adapters
+
+> X-Git-Archeology: > recovered message: > U-Boot assigns the variables eth(0)addr, eth1addr, eth2addr etc as MAC addresses to device tree aliases ethernet0, ethernet1, ethernet2 etc. For Rockchip SBCs, it generates only ethaddr and eth1addr so far. To support 3 static MAC addresses for the NanoPi R6S, it needs to generate eth2addr. This is archived with a U-Boot patch, to derive eth2addr the same way like eth1addr, but inverting the 2nd last bit instead.
+> X-Git-Archeology: > recovered message: > With a kernel patch, PCIe child nodes with the needed "local-mac-address" attributes are added to respective PCIe bridge nodes, and added as ethernet1 and ethernet2 aliases respectively.
+> X-Git-Archeology: > recovered message: > In sum: U-Boot additionally generates a valid eth2addr, and additionally assigns eth1addr and eth2addr to the now existing ethernet1 and ethernet2 aliases, pointing to the 2.5 Gbit Ethernet device nodes.
+> X-Git-Archeology: > recovered message: > Due to shared includes, this applies static MAC addresses for both NanoPi R6C adapters as well.
+> X-Git-Archeology: > recovered message: > This commit additionally fixes the default Ethernet LED triggers for NanoPi R6C and applies them for later Linux versions.
+> X-Git-Archeology: > recovered message: > Signed-off-by: MichaIng <micha@dietpi.com>
+> X-Git-Archeology: - Revision 4b86b630d08c36e21e4efd0de878a568e0c30196: https://github.com/armbian/build/commit/4b86b630d08c36e21e4efd0de878a568e0c30196
+> X-Git-Archeology:   Date: Wed, 15 Apr 2026 04:07:00 +0000
+> X-Git-Archeology:   From: MichaIng <micha@dietpi.com>
+> X-Git-Archeology:   Subject: nanopi-r6s: apply static MAC addresses for all 3 Ethernet adapters
+> X-Git-Archeology:
+---
+ arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi | 12 +++++
+ arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6c.dts |  8 +++
+ arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6s.dts | 26 ++++++++++
+ 3 files changed, 46 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-index fbf062ec3bf17..aea04d9abbce6 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
 @@ -11,6 +11,7 @@
@@ -10,7 +33,7 @@ index fbf062ec3bf17..aea04d9abbce6 100644
  		mmc0 = &sdmmc;
  		mmc1 = &sdhci;
  	};
-@@ -351,6 +352,17 @@ &pcie2x1l1 {
+@@ -359,6 +360,17 @@ &pcie2x1l1 {
  	reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
  	vpcie3v3-supply = <&vcc_3v3_pcie20>;
  	status = "okay";
@@ -29,7 +52,7 @@ index fbf062ec3bf17..aea04d9abbce6 100644
  
  &pcie2x1l2 {
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6c.dts b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6c.dts
-index ccc5e46275176..d461430f824dd 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6c.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6c.dts
 @@ -9,6 +9,14 @@ / {
@@ -48,7 +71,7 @@ index ccc5e46275176..d461430f824dd 100644
  	label = "user_led";
  };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6s.dts b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6s.dts
-index 9c3e0b0daaacb..5ed1303549035 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6s.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6s.dts
 @@ -7,8 +7,34 @@
@@ -86,3 +109,6 @@ index 9c3e0b0daaacb..5ed1303549035 100644
 +		};
 +	};
  };
+-- 
+Armbian
+

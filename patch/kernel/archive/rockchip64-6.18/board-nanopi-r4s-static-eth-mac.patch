@@ -1,5 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: MichaIng <micha@dietpi.com>
+Date: Wed, 15 Apr 2026 03:54:58 +0000
+Subject: [ARCHEOLOGY] nanopi-r4s: apply static MAC addresses for both Ethernet
+ adapters
+
+> X-Git-Archeology: > recovered message: > U-Boot generates and assigns two MAC addresses for Rockchip SBCs with ethernet0 and ethernet1 aliases pointing to repsective device nodes.
+> X-Git-Archeology: > recovered message: > The PCIe child node for the PCIe Ethernet adapter with the needed "local-mac-address" property is added with this patch, as well as the respective alias.
+> X-Git-Archeology: > recovered message: > This commit additionally applies default Ethernet LED triggers.
+> X-Git-Archeology: > recovered message: > Signed-off-by: MichaIng <micha@dietpi.com>
+> X-Git-Archeology: - Revision 3c6af44bb21997caa215ee2a2154823ee7983324: https://github.com/armbian/build/commit/3c6af44bb21997caa215ee2a2154823ee7983324
+> X-Git-Archeology:   Date: Wed, 15 Apr 2026 03:54:58 +0000
+> X-Git-Archeology:   From: MichaIng <micha@dietpi.com>
+> X-Git-Archeology:   Subject: nanopi-r4s: apply static MAC addresses for both Ethernet adapters
+> X-Git-Archeology:
+---
+ arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dtsi | 16 ++++++++++
+ 1 file changed, 16 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dtsi
-index 8d94d9f91a5c6..48b4e8eac7311 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dtsi
 @@ -19,6 +19,10 @@
@@ -29,8 +48,8 @@ index 8d94d9f91a5c6..48b4e8eac7311 100644
  		};
  	};
  
-@@ -74,6 +80,16 @@ &pcie0 {
- 	max-link-speed = <1>;
+@@ -108,6 +114,16 @@ &i2c4 {
+ &pcie0 {
  	num-lanes = <1>;
  	vpcie3v3-supply = <&vcc3v3_sys>;
 +
@@ -46,3 +65,6 @@ index 8d94d9f91a5c6..48b4e8eac7311 100644
  };
  
  &pinctrl {
+-- 
+Armbian
+
