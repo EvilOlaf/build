@@ -83,7 +83,7 @@ function kernel_config_initialize() {
 	display_alert "Kernel configuration" "${LINUXCONFIG}" "info"
 }
 
-# These kernel config hooks are always called twice, once without being in kernel directory and once with current directory being the kernel work directory.
+# These kernel config hooks are always called twice, once without being in kernel directory and one with current directory being the kernel work directory.
 # You must check with "if [[ -f .config ]]; then" in which of the two phases you are. Otherwise, functions like "kernel_config_set_y" won't work.
 function call_extensions_kernel_config() {
 	# Prepare arrays and dict for modifications.
@@ -93,6 +93,15 @@ function call_extensions_kernel_config() {
 	# shellcheck disable=SC2034
 	declare -a opts_y=() opts_n=() opts_m=()
 
+	# Ensure kernel_config_modifying_hashes is initialized for hooks that directly call kernel_config_set_*
+	# This array is used by the artifact versioning system to track config changes.
+	# When called from artifact-kernel.sh, it's already declared. When called from kernel_config_initialize,
+	# we need to ensure it exists globally so kernel_config_set_* functions can append to it.
+	if ! declare -p kernel_config_modifying_hashes >/dev/null 2>&1; then
+		# shellcheck disable=SC2034
+		declare -ga kernel_config_modifying_hashes=()
+	fi
+
 	# Run the core-armbian config modifications here, built-in extensions:
 	call_extension_method "armbian_kernel_config" <<- 'ARMBIAN_KERNEL_CONFIG'
 		*Armbian-core default hook point for pre-olddefconfig Kernel config modifications*
@@ -100,7 +109,8 @@ function call_extensions_kernel_config() {
 		Instead, use `custom_kernel_config` which runs later and can undo anything done by this step.
 		IMPORTANT: this hook might be run multiple times, and one of them might not have a .config in place!
 		Therefore, please check with "if [[ -f .config ]]; then" if you want to modify the kernel config.
-		Either way, the hook _must_ add representative changes to the `kernel_config_modifying_hashes` array, for kernel config hashing.
+		Using kernel_config_set_y/n/m/val/string functions will automatically add changes to
+		kernel_config_modifying_hashes for proper artifact versioning.
 		Please note: Manually changing options doesn't check the validity of the .config file. Check for warnings in your build log.
 	ARMBIAN_KERNEL_CONFIG
 
@@ -112,7 +122,9 @@ function call_extensions_kernel_config() {
 		Armbian default Kconfig modifications have already been applied and can be overriden.
 		IMPORTANT: this hook might be run multiple times, and one of them might not have a .config in place!
 		Therefore, please check with "if [[ -f .config ]]; then" if you want to modify the kernel config.
-		Either way, the hook _must_ add representative changes to the `kernel_config_modifying_hashes` array, for kernel config hashing.
+		You can use kernel_config_set_y/n/m/val/string functions directly; they will automatically
+		add changes to kernel_config_modifying_hashes for proper artifact versioning.
+		Alternatively, you can add to opts_* arrays and kernel_config_modifying_hashes manually.
 		Please note: Manually changing options doesn't check the validity of the .config file. Check for warnings in your build log.
 	CUSTOM_KERNEL_CONFIG
 

@@ -616,6 +616,8 @@ function kernel_config_set_m() {
 	declare module="$1"
 	display_alert "Enabling kernel module" "${module}=m" "debug"
 	run_host_command_logged ./scripts/config --module "${module}"
+	# Add to modifying hashes for artifact versioning
+	kernel_config_modifying_hashes+=("${module}=m")
 }
 
 # Sets a kernel configuration option to be built-in (=y).
@@ -627,6 +629,8 @@ function kernel_config_set_y() {
 	declare config="$1"
 	display_alert "Enabling kernel config/built-in" "${config}=y" "debug"
 	run_host_command_logged ./scripts/config --enable "${config}"
+	# Add to modifying hashes for artifact versioning
+	kernel_config_modifying_hashes+=("${config}=y")
 }
 
 # Disables a kernel configuration option (=n).
@@ -637,6 +641,8 @@ function kernel_config_set_n() {
 	declare config="$1"
 	display_alert "Disabling kernel config/module" "${config}=n" "debug"
 	run_host_command_logged ./scripts/config --disable "${config}"
+	# Add to modifying hashes for artifact versioning
+	kernel_config_modifying_hashes+=("${config}=n")
 }
 
 # Sets a kernel configuration option to a string value.
@@ -649,6 +655,8 @@ function kernel_config_set_string() {
 	declare value="${2}"
 	display_alert "Setting kernel config/module string" "${config}=${value}" "debug"
 	run_host_command_logged ./scripts/config --set-str "${config}" "${value}"
+	# Add to modifying hashes for artifact versioning
+	kernel_config_modifying_hashes+=("${config}=${value}")
 }
 
 # Sets a kernel configuration option to a numeric or hexadecimal value.
@@ -661,6 +669,8 @@ function kernel_config_set_val() {
 	declare value="${2}"
 	display_alert "Setting kernel config/module value" "${config}=${value}" "debug"
 	run_host_command_logged ./scripts/config --set-val "${config}" "${value}"
+	# Add to modifying hashes for artifact versioning
+	kernel_config_modifying_hashes+=("${config}=${value}")
 }
 
 # Applies kernel configuration options from arrays to hashes and the .config file.
