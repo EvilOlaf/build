@@ -668,6 +668,19 @@ index 000000000000..111111111111
 +	{ }
 +};
 +MODULE_DEVICE_TABLE(mdio, ac200_ephy_phy_tbl);
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index 111111111111..222222222222 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -27,6 +27,8 @@ obj-$(CONFIG_SFP)		+= sfp.o
+ sfp-obj-$(CONFIG_SFP)		+= sfp-bus.o
+ obj-y				+= $(sfp-obj-y) $(sfp-obj-m)
+
++obj-$(CONFIG_AC200_PHY)		+= ac200-phy.o
++obj-$(CONFIG_AC200_PHY_SUNXI)		+= sunxi-ephy.o
+ obj-$(CONFIG_ADIN_PHY)		+= adin.o
+ obj-$(CONFIG_ADIN1100_PHY)	+= adin1100.o
+ obj-$(CONFIG_AIR_EN8811H_PHY)   += air_en8811h.o
 diff --git a/include/linux/mfd/ac200.h b/include/linux/mfd/ac200.h
 new file mode 100644
 index 000000000000..111111111111
