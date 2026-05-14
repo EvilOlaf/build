@@ -1,4 +1,17 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: EvilOlaf <werner@armbian.com>
+Date: Thu, 14 May 2026 09:00:00 +0000
+Subject: [PATCH] mfd: ac200: gracefully handle missing nvmem on H6 boards
+
+On H6 boards without calibration nvmem cells (like inovato quadra),
+the sunxi-ac200 MFD driver would fail to probe with -ENOENT error.
+This change makes the driver use default calibration values when
+nvmem is unavailable, allowing both H6 and H616 boards to work
+with the same unified kernel.
+
+Signed-off-by: EvilOlaf <werner@armbian.com>
+---
+
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 Date: Fri, 16 Aug 2019 16:38:21 +0200
 Subject: mfd: Add support for X-Powers AC200
@@ -274,7 +287,7 @@ index 000000000000..111111111111
 +MODULE_LICENSE("GPL v2");
 diff --git a/drivers/mfd/sunxi-ac200.c b/drivers/mfd/sunxi-ac200.c
 new file mode 100644
-index 000000000000..111111111111
+index 000000000000..ecd64bd2cfae
 --- /dev/null
 +++ b/drivers/mfd/sunxi-ac200.c
 @@ -0,0 +1,289 @@
@@ -380,31 +393,33 @@ index 000000000000..111111111111
 +	struct nvmem_cell *calcell;
 +	uint16_t *caldata;
 +	size_t callen;
-+	int ret = 0;
 +
 +	calcell = devm_nvmem_cell_get(dev, "calibration");
 +	if (IS_ERR(calcell)) {
-+		dev_err_probe(dev, PTR_ERR(calcell),
-+			      "Failed to get calibration nvmem cell (%pe)\n",
-+			      calcell);
-+
++		if (PTR_ERR(calcell) == -ENOENT) {
++			dev_info(dev, "No calibration nvmem found, using default\n");
++			ephy_caldata = 0;
++			return 0;
++		}
 +		if (PTR_ERR(calcell) == -EPROBE_DEFER)
 +			return -EPROBE_DEFER;
-+		goto out;
++		dev_err(dev, "Failed to get calibration nvmem cell (%pe)\n",
++			calcell);
++		ephy_caldata = 0;
++		return 0;
 +	}
 +
 +	caldata = nvmem_cell_read(calcell, &callen);
 +	if (IS_ERR(caldata)) {
-+		ret = PTR_ERR(caldata);
-+		dev_err(dev, "Failed to read calibration data (%pe)\n",
++		dev_err(dev, "Failed to read calibration data (%pe), using default\n",
 +			caldata);
-+		goto out;
++		ephy_caldata = 0;
++		return 0;
 +	}
 +
-+    ephy_caldata = *caldata;
++	ephy_caldata = *caldata;
 +	kfree(caldata);
-+out:
-+	return ret;
++	return 0;
 +}
 +
 +uint16_t sun50i_ephy_calibrate_value(void)
@@ -439,10 +454,8 @@ index 000000000000..111111111111
 +    }
 +
 +    ret = sun50i_ephy_get_calibrate(dev);
-+	if (ret) {
-+        dev_err(dev, "sun50i get ephy id failed\n");
++    if (ret == -EPROBE_DEFER)
 +        return ret;
-+    }
 +    ephy_cal = sun50i_ephy_calibrate_value();
 +
 +    if (ephy_cal & SUNXI_AC300_KEY) {
@@ -567,45 +580,6 @@ index 000000000000..111111111111
 +MODULE_DESCRIPTION("MFD core driver for AC200");
 +MODULE_AUTHOR("Jernej Skrabec <jernej.skrabec@siol.net>");
 +MODULE_LICENSE("GPL v2");
-diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
-index 111111111111..222222222222 100644
---- a/drivers/net/phy/Kconfig
-+++ b/drivers/net/phy/Kconfig
-@@ -101,6 +101,21 @@ config AIR_EN8811H_PHY
- 	help
- 	  Currently supports the Airoha EN8811H PHY.
- 
-+config AC200_PHY
-+	tristate "AC200 EPHY"
-+	depends on NVMEM
-+	depends on OF
-+	help
-+	  Fast ethernet PHY as found in X-Powers AC200 multi-function device.
-+
-+config AC200_PHY_SUNXI
-+	tristate "AC200 EPHY(Sunxi)"
-+	depends on NVMEM
-+	depends on OF
-+	depends on MFD_AC200_SUNXI
-+	help
-+	  Fast ethernet PHY as found in X-Powers AC200(Sunxi) multi-function device.
-+
- config AMD_PHY
- 	tristate "AMD and Altima PHYs"
- 	help
-diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-index 111111111111..222222222222 100644
---- a/drivers/net/phy/Makefile
-+++ b/drivers/net/phy/Makefile
-@@ -27,6 +27,8 @@ obj-$(CONFIG_SFP)		+= sfp.o
- sfp-obj-$(CONFIG_SFP)		+= sfp-bus.o
- obj-y				+= $(sfp-obj-y) $(sfp-obj-m)
- 
-+obj-$(CONFIG_AC200_PHY)		+= ac200-phy.o
-+obj-$(CONFIG_AC200_PHY_SUNXI)		+= sunxi-ephy.o
- obj-$(CONFIG_ADIN_PHY)		+= adin.o
- obj-$(CONFIG_ADIN1100_PHY)	+= adin1100.o
- obj-$(CONFIG_AIR_EN8811H_PHY)   += air_en8811h.o
 diff --git a/drivers/net/phy/ac200-phy.c b/drivers/net/phy/ac200-phy.c
 new file mode 100644
 index 000000000000..111111111111
