@@ -5,7 +5,7 @@ Subject: drm: add cix linlon dp driver
 
 Signed-off-by: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 ---
- drivers/gpu/drm/Kconfig                                 |    4 +-
+ drivers/gpu/drm/Kconfig                                 |    1 +
  drivers/gpu/drm/Makefile                                |    1 +
  drivers/gpu/drm/cix/Kconfig                             |   55 +
  drivers/gpu/drm/cix/Makefile                            |    5 +
@@ -81,13 +81,13 @@ Signed-off-by: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
  drivers/gpu/drm/cix/linlon-dp/linlondp_utils.h          |   43 +
  drivers/gpu/drm/cix/linlon-dp/linlondp_wb_connector.c   |  391 ++
  drivers/video/backlight/pwm_bl.c                        |   48 +-
- 76 files changed, 27971 insertions(+), 21 deletions(-)
+ 76 files changed, 27971 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
 index 111111111111..222222222222 100644
 --- a/drivers/gpu/drm/Kconfig
 +++ b/drivers/gpu/drm/Kconfig
-@@ -273,6 +273,7 @@ config DRM_LIB_RANDOM
+@@ -285,6 +285,7 @@ source "drivers/gpu/drm/armada/Kconfig"
  source "drivers/gpu/drm/aspeed/Kconfig"
  source "drivers/gpu/drm/ast/Kconfig"
  source "drivers/gpu/drm/atmel-hlcdc/Kconfig"
@@ -28609,5 +28609,5 @@ index 111111111111..222222222222 100644
  	.probe		= pwm_backlight_probe,
  	.remove		= pwm_backlight_remove,
 -- 
-Cixtech
+Armbian
 

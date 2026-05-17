@@ -37,5 +37,5 @@ index 111111111111..222222222222 100644
  	if (!mdrv)
  		return -ENOMEM;
 -- 
-Cixtech
+Armbian
 
