@@ -1,0 +1,13 @@
+[Unit]
+Description=CIX NPU Firstboot Setup
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=!/var/lib/cix-npu/.firstboot-done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/cix-npu-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

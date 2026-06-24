@@ -1,0 +1,61 @@
+#!/bin/bash
+# CIX NPU firstboot - MS-R1 SSDT override + blacklist removal
+
+LOGFILE="/var/log/cix-npu-firstboot.log"
+MARKER="/var/lib/cix-npu/.firstboot-done"
+ASL_FILE="/usr/share/cix-npu/ssdt-msr1-npu-core-hid.asl"
+
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOGFILE"; }
+
+if [ -f "$MARKER" ]; then
+	exit 0
+fi
+
+log "CIX NPU firstboot starting"
+
+# Detect if CIXH4010 cores already enumerate (firmware has correct DSDT)
+if ls /sys/bus/acpi/devices/CIXH4010:* 2>/dev/null | grep -q .; then
+	log "CIXH4010 cores present - firmware correct, skipping SSDT"
+	HAS_NPU_CORES=1
+else
+	log "CIXH4010 cores missing - MS-R1 detected, applying SSDT override"
+	HAS_NPU_CORES=0
+fi
+
+if [ "$HAS_NPU_CORES" = "0" ]; then # MS-R1: Apply SSDT override
+	TMPDIR=$(mktemp -d)
+	if iasl -oa "$ASL_FILE" -p "$TMPDIR/ssdt" 2>/dev/null; then
+		mkdir -p "$TMPDIR/cpio/kernel/firmware/acpi"
+		cp "$TMPDIR/ssdt.aml" "$TMPDIR/cpio/kernel/firmware/acpi/ssdt-msr1-npu-core-hid.aml"
+		(cd "$TMPDIR/cpio" && find . | cpio -o -H newc > "$TMPDIR/acpi-override.cpio" 2>/dev/null)
+
+		KVER=$(uname -r)
+		INITRD="/boot/initrd.img-${KVER}"
+
+		if [ -f "$INITRD" ]; then
+			cp "$INITRD" "${INITRD}.backup"
+			cat "$TMPDIR/acpi-override.cpio" "$INITRD" > "${INITRD}.new"
+			mv "${INITRD}.new" "$INITRD"
+			log "SSDT override applied to $INITRD"
+		fi
+	fi
+	rm -rf "$TMPDIR"
+
+	# Remove blacklist
+	sed -i -E 's/^(blacklist\s+(armchina_npu|aipu)).*$/#\1/' /etc/modprobe.d/blacklist-cix-acpi.conf 2>/dev/null
+	update-initramfs -u -k all >/dev/null 2>&1
+
+	mkdir -p /var/lib/cix-npu
+	touch "$MARKER"
+	log "MS-R1 setup complete - reboot required"
+
+else
+	# Non-MS-R1: Cores present, load module now
+	sed -i -E 's/^(blacklist\s+(armchina_npu|aipu)).*$/#\1/' /etc/modprobe.d/blacklist-cix-acpi.conf 2>/dev/null
+	update-initramfs -u -k all >/dev/null 2>&1
+	modprobe aipu 2>/dev/null
+
+	mkdir -p /var/lib/cix-npu
+	touch "$MARKER"
+	log "NPU setup complete"
+fi

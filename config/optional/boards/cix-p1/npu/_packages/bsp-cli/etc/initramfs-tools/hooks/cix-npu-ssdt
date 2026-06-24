@@ -1,0 +1,31 @@
+#!/bin/sh
+# CIX NPU SSDT override hook - runs during initramfs update
+
+PREREQ=""
+prereqs()
+{
+	echo "$PREREQ"
+}
+
+case "${1}" in
+	prereqs)
+		prereqs
+		exit 0
+		;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+# MS-R1 detection: DMI product name (static, not affected by SSDT)
+[ "$(cat /sys/class/dmi/id/product_name 2>/dev/null)" = "MS-R1" ] || exit 0
+	ASL_FILE="/usr/share/cix-npu/ssdt-msr1-npu-core-hid.asl"
+	[ -f "$ASL_FILE" ] || exit 0
+	command -v iasl >/dev/null 2>&1 || exit 0
+
+	TMPDIR=$(mktemp -d)
+	if iasl -oa "$ASL_FILE" -p "$TMPDIR/ssdt" 2>/dev/null; then
+		mkdir -p "${DESTDIR}/kernel/firmware/acpi"
+		cp "$TMPDIR/ssdt.aml" "${DESTDIR}/kernel/firmware/acpi/ssdt-msr1-npu-core-hid.aml"
+	fi
+	rm -rf "$TMPDIR"
+fi
