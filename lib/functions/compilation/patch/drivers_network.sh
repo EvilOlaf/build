@@ -523,8 +523,12 @@ driver_uwe5622() {
 		cp -R "${SRC}/cache/sources/uwe5622/${uwe5622ver#*:}"/{tty-sdio,unisocwcn,unisocwifi,Kconfig,Makefile} \
 			"$kerneldir/drivers/net/wireless/uwe5622"
 
-		# Add to section Makefile (driver has its own Kconfig)
+		# Add to section Makefile
 		echo "obj-\$(CONFIG_SPARD_WLAN_SUPPORT) += uwe5622/" >> "$kerneldir/drivers/net/wireless/Makefile"
+
+		# Add to Kconfig
+		sed -i '/source "drivers\/net\/wireless\/ti\/Kconfig"/a source "drivers\/net\/wireless\/uwe5622\/Kconfig"' \
+			"$kerneldir/drivers/net/wireless/Kconfig"
 
 		display_alert "Added" "uwe5622 driver with inline kernel version guards (5.15-7.1)" "info"
 	fi
