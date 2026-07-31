@@ -3,6 +3,8 @@ From: Paolo Sabatino <paolo.sabatino@gmail.com>
 Date: Sun, 22 Jan 2023 14:13:39 +0000
 Subject: adjust uwe5622 driver for rockchip
 
+Signed-off-by: Juan Sanchez Fuentes <juanesf91@gmail.com>
+Assisted-by: opencode:big-pickle
 ---
  drivers/net/wireless/uwe5622/Kconfig                              |    3 +-
  drivers/net/wireless/uwe5622/Makefile                             |    2 +-
@@ -2999,7 +3001,7 @@ index 000000000000..a3abdd850ffa
 +#ifdef CONFIG_OF
 +#include <linux/of.h>
 +#include <linux/of_device.h>
-+#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
 +#endif
 +
 +#if 0
@@ -3834,7 +3836,7 @@ index 000000000000..a0933abb0bfa
 +#ifdef CONFIG_OF
 +#include <linux/of.h>
 +#include <linux/of_device.h>
-+#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
 +#endif
 +#include <linux/soc/rockchip/rk_vendor_storage.h>
 +#include <linux/device.h>

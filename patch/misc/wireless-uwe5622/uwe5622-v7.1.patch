@@ -16,6 +16,8 @@ Kernel 7.1 removed legacy GPIO and cfg80211 APIs:
   - cfg80211_new_sta(), cfg80211_del_sta() now take wireless_dev*
 
 Signed-off-by: Werner <werner@armbian.com>
+Signed-off-by: Juan Sanchez Fuentes <juanesf91@gmail.com>
+Assisted-by: opencode:big-pickle
 ---
 diff --git a/drivers/net/wireless/uwe5622/tty-sdio/rfkill.c b/drivers/net/wireless/uwe5622/tty-sdio/rfkill.c
 index 66ce926033e9..11be70956d2d 100644
@@ -823,30 +825,4 @@ index db9af5f67880..7149b1dc0ee3 100755
 +		cfg80211_del_sta(&vif->wdev, addr, GFP_KERNEL);
  		wl_ndev_log(L_DBG, vif->ndev, "The station (%pM) disconnected\n",
  				addr);
- 		trace_deauth_reason(vif->mode, 0, REMOTE_EVENT);
-diff --git a/drivers/net/wireless/uwe5622/unisocwifi/rfkill-bt.c b/drivers/net/wireless/uwe5622/unisocwifi/rfkill-bt.c
-index a3abdd850ffa..4f20ca43d02c 100644
---- a/drivers/net/wireless/uwe5622/unisocwifi/rfkill-bt.c
-+++ b/drivers/net/wireless/uwe5622/unisocwifi/rfkill-bt.c
-@@ -37,7 +37,7 @@
- #ifdef CONFIG_OF
- #include <linux/of.h>
- #include <linux/of_device.h>
--#include <linux/of_gpio.h>
-+#include <linux/gpio/consumer.h>
- #endif
- 
- #if 0
-diff --git a/drivers/net/wireless/uwe5622/unisocwifi/rfkill-wlan.c b/drivers/net/wireless/uwe5622/unisocwifi/rfkill-wlan.c
-index a0933abb0bfa..348b78a0601e 100644
---- a/drivers/net/wireless/uwe5622/unisocwifi/rfkill-wlan.c
-+++ b/drivers/net/wireless/uwe5622/unisocwifi/rfkill-wlan.c
-@@ -41,7 +41,7 @@
- #ifdef CONFIG_OF
- #include <linux/of.h>
- #include <linux/of_device.h>
--#include <linux/of_gpio.h>
-+#include <linux/gpio/consumer.h>
- #endif
- #include <linux/soc/rockchip/rk_vendor_storage.h>
- #include <linux/device.h>
+ 			trace_deauth_reason(vif->mode, 0, REMOTE_EVENT);

@@ -8,6 +8,53 @@ function extension_finish_config__install_kernel_headers_for_aic8800_dkms() {
 	display_alert "Forcing INSTALL_HEADERS=yes; for use with aic8800 dkms" "${EXTENSION}" "debug"
 }
 
+# Kernel 7.1 broke the radxa aic8800 dkms source in several ways (ieee80211
+# action-frame layout, cfg80211 ops/new_sta/del_sta now taking wireless_dev,
+# removal of <linux/of_gpio.h>). Extract the deb, patch the source, repack.
+function patch_aic8800_dkms_for_kernel_7_1() {
+
+	local deb_path="${1}"
+	local patch_file="${EXTENSION_DIR}/radxa-aic8800-kernel-7.1.patch"
+	local work_dir src_file driver_root patched_deb
+
+	work_dir="$(mktemp -d)"
+	patched_deb="${work_dir}/$(basename "${deb_path}")"
+
+	dpkg-deb -R "${deb_path}" "${work_dir}/extracted" || {
+		display_alert "Failed to extract aic8800 dkms deb for patching" "will install unpatched deb; dkms build will fail with the real error" "${EXTENSION}" "error"
+		rm -rf "${work_dir}"
+		echo "${deb_path}"
+		return 0
+	}
+
+	src_file="$(find "${work_dir}/extracted" -path "*/SDIO/driver_fw/driver/aic8800/aic8800_fdrv/rwnx_tdls.c" -print -quit)"
+	if [[ -z "${src_file}" ]]; then
+		display_alert "aic8800 dkms source layout changed" "cannot locate rwnx_tdls.c; will install unpatched deb" "${EXTENSION}" "warn"
+		rm -rf "${work_dir}"
+		echo "${deb_path}"
+		return 0
+	fi
+
+	driver_root="$(dirname "$(dirname "${src_file}")")"
+	if ! (cd "${driver_root}" && patch -p1 -f -i "${patch_file}" > /dev/null); then
+		display_alert "Failed to patch aic8800 dkms source for kernel 7.1" "will install unpatched deb; dkms build will fail with the real error" "${EXTENSION}" "warn"
+		rm -rf "${work_dir}"
+		echo "${deb_path}"
+		return 0
+	fi
+
+	if ! dpkg-deb -b "${work_dir}/extracted" "${patched_deb}" > /dev/null; then
+		display_alert "Failed to repack aic8800 dkms deb" "will install unpatched deb; dkms build will fail with the real error" "${EXTENSION}" "error"
+		rm -rf "${work_dir}"
+		echo "${deb_path}"
+		return 0
+	fi
+
+	display_alert "Patched aic8800 dkms source for kernel 7.1 (ieee80211/cfg80211/of_gpio)" "${EXTENSION}" "info"
+	rm -rf "${work_dir}/extracted"
+	echo "${patched_deb}"
+}
+
 function post_install_kernel_debs__install_aic8800_dkms_package() {
 
 	if linux-version compare "${KERNEL_MAJOR_MINOR}" ge 7.2; then
@@ -49,6 +96,9 @@ function post_install_kernel_debs__install_aic8800_dkms_package() {
 			display_alert "Will download ${full_deb_path} from latest release..." "${EXTENSION}" "info"
 			wget --progress=dot:mega --local-encoding=UTF-8 --output-document="${full_deb_path}.tmp" "${down_url}"
 			mv -v "${full_deb_path}.tmp" "${full_deb_path}"
+		fi
+		if [[ "${deb_file}" == "${aic8800_dkms_file_name}" ]] && linux-version compare "${KERNEL_MAJOR_MINOR}" ge 7.1; then
+			full_deb_path="$(patch_aic8800_dkms_for_kernel_7_1 "${full_deb_path}")"
 		fi
 		cp -v "${full_deb_path}" "${SDCARD}/tmp/${deb_file}"
 	done
