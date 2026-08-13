@@ -1,100 +1,102 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
-Date: Tue, 17 Mar 2026 17:29:24 +0800
+Date: Thu, 7 May 2026 13:53:53 +0800
 Subject: drm: add cix linlon dp driver
 
 ---
- drivers/gpu/drm/Kconfig                                 |    2 +
- drivers/gpu/drm/Makefile                                |    1 +
- drivers/gpu/drm/cix/Kconfig                             |   55 +
- drivers/gpu/drm/cix/Makefile                            |    5 +
- drivers/gpu/drm/cix/cix_display.c                       |  204 +
- drivers/gpu/drm/cix/cix_virtual.c                       |  312 +
- drivers/gpu/drm/cix/dptx/Kconfig                        |   28 +
- drivers/gpu/drm/cix/dptx/Makefile                       |   11 +
- drivers/gpu/drm/cix/dptx/cix_edp_panel.c                |  879 +++
- drivers/gpu/drm/cix/dptx/cix_edp_panel.h                |   26 +
- drivers/gpu/drm/cix/dptx/dptx_infoframe.c               |  359 +
- drivers/gpu/drm/cix/dptx/dptx_infoframe.h               |   46 +
- drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp.c                |  396 ++
- drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp.h                |  141 +
- drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl.c          |  184 +
- drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl.h          |   22 +
- drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl_cmd.h      |  116 +
- drivers/gpu/drm/cix/dptx/hdcp/dptx_aux_reg.h            |  126 +
- drivers/gpu/drm/cix/dptx/hdcp/dptx_reg.h                |  483 ++
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_hw_tx.c             |  920 +++
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_hw_tx.h             |   62 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_key_drvn_tx.c       |  246 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_key_drvn_tx.h       |   46 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_state.c          |  126 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_state.h          |   31 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_tmr.c            |  190 +
- drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_tmr.h            |   19 +
- drivers/gpu/drm/cix/dptx/trilin_dptx.c                  | 3483 ++++++++++
- drivers/gpu/drm/cix/dptx/trilin_dptx.h                  |  577 ++
- drivers/gpu/drm/cix/dptx/trilin_dptx_audio.c            |  250 +
- drivers/gpu/drm/cix/dptx/trilin_dptx_audio.h            |   59 +
- drivers/gpu/drm/cix/dptx/trilin_dptx_cix.c              |  440 ++
- drivers/gpu/drm/cix/dptx/trilin_dptx_reg.h              |  452 ++
- drivers/gpu/drm/cix/dptx/trilin_drm.c                   | 1256 ++++
- drivers/gpu/drm/cix/dptx/trilin_drm.h                   |   27 +
- drivers/gpu/drm/cix/dptx/trilin_drm_mst.c               |  935 +++
- drivers/gpu/drm/cix/dptx/trilin_drm_mst.h               |   29 +
- drivers/gpu/drm/cix/dptx/trilin_edp_phy.c               | 1185 ++++
- drivers/gpu/drm/cix/dptx/trilin_edp_phy.h               |  746 ++
- drivers/gpu/drm/cix/dptx/trilin_host_tmr.c              |  254 +
- drivers/gpu/drm/cix/dptx/trilin_host_tmr.h              |   62 +
- drivers/gpu/drm/cix/dptx/trilin_phy.h                   |  126 +
- drivers/gpu/drm/cix/dptx/trilin_usbdp_phy.c             |  595 ++
- drivers/gpu/drm/cix/dptx/trilin_usbdp_phy.h             |   66 +
- drivers/gpu/drm/cix/linlon-dp/Makefile                  |   24 +
- drivers/gpu/drm/cix/linlon-dp/hw/dp_axi.c               |  261 +
- drivers/gpu/drm/cix/linlon-dp/hw/dp_component.c         | 1696 +++++
- drivers/gpu/drm/cix/linlon-dp/hw/dp_dev.c               |  703 ++
- drivers/gpu/drm/cix/linlon-dp/hw/dp_dev.h               |   63 +
- drivers/gpu/drm/cix/linlon-dp/hw/dp_regs.h              |  562 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.c         |  120 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.h         |   75 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_color_mgmt.c     |  270 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_color_mgmt.h     |   48 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_crtc.c           | 1028 +++
- drivers/gpu/drm/cix/linlon-dp/linlondp_dev.c            |  845 +++
- drivers/gpu/drm/cix/linlon-dp/linlondp_dev.h            |  306 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_drm.h            |   26 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_drv.c            |  362 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_event.c          |  159 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_format_caps.c    |  149 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_format_caps.h    |  101 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.c    |  289 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.h    |   49 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_io.h             |   46 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_kms.c            |  412 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_kms.h            |  339 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline.c       |  464 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline.h       |  597 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline_state.c | 1733 +++++
- drivers/gpu/drm/cix/linlon-dp/linlondp_plane.c          |  727 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_private_obj.c    |  433 ++
- drivers/gpu/drm/cix/linlon-dp/linlondp_product.h        |   37 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_utils.h          |   43 +
- drivers/gpu/drm/cix/linlon-dp/linlondp_wb_connector.c   |  391 ++
- drivers/video/backlight/pwm_bl.c                        |   48 +-
- 76 files changed, 27966 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/Kconfig                                  |    2 +
+ drivers/gpu/drm/Makefile                                 |    1 +
+ drivers/gpu/drm/cix/Kconfig                              |   55 +
+ drivers/gpu/drm/cix/Makefile                             |    5 +
+ drivers/gpu/drm/cix/cix_display.c                        |  204 +
+ drivers/gpu/drm/cix/cix_virtual.c                        |  313 +
+ drivers/gpu/drm/cix/dptx/Kconfig                         |   27 +
+ drivers/gpu/drm/cix/dptx/Makefile                        |   11 +
+ drivers/gpu/drm/cix/dptx/cix_edp_panel.c                 |  881 +++
+ drivers/gpu/drm/cix/dptx/cix_edp_panel.h                 |   26 +
+ drivers/gpu/drm/cix/dptx/dptx_infoframe.c                |  361 +
+ drivers/gpu/drm/cix/dptx/dptx_infoframe.h                |   44 +
+ drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp.c                 |  396 ++
+ drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp.h                 |  141 +
+ drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl.c           |  183 +
+ drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl.h           |   22 +
+ drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl_cmd.h       |  116 +
+ drivers/gpu/drm/cix/dptx/hdcp/dptx_aux_reg.h             |  126 +
+ drivers/gpu/drm/cix/dptx/hdcp/dptx_reg.h                 |  483 ++
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_hw_tx.c              |  920 +++
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_hw_tx.h              |   62 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_key_drvn_tx.c        |  246 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_key_drvn_tx.h        |   46 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_state.c           |  126 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_state.h           |   31 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_tmr.c             |  189 +
+ drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_tmr.h             |   19 +
+ drivers/gpu/drm/cix/dptx/trilin_dptx.c                   | 3406 ++++++++++
+ drivers/gpu/drm/cix/dptx/trilin_dptx.h                   |  586 ++
+ drivers/gpu/drm/cix/dptx/trilin_dptx_audio.c             |  179 +
+ drivers/gpu/drm/cix/dptx/trilin_dptx_audio.h             |   51 +
+ drivers/gpu/drm/cix/dptx/trilin_dptx_cix.c               |  439 ++
+ drivers/gpu/drm/cix/dptx/trilin_dptx_reg.h               |  452 ++
+ drivers/gpu/drm/cix/dptx/trilin_drm.c                    | 1236 ++++
+ drivers/gpu/drm/cix/dptx/trilin_drm.h                    |   29 +
+ drivers/gpu/drm/cix/dptx/trilin_drm_mst.c                |  920 +++
+ drivers/gpu/drm/cix/dptx/trilin_drm_mst.h                |   14 +
+ drivers/gpu/drm/cix/dptx/trilin_edp_phy.c                | 1186 ++++
+ drivers/gpu/drm/cix/dptx/trilin_edp_phy.h                |  746 ++
+ drivers/gpu/drm/cix/dptx/trilin_host_tmr.c               |  254 +
+ drivers/gpu/drm/cix/dptx/trilin_host_tmr.h               |   62 +
+ drivers/gpu/drm/cix/dptx/trilin_phy.h                    |  127 +
+ drivers/gpu/drm/cix/dptx/trilin_usbdp_phy.c              |  596 ++
+ drivers/gpu/drm/cix/dptx/trilin_usbdp_phy.h              |   66 +
+ drivers/gpu/drm/cix/linlon-dp/Makefile                   |   28 +
+ drivers/gpu/drm/cix/linlon-dp/hw/dp_axi.c                |  261 +
+ drivers/gpu/drm/cix/linlon-dp/hw/dp_component.c          | 1696 +++++
+ drivers/gpu/drm/cix/linlon-dp/hw/dp_dev.c                |  703 ++
+ drivers/gpu/drm/cix/linlon-dp/hw/dp_dev.h                |   63 +
+ drivers/gpu/drm/cix/linlon-dp/hw/dp_regs.h               |  562 ++
+ drivers/gpu/drm/cix/linlon-dp/include/linlondp_drm.h     |   26 +
+ drivers/gpu/drm/cix/linlon-dp/include/linlondp_io.h      |   46 +
+ drivers/gpu/drm/cix/linlon-dp/include/linlondp_product.h |   36 +
+ drivers/gpu/drm/cix/linlon-dp/include/linlondp_utils.h   |   43 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.c          |  120 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.h          |   75 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_color_mgmt.c      |  270 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_color_mgmt.h      |   48 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_crtc.c            | 1026 +++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_dev.c             |  832 +++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_dev.h             |  305 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_drv.c             |  361 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_event.c           |  159 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_format_caps.c     |  149 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_format_caps.h     |  101 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.c     |  288 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.h     |   48 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_io.h              |   46 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_kms.c             |  413 ++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_kms.h             |  339 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline.c        |  464 ++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline.h        |  597 ++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline_state.c  | 1735 +++++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_plane.c           |  649 ++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_private_obj.c     |  433 ++
+ drivers/gpu/drm/cix/linlon-dp/linlondp_product.h         |   37 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_utils.h           |   43 +
+ drivers/gpu/drm/cix/linlon-dp/linlondp_wb_connector.c    |  389 ++
+ 78 files changed, 27776 insertions(+)
 
 diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
 index 111111111111..222222222222 100644
 --- a/drivers/gpu/drm/Kconfig
 +++ b/drivers/gpu/drm/Kconfig
-@@ -269,6 +269,8 @@ source "drivers/gpu/drm/sysfb/Kconfig"
+@@ -399,6 +399,8 @@ source "drivers/gpu/drm/imagination/Kconfig"
  
- source "drivers/gpu/drm/arm/Kconfig"
+ source "drivers/gpu/drm/tyr/Kconfig"
  
 +source "drivers/gpu/drm/cix/Kconfig"
 +
- source "drivers/gpu/drm/radeon/Kconfig"
- 
- source "drivers/gpu/drm/amd/amdgpu/Kconfig"
+ config DRM_HYPERV
+ 	tristate "DRM Support for Hyper-V synthetic video device"
+ 	depends on DRM && PCI && HYPERV_VMBUS
 diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
 index 111111111111..222222222222 100644
 --- a/drivers/gpu/drm/Makefile
@@ -394,7 +396,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/cix_virtual.c
-@@ -0,0 +1,312 @@
+@@ -0,0 +1,313 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright 2024 Cix Technology Group Co., Ltd.
@@ -403,7 +405,6 @@ index 000000000000..111111111111
 +#include <linux/component.h>
 +#include <linux/device.h>
 +#include <linux/module.h>
-+#include <linux/of.h>
 +#include <linux/of_platform.h>
 +#include <linux/platform_device.h>
 +#include <linux/fwnode.h>
@@ -682,13 +683,15 @@ index 000000000000..111111111111
 +	return component_add(dev, &cix_virtual_ops);
 +}
 +
-+static void cix_virtual_remove(struct platform_device *pdev)
++static int cix_virtual_remove(struct platform_device *pdev)
 +{
 +	struct device *dev = &pdev->dev;
 +
 +	component_del(dev, &cix_virtual_ops);
 +
 +	dev_set_drvdata(dev, NULL);
++
++	return 0;
 +}
 +
 +struct platform_driver cix_virtual_driver = {
@@ -712,7 +715,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/Kconfig
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,27 @@
 +#SPDX - License - Identifier : GPL - 2.0 - only
 +config DRM_TRILIN_DPSUB
 +	tristate "Trilinear Technologies DisplayPort Controller Driver"
@@ -723,7 +726,6 @@ index 000000000000..111111111111
 +	select DRM_DISPLAY_HDMI_HELPER
 +	select DRM_DP_AUX_CHARDEV
 +	select GENERIC_PHY
-+	select BACKLIGHT_CLASS_DEVICE
 +	select SND_SOC_HDMI_CODEC if SND_SOC
 +	help
 +	  This is a DRM/KMS driver for Trilinear Technologies DisplayPort controller.
@@ -764,7 +766,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/cix_edp_panel.c
-@@ -0,0 +1,879 @@
+@@ -0,0 +1,881 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2013, NVIDIA Corporation.  All rights reserved.
@@ -1481,13 +1483,15 @@ index 000000000000..111111111111
 +	return err;
 +}
 +
-+static void cix_edp_panel_remove(struct device *dev)
++static int cix_edp_panel_remove(struct device *dev)
 +{
 +	struct cix_edp_panel *panel = dev_get_drvdata(dev);
 +
 +	drm_panel_remove(&panel->base);
 +	drm_panel_disable(&panel->base);
 +	drm_panel_unprepare(&panel->base);
++
++	return 0;
 +}
 +
 +static void cix_edp_panel_shutdown(struct device *dev)
@@ -1608,9 +1612,9 @@ index 000000000000..111111111111
 +	return cix_edp_panel_probe(&pdev->dev, desc);
 +}
 +
-+static void cix_edp_panel_platform_remove(struct platform_device *pdev)
++static int cix_edp_panel_platform_remove(struct platform_device *pdev)
 +{
-+	cix_edp_panel_remove(&pdev->dev);
++	return cix_edp_panel_remove(&pdev->dev);
 +}
 +
 +static void cix_edp_panel_platform_shutdown(struct platform_device *pdev)
@@ -1681,8 +1685,10 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/dptx_infoframe.c
-@@ -0,0 +1,359 @@
+@@ -0,0 +1,361 @@
 +// SPDX-License-Identifier: GPL-2.0
++// Copyright 2024 Cix Technology Group Co., Ltd.
++
 +#include <drm/drm_atomic_helper.h>
 +#include <drm/drm_connector.h>
 +#include <drm/drm_crtc.h>
@@ -2046,11 +2052,9 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/dptx_infoframe.h
-@@ -0,0 +1,46 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2023, The Linux Foundation. All rights reserved.
-+ */
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright 2024 Cix Technology Group Co., Ltd.
 +
 +#ifndef _DP_INFOFRAME_H_
 +#define _DP_INFOFRAME_H_
@@ -2647,7 +2651,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/hdcp/cix_hdcp_ioctl.c
-@@ -0,0 +1,184 @@
+@@ -0,0 +1,183 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * display port hdcp driver for the cix ec
@@ -2660,7 +2664,6 @@ index 000000000000..111111111111
 +#include <linux/string.h>
 +#include <linux/errno.h>
 +#include "cix_hdcp.h"
-+#include "cix_hdcp_ioctl.h"
 +#include "cix_hdcp_ioctl_cmd.h"
 +#include "hdcp2_tx_tmr.h"
 +#include "hdcp2_tx_state.h"
@@ -5075,7 +5078,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/hdcp/hdcp2_tx_tmr.c
-@@ -0,0 +1,190 @@
+@@ -0,0 +1,189 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * display port hdcp driver for the cix ec
@@ -5088,7 +5091,6 @@ index 000000000000..111111111111
 +#include <linux/io.h>
 +
 +#include "cix_hdcp.h"
-+#include "hdcp2_tx_tmr.h"
 +
 +//------------------------------------------------------------------------------
 +//  Time Values:
@@ -5123,7 +5125,7 @@ index 000000000000..111111111111
 +//  Returns:
 +//      None
 +//------------------------------------------------------------------------------
-+static void tmr_hdcp_init(void *addr)
++void tmr_hdcp_init(void *addr)
 +{
 +	writel(0ul, addr);
 +}
@@ -5138,7 +5140,7 @@ index 000000000000..111111111111
 +//  Returns:
 +//      None
 +//------------------------------------------------------------------------------
-+static void tmr_hdcp_set_us(void *addr, uint32_t tmr_us)
++void tmr_hdcp_set_us(void *addr, uint32_t tmr_us)
 +{
 +	uint32_t tmr_val = readl(addr);
 +
@@ -5157,7 +5159,7 @@ index 000000000000..111111111111
 +//  Returns:
 +//      None
 +//------------------------------------------------------------------------------
-+static void tmr_hdcp_enable(void *addr, bool enable)
++void tmr_hdcp_enable(void *addr, bool enable)
 +{
 +	uint32_t tmr_val = readl(addr);
 +
@@ -5180,7 +5182,7 @@ index 000000000000..111111111111
 +//  Returns:
 +//      None
 +//------------------------------------------------------------------------------
-+static void tmr_hdcp_interrupt(void *addr, bool enable)
++void tmr_hdcp_interrupt(void *addr, bool enable)
 +{
 +	uint32_t tmr_val = readl(addr);
 +
@@ -5203,7 +5205,7 @@ index 000000000000..111111111111
 +//  Returns:
 +//      None
 +//------------------------------------------------------------------------------
-+static void __maybe_unused tmr_hdcp_autoreload(void *addr, bool enable)
++void tmr_hdcp_autoreload(void *addr, bool enable)
 +{
 +	uint32_t tmr_val = readl(addr);
 +
@@ -5296,11 +5298,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_dptx.c
-@@ -0,0 +1,3483 @@
+@@ -0,0 +1,3406 @@
 +// SPDX-License-Identifier: GPL-2.0
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -5315,14 +5318,10 @@ index 000000000000..111111111111
 +//	along with this program. If not, see <http://www.gnu.org/licenses/>.
 +//------------------------------------------------------------------------------
 +
-+#include <drm/drm_atomic.h>
 +#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_atomic_uapi.h>
 +#include <drm/drm_crtc.h>
 +#include <drm/drm_device.h>
-+#include <drm/drm_drv.h>
 +#include <drm/drm_edid.h>
-+#include <drm/drm_modeset_lock.h>
 +#include <drm/drm_panel.h>
 +#include <drm/drm_managed.h>
 +#include <drm/drm_modes.h>
@@ -5331,9 +5330,9 @@ index 000000000000..111111111111
 +#include <drm/drm_simple_kms_helper.h>
 +#include <drm/drm_debugfs.h>
 +#include <drm/drm_file.h>
-+#include <drm/display/drm_dp_helper.h>
++#include <drm/drm_drv.h>
++#include <drm/drm_atomic_uapi.h>
 +
-+#include <linux/acpi.h>
 +#include <linux/clk.h>
 +#include <linux/delay.h>
 +#include <linux/device.h>
@@ -5344,7 +5343,6 @@ index 000000000000..111111111111
 +#include <linux/reset.h>
 +#include <linux/kernel.h>
 +#include <linux/clk-provider.h>
-+#include <linux/workqueue.h>
 +
 +#include "trilin_dptx_reg.h"
 +#include "trilin_host_tmr.h"
@@ -5378,6 +5376,7 @@ index 000000000000..111111111111
 +#define MISC0_USE_SYNC_CLOCK 0
 +#define TRILIN_AVI_SDP_ENABLE 0
 +static int trilin_dpcd_power_up(struct trilin_dp *dp);
++static int trinlin_dp_panel_read_sink_caps(struct trilin_dp *dp);
 +
 +void trilin_dp_write(struct trilin_dp *dp, int offset, u32 val)
 +{
@@ -5420,6 +5419,7 @@ index 000000000000..111111111111
 +	union phy_configure_opts opts = { 0 };
 +	struct trilin_phy_t *phy = &dp->phy;
 +	u8 lanes, max_lanes = dp->link_config.max_lanes;
++	int ret;
 +
 +	if (IS_ERR_OR_NULL(phy->base)) {
 +		lanes = max_lanes;
@@ -5435,7 +5435,7 @@ index 000000000000..111111111111
 +	opts.dp.set_rate = 1;
 +
 +	if (phy->phy_ops)
-+		phy->phy_ops->configure(dp, &opts);
++		ret = phy->phy_ops->configure(dp, &opts);
 +}
 +
 +/**
@@ -5676,12 +5676,16 @@ index 000000000000..111111111111
 +		pat = DP_TRAINING_PATTERN_1;
 +		break;
 +	case LINK_TRAIN_CHANNEL_EQUALIZATION:
-+		if (dp->caps.tps4_supported)
-+			pat = DP_TRAINING_PATTERN_4;
-+		else if (dp->caps.tps3_supported)
-+			pat = DP_TRAINING_PATTERN_3;
-+		else
++		if (dp->platform_id != CIX_PLATFORM_SOC) {
 +			pat = DP_TRAINING_PATTERN_2;
++		} else {
++			if (dp->caps.tps4_supported)
++				pat = DP_TRAINING_PATTERN_4;
++			else if (dp->caps.tps3_supported)
++				pat = DP_TRAINING_PATTERN_3;
++			else
++				pat = DP_TRAINING_PATTERN_2;
++		}
 +		break;
 +	default:
 +		DP_ERR("no this train patten.");
@@ -5806,12 +5810,15 @@ index 000000000000..111111111111
 +		if (ce_done)
 +			break;
 +
++		if (dp->platform_id == CIX_PLATFORM_EMU) // skip CE
++			goto end;
++
 +		trilin_dp_adjust_train(dp, link_status);
 +	}
 +
 +	if (!ce_done)
 +		return -EIO;
-+
++end:
 +	dp->train_ce_done = true;
 +	return 0;
 +}
@@ -5933,10 +5940,11 @@ index 000000000000..111111111111
 +
 +	trilin_link_rate_update(dp, bw_code);
 +
-+	ret = trilin_dp_phy_ready(dp);
-+	if (ret < 0)
-+		return ret;
-+
++	if (dp->platform_id == CIX_PLATFORM_SOC) {
++		ret = trilin_dp_phy_ready(dp);
++		if (ret < 0)
++			return ret;
++	}
 +	return ret;
 +}
 +
@@ -5985,7 +5993,7 @@ index 000000000000..111111111111
 + *
 + * Train the link by downshifting the link rate if training is not successful.
 + */
-+static int trilin_dp_train_loop(struct trilin_dp *dp)
++int trilin_dp_train_loop(struct trilin_dp *dp)
 +{
 +	struct trilin_dp_mode *mode = &dp->mode;
 +	u8 bw_cur, bw = mode->bw_code;
@@ -5998,7 +6006,7 @@ index 000000000000..111111111111
 +		i = 0;
 +		bw_cur = bw;
 +		do {
-+			if (!(dp->state & DP_STATE_READY)) {
++			if (!(dp->state & DPTX_STATE_READY)) {
 +				DP_DEBUG("disconnected, not do training");
 +				return 0;
 +			}
@@ -6100,14 +6108,26 @@ index 000000000000..111111111111
 +	if (reply)
 +		*reply = reg;
 +
-+	if (is_read && (reg == TRILIN_DPTX_AUX_REPLY_CODE_AUX_ACK ||
-+			reg == TRILIN_DPTX_AUX_REPLY_CODE_I2C_ACK)) {
-+		reg = trilin_dp_read(dp,
-+				     TRILIN_DPTX_AUX_REPLY_DATA_COUNT);
-+		if ((reg & TRILIN_DPTX_REPLY_DATA_COUNT_MASK) !=
-+		    bytes) {
-+			DP_ERR("TRILIN_DPTX_REPLY_DATA_COUNT_MASK\n");
-+			return -EIO;
++	if (dp->platform_id != CIX_PLATFORM_EMU) {
++		if (is_read && (reg == TRILIN_DPTX_AUX_REPLY_CODE_AUX_ACK ||
++				reg == TRILIN_DPTX_AUX_REPLY_CODE_I2C_ACK)) {
++			reg = trilin_dp_read(dp,
++					     TRILIN_DPTX_AUX_REPLY_DATA_COUNT);
++			if ((reg & TRILIN_DPTX_REPLY_DATA_COUNT_MASK) !=
++			    bytes) {
++				DP_ERR("TRILIN_DPTX_REPLY_DATA_COUNT_MASK\n");
++				return -EIO;
++			}
++		}
++	} else {
++		if (is_read) {
++			reg = trilin_dp_read(dp,
++					     TRILIN_DPTX_AUX_REPLY_DATA_COUNT);
++			if ((reg & TRILIN_DPTX_REPLY_DATA_COUNT_MASK) !=
++			    bytes) {
++				DP_ERR("TRILIN_DPTX_AUX_REPLY_DATA_COUNT\n");
++				return -EIO;
++			}
 +		}
 +	}
 +
@@ -6487,7 +6507,7 @@ index 000000000000..111111111111
 +		dp->caps.psr2_sink_support = y_req && alpm;
 +	}
 +
-+	/* For eDP panels that don't support fast training, keep main link active */
++	/*For edp pannel that not support fast training, keep main link active*/
 +	if (!dp->caps.fast_training)
 +		dp->psr.main_link_keep_active = true;
 +
@@ -6502,8 +6522,7 @@ index 000000000000..111111111111
 +		DP_DEBUG("Unable to get sink synchronization latency, assuming 8 frames\n");
 +
 +	dp->psr.sink_sync_latency = val;
-+	DP_INFO("Panel Supports PSR %s: caps:%0x",
-+		dp->caps.psr2_sink_support ? "and PSR2" : "but not PSR2", psr_caps);
++	DP_INFO("Panel Supports PSR %s: caps:%0x", dp->caps.psr2_sink_support ? "and PSR2" : "but not PSR2", psr_caps);
 +}
 +
 +static void trilin_dp_psr_enable_sink(struct trilin_dp *dp,
@@ -6512,7 +6531,6 @@ index 000000000000..111111111111
 +	u8 dpcd_val;
 +	int ret;
 +	struct trilin_connector *conn = dp_panel ? dp_panel->connector : NULL;
-+
 +	if (!dp->caps.psr_sink_support || !dp->psr_config_on
 +		|| !conn || conn->vrr.enable)
 +		return;
@@ -6619,23 +6637,23 @@ index 000000000000..111111111111
 +	}
 +
 +	trilin_dp_write(dp, TRILIN_DPTX_SRC0_PSR_STATE, 0x1);
-+	if (!trilin_dp_wait_psr_status_ready(dp, true))
++	if(!trilin_dp_wait_psr_status_ready(dp, true)) {
 +		goto err;
++	}
 +
-+	/* TODO: single frame update support */
-+	/* trilin_dp_write(dp, TRILIN_DPTX_SRC0_PSR_STATE, 0x3); */
++	/*Todo: single frame update support*/
++	// trilin_dp_write(dp, TRILIN_DPTX_SRC0_PSR_STATE, 0x3); //single frame update
 +
 +	if (!dp->psr.main_link_keep_active) {
 +		if (phy->phy_ops)
 +			phy->phy_ops->power(dp, trilin_power_a3);
-+		/* 5 idle patterns needs TRILIN_DPTX_VIDEO_STREAM_ENABLE 0 */
++		/* 5 idle pattens needs TRILIN_DPTX_VIDEO_STREAM_ENABLE 0*/
 +		trilin_dp_write(dp, TRILIN_DPTX_VIDEO_STREAM_ENABLE, 0x0);
 +	}
 +
 +	dp->psr.active = true;
 +	DP_DEBUG("end");
 +	return;
-+
 +err:
 +	trilin_dp_write(dp, TRILIN_DPTX_SRC0_PSR_STATE, 0x0);
 +	dp->psr.active = false;
@@ -6658,8 +6676,9 @@ index 000000000000..111111111111
 +			phy->phy_ops->power(dp, trilin_power_a2);
 +			phy->phy_ops->power(dp, trilin_power_a0);
 +		}
++		//remove fast train...
 +		trilin_dpcd_power_up(dp);
-+		/* Send 5 idle patterns for PSR exit */
++		/* 5 idle pattens */
 +		trilin_dp_write(dp, TRILIN_DPTX_DISABLE_SCRAMBLING, 1);
 +		trilin_dp_write(dp, TRILIN_DPTX_TRAINING_PATTERN_SET, 0x1);
 +		usleep_range(500, 600);
@@ -6681,16 +6700,16 @@ index 000000000000..111111111111
 +	trilin_dp_write(dp, TRILIN_DPTX_VIDEO_STREAM_ENABLE, 0x1);
 +	usleep_range(50, 60);
 +	trilin_dp_write(dp, TRILIN_DPTX_SRC0_PSR_STATE, 0x0);
-+	if (!trilin_dp_wait_psr_status_ready(dp, false))
++	if (!trilin_dp_wait_psr_status_ready(dp, false)) {
 +		goto end;
-+
++	}
 +	dp->psr.active = false;
 +	return;
-+
 +end:
 +	dp->psr_config_on = false;
 +	dp->psr_default_on = 0;
 +	dp->psr.active = false;
++
 +	DP_DEBUG("end");
 +}
 +
@@ -6946,7 +6965,7 @@ index 000000000000..111111111111
 +	return 0;
 +}
 +
-+static void trilin_dp_panel_hw_cfg(struct trilin_dp *dp,
++void trilin_dp_panel_hw_cfg(struct trilin_dp *dp,
 +			    struct trilin_dp_panel *dp_panel)
 +{
 +	struct trilin_connector *conn = dp_panel->connector;
@@ -7098,6 +7117,9 @@ index 000000000000..111111111111
 +	int rc = 0;
 +	struct clk *vid_clk;
 +
++	if (dp->platform_id != CIX_PLATFORM_SOC)
++		return rc;
++
 +	if (dp_panel->stream_id == DP_STREAM_0) {
 +		vid_clk = dp->dpsub->vid_clk0;
 +	} else if (dp_panel->stream_id == DP_STREAM_1) {
@@ -7139,8 +7161,8 @@ index 000000000000..111111111111
 +	trilin_dp_panel_hw_cfg(dp, dp_panel);
 +	trilin_dp_ctrl_mst_stream_setup(dp, dp_panel, true);
 +end:
-+	trilin_dp_psr_enable_sink(dp, dp_panel);
 +
++	trilin_dp_psr_enable_sink(dp, dp_panel);
 +	trilin_dp_write(dp, TRILIN_DPTX_VIDEO_STREAM_ENABLE + regs_off, 1);
 +	trilin_dp_write(dp, TRILIN_DPTX_SECONDARY_STREAM_ENABLE + regs_off, 1);
 +
@@ -7164,8 +7186,10 @@ index 000000000000..111111111111
 +{
 +	u32 regs_off = TRILIN_DPTX_SOURCE_OFFSET * dp_panel->stream_id;
 +
-+	if (dp->edp_panel)
-+		drm_panel_disable(dp->edp_panel);
++	if (dp->edp_panel) {
++		if (drm_panel_disable(dp->edp_panel))
++			DP_INFO("edp panel disable failed");
++	}
 +	/*reset infoframe*/
 +	trilin_dp_write(dp, TRILIN_DPTX_SEC0_INFOFRAME_ENABLE + regs_off, 0);
 +	trilin_dp_write(dp, TRILIN_DPTX_SEC0_INFOFRAME_SELECT + regs_off, 0);
@@ -7314,15 +7338,15 @@ index 000000000000..111111111111
 +	int i;
 +
 +	DP_DEBUG("enter");
-+	if (dp->state & DP_STATE_READY) {
++	if (dp->state & DPTX_STATE_READY) {
 +		DP_DEBUG("[already ready]");
 +		return rc;
 +	}
 +
-+	dp->state |= DP_STATE_READY;
++	dp->state |= DPTX_STATE_READY;
 +
 +	if (dp->enabled_by_gop) {
-+		dp->state |= DP_STATE_INIT_TRAIN;
++		dp->state |= DPTX_STATE_INIT_TRAIN;
 +		DP_DEBUG("[enabled_by_gop]");
 +		return rc;
 +	}
@@ -7363,8 +7387,11 @@ index 000000000000..111111111111
 +		fast_train_success = !trilin_dp_fast_train(dp);
 +	}
 +
-+	if (!fast_train_success)
++	if (!fast_train_success) {
++		/* update sink caps, before do linktraining */
++		trinlin_dp_panel_read_sink_caps(dp);
 +		rc = trilin_dp_train_loop(dp);
++	}
 +
 +	/*dptx source enable*/
 +	trilin_dp_write(dp, TRILIN_DPTX_SOFT_RESET, enable_sources);
@@ -7380,12 +7407,18 @@ index 000000000000..111111111111
 +		DP_DEBUG("train failed but GO ON");
 +	}
 +
-+	DP_DEBUG("Trilinear DPTX %x with %u lanes\n",
-+		trilin_dp_read(dp, TRILIN_DPTX_CORE_REVISION), dp->num_lanes);
++	DP_DEBUG("Trilinear DPTX %x with %u lanes, platform id %d\n",
++		trilin_dp_read(dp, TRILIN_DPTX_CORE_REVISION), dp->num_lanes,
++		dp->platform_id);
 +
-+	if (dp->edp_panel)
-+		drm_panel_enable(dp->edp_panel);
-+	dp->state |= DP_STATE_INIT_TRAIN;
++	if (dp->edp_panel) {
++		rc = drm_panel_enable(dp->edp_panel);
++		if (rc) {
++			DP_INFO("edp panel disable failed but GO ON");
++			rc = 0;
++		}
++	}
++	dp->state |= DPTX_STATE_INIT_TRAIN;
 +	return rc;
 +end3:
 +	if (phy->phy_ops)
@@ -7394,7 +7427,7 @@ index 000000000000..111111111111
 +	if (phy->phy_ops)
 +		phy->phy_ops->exit(dp);
 +end1:
-+	dp->state &= ~DP_STATE_READY;
++	dp->state &= ~DPTX_STATE_READY;
 +	return rc;
 +}
 +
@@ -7403,7 +7436,7 @@ index 000000000000..111111111111
 +	int rc = 0;
 +	struct trilin_phy_t *phy = &dp->phy;
 +
-+	if (!(dp->state & DP_STATE_READY))
++	if (!(dp->state & DPTX_STATE_READY))
 +		return rc;
 +
 +	DP_DEBUG("enter\n");
@@ -7413,12 +7446,6 @@ index 000000000000..111111111111
 +		phy->phy_ops->power(dp, trilin_power_a3);
 +		phy->phy_ops->exit(dp);
 +	}
-+
-+	/* Stop audio packets before tearing down the link.  The ALSA
-+	 * stream may still be open (running flag stays set so that
-+	 * reconfig_and_enable restores audio on the next plug-in).
-+	 */
-+	trilin_dp_write(dp, TRILIN_DPTX_SEC0_AUDIO_ENABLE, 0);
 +
 +	trilin_dp_write(dp, TRILIN_DPTX_MST_ENABLE, 0);
 +	trilin_dp_write(dp, TRILIN_DPTX_SOURCE_ENABLE, 0);
@@ -7430,9 +7457,8 @@ index 000000000000..111111111111
 +	memset(&(dp->mst_ch_info.slot_info),
 +			0, sizeof(struct trilin_dp_mst_ch_slot_info) * dp->max_streams);
 +
-+	dp->state &= ~DP_STATE_READY;
-+	dp->state &= ~DP_STATE_INIT_TRAIN;
-+
++	dp->state &= ~DPTX_STATE_READY;
++	dp->state &= ~DPTX_STATE_INIT_TRAIN;
 +	return rc;
 +}
 +
@@ -7531,7 +7557,7 @@ index 000000000000..111111111111
 +	bool status_update, clock_recovery_ok, channel_eq_ok;
 +	int ret;
 +
-+	if (!(dp->state & DP_STATE_ENABLED))
++	if (!(dp->state & DPTX_STATE_ENABLED))
 +		return false;
 +
 +	ret = drm_dp_dpcd_read(&dp->aux, DP_SINK_COUNT, status,
@@ -7573,7 +7599,7 @@ index 000000000000..111111111111
 +	u8 status[DP_LINK_STATUS_SIZE + 2];
 +	int ret;
 +
-+	if (!(dp->state & DP_STATE_ENABLED))
++	if (!(dp->state & DPTX_STATE_ENABLED))
 +		return false;
 +
 +	ret = drm_dp_dpcd_read(&dp->aux, DP_SINK_COUNT, status,
@@ -7618,7 +7644,7 @@ index 000000000000..111111111111
 +	struct fwnode_handle *fwnode;
 +
 +	/* register phy here that need power init*/
-+	if (!phy->phy_ops) {
++	if (!phy->phy_ops && dp->platform_id == CIX_PLATFORM_SOC) {
 +		if (has_acpi_companion(dp->dev)) {
 +			fwnode = fwnode_find_reference(dp->dev->fwnode, "dp_phy", 0);
 +			if (!IS_ERR(fwnode)) {
@@ -7685,9 +7711,10 @@ index 000000000000..111111111111
 +int trilin_dp_host_init(struct trilin_dp *dp)
 +{
 +	int rc = 0;
++	struct trilin_phy_t *phy = &dp->phy;
 +
 +	DP_DEBUG("enter\n");
-+	if (dp->state & DP_STATE_INITIALIZED) {
++	if (dp->state & DPTX_STATE_INITIALIZED) {
 +		DP_DEBUG("[already initialized]");
 +		return rc;
 +	}
@@ -7701,14 +7728,22 @@ index 000000000000..111111111111
 +	}
 +
 +	if (dp->edp_panel) {
-+		drm_panel_prepare(dp->edp_panel);
++		rc = drm_panel_prepare(dp->edp_panel);
++		if (rc) {
++			DP_ERR("edp panel prepare failed");
++			goto err_out;
++		}
 +		msleep(50);
 +		dp->edp_panel_ready = true;
 +	}
 +
-+	dp->state |= DP_STATE_INITIALIZED;
++	dp->state |= DPTX_STATE_INITIALIZED;
 +	/* log this as it results from user action of cable connection */
 +	DP_INFO("[OK.]\n");
++	return rc;
++err_out:
++	if (phy->phy_ops)
++		phy->phy_ops->exit(dp);
 +	return rc;
 +}
 +
@@ -7718,14 +7753,14 @@ index 000000000000..111111111111
 +
 +	trilin_dp_register_phy(dp);
 +
-+	dp->state |= DP_STATE_INITIALIZED;
++	dp->state |= DPTX_STATE_INITIALIZED;
 +
 +	dev_info(dp->dev, "%s reports a plug event\n", __func__);
 +
 +	/* add force to detect to sync call detect. */
 +	drm_helper_probe_detect(&dp->connector.base, NULL, false);
-+	/* then call the hpd event - use freezable workqueue */
-+	queue_delayed_work(system_freezable_wq, &dp->hpd_event_work, 0);
++	/* then call the hpd envent */
++	schedule_delayed_work(&dp->hpd_event_work, 0);
 +	return rc;
 +}
 +
@@ -7737,12 +7772,14 @@ index 000000000000..111111111111
 +		DP_DEBUG("active stream present\n");
 +		return;
 +	}
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		DP_DEBUG("[not initialized]");
 +		return;
 +	}
-+	if (dp->edp_panel)
-+		drm_panel_unprepare(dp->edp_panel);
++	if (dp->edp_panel) {
++		if (drm_panel_unprepare(dp->edp_panel))
++			DP_INFO("unprepare failed");
++	}
 +
 +	if (phy->phy_ops)
 +		phy->phy_ops->exit(dp);
@@ -7753,8 +7790,8 @@ index 000000000000..111111111111
 +			TRILIN_DPTX_INTERRUPT_MASK_ALL);
 +	trilin_dp_core_power_deinit(dp);
 +
-+	dp->state &= ~DP_STATE_INITIALIZED;
-+	dp->state &= ~DP_STATE_INIT_TRAIN;
++	dp->state &= ~DPTX_STATE_INITIALIZED;
++	dp->state &= ~DPTX_STATE_INIT_TRAIN;
 +	/* log this as it results from user action of cable dis-connection */
 +	DP_DEBUG("[OK]\n");
 +}
@@ -7818,36 +7855,13 @@ index 000000000000..111111111111
 +	       (drm_dp_read_sink_count(&dp->aux) == 0);
 +}
 +
-+/*
-+ * Check if the DP link is healthy by reading DPCD link status.
-+ * Returns true if clock recovery and channel equalization are both OK,
-+ * or if the link isn't in a state where checking makes sense.
-+ * Returns false if the link has degraded and needs retraining.
-+ */
-+static bool trilin_dp_link_is_healthy(struct trilin_dp *dp)
-+{
-+	u8 status[DP_LINK_STATUS_SIZE + 2];
-+	int ret;
-+
-+	if (!(dp->state & DP_STATE_READY))
-+		return true;
-+
-+	ret = drm_dp_dpcd_read(&dp->aux, DP_SINK_COUNT, status,
-+			       DP_LINK_STATUS_SIZE + 2);
-+	if (ret < 0)
-+		return false;
-+
-+	return drm_dp_clock_recovery_ok(&status[2], dp->mode.lane_cnt) &&
-+	       drm_dp_channel_eq_ok(&status[2], dp->mode.lane_cnt);
-+}
-+
 +static bool trilin_dp_is_ready(struct trilin_dp *dp)
 +{
 +	DP_DEBUG("hpd=%d state=%d sink count:%d is_sink_count_zero=%d\n",
-+		trilin_dp_get_hpd_state(dp), (dp->state & DP_STATE_CONNECTED),
++		trilin_dp_get_hpd_state(dp), (dp->state & DPTX_STATE_CONNECTED),
 +		drm_dp_read_sink_count(&dp->aux),
 +		trilin_dp_is_sink_count_zero(dp));
-+	return trilin_dp_get_hpd_state(dp) && (dp->state & DP_STATE_CONNECTED);
++	return trilin_dp_get_hpd_state(dp) && (dp->state & DPTX_STATE_CONNECTED);
 +	// && !trilin_dp_is_sink_count_zero(dp);
 +}
 +
@@ -7858,40 +7872,25 @@ index 000000000000..111111111111
 +
 +	DP_DEBUG("enter\n");
 +	mutex_lock(&dp->session_lock);
-+	if (dp->state & DP_STATE_CONNECTED) {
++	if (dp->state & DPTX_STATE_CONNECTED) {
 +		DP_DEBUG("dp already connected, skipping hpd high\n");
 +		mutex_unlock(&dp->session_lock);
 +		return 0;
 +	}
-+	if (dp->state & DP_STATE_SUSPENDED) {
-+		DP_DEBUG("DP_STATE_SUSPENDED return\n");
++	if (dp->state & DPTX_STATE_SUSPENDED) {
++		DP_DEBUG("DPTX_STATE_SUSPENDED return\n");
 +		goto end;
 +	}
 +
-+	dp->state |= DP_STATE_CONNECTED;
++	dp->state |= DPTX_STATE_CONNECTED;
 +
 +	rc = trinlin_dp_panel_read_sink_caps(dp);
-+	/*
-+	 * On cold-plug (display connected after boot), the sink may not be
-+	 * ready for AUX transactions immediately.  The DP spec allows up to
-+	 * 500ms for a sink to power up, but some bridges/monitors need more.
-+	 * Retry with increasing delays before giving up.
-+	 */
-+	if (rc == -ETIMEDOUT) {
-+		int retries;
-+
-+		for (retries = 0; retries < 5 && rc == -ETIMEDOUT; retries++) {
-+			DP_INFO("sink not ready, retry %d/5\n", retries + 1);
-+			msleep(100);
-+			rc = trinlin_dp_panel_read_sink_caps(dp);
-+		}
-+	}
 +	/*
 +	 * ETIMEDOUT --> cable may have been removed
 +	 * ENOTCONN --> no downstream device connected
 +	 */
 +	if (rc == -ETIMEDOUT || rc == -ENOTCONN) {
-+		dp->state &= ~DP_STATE_CONNECTED;
++		dp->state &= ~DPTX_STATE_CONNECTED;
 +		goto end;
 +	}
 +
@@ -7914,36 +7913,12 @@ index 000000000000..111111111111
 +	DP_DEBUG("enter\n");
 +	mutex_lock(&dp->session_lock);
 +
-+	if (!(dp->state & DP_STATE_CONNECTED)) {
++	if (!(dp->state & DPTX_STATE_CONNECTED)) {
 +		DP_DEBUG("already disconnect");
 +		goto end;
 +	}
 +
-+	dp->state &= ~DP_STATE_CONNECTED;
-+
-+	/*
-+	 * Tear down DP core and PHY immediately on disconnect.
-+	 *
-+	 * The normal shutdown path (encoder_disable -> trilin_dp_unprepare ->
-+	 * trilin_dp_core_off) is asynchronous ��� it depends on the compositor
-+	 * processing the hotplug uevent and issuing an atomic commit.  On a
-+	 * quick unplug/replug cycle this may not have happened yet, leaving
-+	 * DP_STATE_READY and DP_STATE_ENABLED set.  trilin_dp_prepare() then
-+	 * returns early ("already enabled") and trilin_dp_core_on() skips PHY
-+	 * reinitialization, so link training fails with stale PHY state.
-+	 *
-+	 * Calling core_off here ensures the PHY is powered down and
-+	 * DP_STATE_READY is cleared regardless of compositor timing.
-+	 * core_off is idempotent (checks DP_STATE_READY), so the later
-+	 * encoder_disable path harmlessly no-ops.
-+	 */
-+	trilin_dp_core_off(dp);
-+	dp->state &= ~DP_STATE_ENABLED;
-+	dp->active_stream_cnt = 0;
-+
-+	/* Invalidate CEC physical address; the framework debounces unregistration */
-+	drm_dp_cec_unset_edid(&dp->aux);
-+
++	dp->state &= ~DPTX_STATE_CONNECTED;
 +	if (dp->mst.mst_active) {
 +		/* user mode should active power off to disable encoder */
 +		trilin_dp_set_mst_mgr_state(dp, false);
@@ -7966,12 +7941,10 @@ index 000000000000..111111111111
 +	cancel_delayed_work_sync(&dp->hpd_event_work);
 +	disable_irq(dp->irq);
 +
-+	drm_dp_cec_unregister_connector(&dp->aux);
-+
 +	mutex_lock(&dp->session_lock);
 +	trilin_dp_aux_cleanup(dp);
 +	trilin_dp_host_deinit(dp);
-+	dp->state &= ~(DP_STATE_CONFIGURED);
++	dp->state &= ~(DPTX_STATE_CONFIGURED);
 +	mutex_unlock(&dp->session_lock);
 +	/*final destry session_lock*/
 +	mutex_destroy(&dp->session_lock);
@@ -7988,6 +7961,7 @@ index 000000000000..111111111111
 +	struct trilin_phy_t *phy;
 +	int try;
 +	bool connected;
++	enum drm_connector_status old_status;
 +
 +	dp = container_of(work, struct trilin_dp, hpd_event_work.work);
 +	phy = &dp->phy;
@@ -8008,32 +7982,16 @@ index 000000000000..111111111111
 +	}
 +
 +	/* add force to detect to sync call detect. */
++	old_status = dp->status;
 +	drm_helper_probe_detect(&dp->connector.base, NULL, false);
 +
-+	connected = (dp->status == connector_status_connected);
-+	if (dp->plugin == connected) {
-+		/*
-+		 * HPD bounce recovery: if we think we're already connected but
-+		 * the link has degraded (e.g., bridge/sink was power-cycled
-+		 * during a fast unplug/replug that we never saw as a
-+		 * disconnect), force a full disconnect/reconnect cycle to
-+		 * re-establish the link.  This follows the i915 pattern of
-+		 * checking live DPCD link status on "already connected" HPD.
-+		 */
-+		if (connected && !trilin_dp_link_is_healthy(dp)) {
-+			DP_INFO("HPD bounce: link degraded, forcing reconnect\n");
-+			trilin_dp_handle_disconnect(dp, false);
-+			dp->plugin = false;
-+			drm_helper_probe_detect(&dp->connector.base, NULL, false);
-+			connected = (dp->status == connector_status_connected);
-+		} else {
-+			return;
-+		}
++	if(old_status == dp->status) {
++		DP_INFO("dp status is same : %d", dp->status);
++		return;
 +	}
++	connected = (dp->status == connector_status_connected);
 +
-+	dp->plugin = connected;
-+
-+	if (dp->plugin)
++	if (connected)
 +		DP_INFO("dp hpd event received: Plugged\n");
 +	else
 +		DP_INFO("dp hpd event received: Unplugged\n");
@@ -8041,17 +7999,10 @@ index 000000000000..111111111111
 +	if (dp->drm[0])
 +		drm_helper_hpd_irq_event(dp->drm[0]);
 +
-+	/* Audio plugged notification is deferred to
-+	 * trilin_connector_update_modes(), after the ELD has been
-+	 * populated from EDID.  Firing it here would race ��� the
-+	 * connector probe triggered above is asynchronous.
-+	 *
-+	 * For unplug, notify immediately so hdmi-codec can clear state.
-+	 */
-+	if (!dp->plugin)
-+		dptx_audio_handle_plugged_change(dp_audio, false);
++	DP_DEBUG("dp audio plugin status = %d\n", connected);
++	dptx_audio_handle_plugged_change(dp_audio, connected);
 +
-+	cix_hdcp_hpd_event_process(&dp->hdcp, dp->plugin);
++	cix_hdcp_hpd_event_process(&dp->hdcp, connected);
 +}
 +
 +/* hdp irq handle other event */
@@ -8067,10 +8018,8 @@ index 000000000000..111111111111
 +		return;
 +	}
 +
-+	drm_dp_cec_irq(&dp->aux);
-+
 +	mutex_lock(&dp->session_lock);
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		mutex_unlock(&dp->session_lock);
 +		goto mst_attention;
 +	}
@@ -8080,7 +8029,7 @@ index 000000000000..111111111111
 +
 +	if (dp->link_request & DP_LINK_STATUS_UPDATED) {
 +		mutex_lock(&dp->session_lock);
-+		if (dp->state & DP_STATE_ENABLED)
++		if (dp->state & DPTX_STATE_ENABLED)
 +			trilin_dp_train_loop(dp);
 +		mutex_unlock(&dp->session_lock);
 +	}
@@ -8117,13 +8066,16 @@ index 000000000000..111111111111
 +		u32 delay = 0;
 +		if (trilin_dp_get_hpd_state(dp))
 +			delay = dp->delay_after_hpd;
-+		/* Use freezable workqueue to prevent races during suspend */
++		// schedule_delayed_work(&dp->hpd_event_work,
++		// 		      msecs_to_jiffies(delay));
 +		queue_delayed_work(system_freezable_wq, &dp->hpd_event_work,
-+				   msecs_to_jiffies(delay));
++				      msecs_to_jiffies(delay));
 +	}
 +
 +	if (status & TRILIN_DPTX_INTERRUPT_HPD_IRQ)
-+		queue_delayed_work(system_freezable_wq, &dp->hpd_irq_work, 0);
++		//schedule_delayed_work(&dp->hpd_irq_work, 0);
++		queue_delayed_work(system_freezable_wq, &dp->hpd_irq_work,
++				      0);
 +
 +	return IRQ_HANDLED;
 +}
@@ -8132,13 +8084,6 @@ index 000000000000..111111111111
 + * Common function for trilin_drm.c and trilin_drm_mst.c
 + */
 +
-+/*
-+ * trilin_dp_pm_resume_early - Early resume to force connector state reset
-+ *
-+ * This function uses DRM_MODESET_LOCK_ALL to safely manipulate the atomic
-+ * state during resume. It forces all connectors to disconnected state,
-+ * which ensures a clean state for the subsequent complete phase.
-+ */
 +int trilin_dp_pm_resume_early(struct trilin_dp *dp)
 +{
 +	struct drm_connector *connector = &dp->connector.base;
@@ -8149,10 +8094,9 @@ index 000000000000..111111111111
 +	struct drm_connector_state *conn_state;
 +	struct drm_connector *conn;
 +	int ret, i;
-+
 +	DP_INFO("enter");
 +
-+	if (IS_ERR(old_state)) {
++	if(IS_ERR(old_state)) {
 +		DP_ERR("old state err");
 +		return PTR_ERR(old_state);
 +	}
@@ -8162,7 +8106,7 @@ index 000000000000..111111111111
 +		return -EINVAL;
 +	}
 +
-+	/* Force status disconnected with proper modeset locking */
++	/* force status disconnected */
 +	DRM_MODESET_LOCK_ALL_BEGIN(dev, ctx, 0, ret);
 +	new_state = drm_atomic_helper_duplicate_state(dev, &ctx);
 +
@@ -8194,33 +8138,23 @@ index 000000000000..111111111111
 +	return ret;
 +}
 +
-+/*
-+ * trilin_dp_pm_prepare - Prepare for system suspend
-+ *
-+ * Note: mutex must be released before cancel_delayed_work_sync() to avoid
-+ * deadlock. The work callbacks may need session_lock, and waiting for them
-+ * to complete while holding the lock would deadlock.
-+ */
 +int trilin_dp_pm_prepare(struct trilin_dp *dp)
 +{
 +	mutex_lock(&dp->session_lock);
 +	DP_DEBUG("enter");
 +	trilin_dp_mst_suspend(dp);
 +	mutex_unlock(&dp->session_lock);
-+
-+	/* Release lock before sync - work callbacks may need it */
 +	cancel_delayed_work_sync(&dp->hpd_irq_work);
 +	cancel_delayed_work_sync(&dp->hpd_event_work);
-+
 +	mutex_lock(&dp->session_lock);
 +	disable_irq(dp->irq);
-+	dp->state |= DP_STATE_SUSPENDED;
++	dp->state |= DPTX_STATE_SUSPENDED;
 +	if (!dp->active_stream_cnt) {
 +		DP_DEBUG("no active stream. just deinit");
 +		trilin_dp_host_deinit(dp);
 +	}
 +	dp->status = connector_status_unknown;
-+	dp->state &= ~DP_STATE_CONNECTED;
++	dp->state &= ~DPTX_STATE_CONNECTED;
 +	mutex_unlock(&dp->session_lock);
 +	return 0;
 +}
@@ -8229,14 +8163,14 @@ index 000000000000..111111111111
 +{
 +	mutex_lock(&dp->session_lock);
 +	DP_DEBUG("enter");
-+	if (!(dp->state & DP_STATE_SUSPENDED))
++	if (!(dp->state & DPTX_STATE_SUSPENDED))
 +		goto end;
 +	trilin_dp_host_init(dp);
 +
 +	DP_DEBUG("init hpd: %d", trilin_dp_get_hpd_state(dp));
 +	enable_irq(dp->irq);
 +	trilin_dp_mst_resume(dp);
-+	dp->state &= ~DP_STATE_SUSPENDED;
++	dp->state &= ~DPTX_STATE_SUSPENDED;
 +end:
 +	mutex_unlock(&dp->session_lock);
 +	return 0;
@@ -8335,21 +8269,21 @@ index 000000000000..111111111111
 +	mutex_lock(&dp->session_lock);
 +
 +	/*
-+	 * If DP_STATE_ENABLED, there is nothing left to do.
++	 * If DPTX_STATE_ENABLED, there is nothing left to do.
 +	 */
-+	if (dp->state & (DP_STATE_ENABLED)) {
++	if (dp->state & (DPTX_STATE_ENABLED)) {
 +		DP_DEBUG("[already enabled, mst second stream?]");
 +		goto end;
 +	}
 +
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		rc = trilin_dp_host_init(dp);
 +		if (rc) {
 +			DP_WARN("Host init Failed");
 +			goto end;
 +		}
-+	} else if (dp->state & DP_STATE_INIT_TRAIN){
-+		reset_dp_and_reinit(dp);
++	} else if (dp->state & DPTX_STATE_INIT_TRAIN){
++		reset_dp_and_reinit(dp); //enable dp reset...
 +		usleep_range(100, 200);
 +	}
 +
@@ -8371,10 +8305,10 @@ index 000000000000..111111111111
 +	DP_DEBUG("enter\n");
 +	mutex_lock(&dp->session_lock);
 +	/*
-+	 * If DP_STATE_INITIALIZED or DP_STATE_READY is not set, we should
-+	 * not do any HW programming.
++	 * If DPTX_STATE_INITIALIZED is not set, we should not do any HW
++	 * programming.
 +	 */
-+	if (!(dp->state & DP_STATE_INITIALIZED) || !(dp->state & DP_STATE_READY)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED) || !(dp->state & DPTX_STATE_READY)) {
 +		DP_WARN("[host not ready]");
 +		goto end;
 +	}
@@ -8392,7 +8326,7 @@ index 000000000000..111111111111
 +	if (rc)
 +		goto end;
 +
-+	dp->state |= DP_STATE_ENABLED;
++	dp->state |= DPTX_STATE_ENABLED;
 +end:
 +	mutex_unlock(&dp->session_lock);
 +	return rc;
@@ -8411,7 +8345,7 @@ index 000000000000..111111111111
 +
 +	DP_DEBUG("enter\n");
 +	mutex_lock(&dp->session_lock);
-+	if (!(dp->state & DP_STATE_ENABLED)) {
++	if (!(dp->state & DPTX_STATE_ENABLED)) {
 +		DP_DEBUG("[not enabled]");
 +		goto end;
 +	}
@@ -8429,12 +8363,12 @@ index 000000000000..111111111111
 +	DP_DEBUG("enter\n");
 +	mutex_lock(&dp->session_lock);
 +
-+	if (!(dp->state & DP_STATE_ENABLED)) {
++	if (!(dp->state & DPTX_STATE_ENABLED)) {
 +		DP_DEBUG("[not enabled]");
 +		goto end;
 +	}
 +
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		DP_DEBUG("[not ready]");
 +		goto end;
 +	}
@@ -8452,7 +8386,7 @@ index 000000000000..111111111111
 +	DP_DEBUG("enter\n");
 +
 +	mutex_lock(&dp->session_lock);
-+	if (!(dp->state & DP_STATE_ENABLED)) {
++	if (!(dp->state & DPTX_STATE_ENABLED)) {
 +		DP_DEBUG("[not enabled]");
 +		goto end;
 +	}
@@ -8464,10 +8398,10 @@ index 000000000000..111111111111
 +
 +	trilin_dp_core_off(dp);
 +
-+	if (dp->state & DP_STATE_SUSPENDED)
++	if (dp->state & DPTX_STATE_SUSPENDED)
 +		trilin_dp_host_deinit(dp);
 +
-+	dp->state &= ~DP_STATE_ENABLED;
++	dp->state &= ~DPTX_STATE_ENABLED;
 +	/* log this as it results from user action of cable dis-connection */
 +	DP_DEBUG("[OK]\n");
 +end:
@@ -8486,7 +8420,7 @@ index 000000000000..111111111111
 +
 +	/* config dp state*/
 +	mutex_init(&dp->session_lock);
-+	dp->state |= (DP_STATE_CONFIGURED);
++	dp->state |= (DPTX_STATE_CONFIGURED);
 +
 +	rc = trilin_dp_aux_register(dp);
 +	if (rc) {
@@ -8497,7 +8431,7 @@ index 000000000000..111111111111
 +	/* first call host init */
 +	if (dp->enabled_by_gop) {
 +		trinlin_dp_panel_read_sink_caps(dp);
-+		if (!dp->caps.mst)
++		if (!dp->caps.mst && !dp->caps.psr_sink_support)
 +			rc = trilin_dp_host_init_from_bootloader(dp);
 +		else
 +			dp->enabled_by_gop = 0; //mst disable gop
@@ -8527,7 +8461,7 @@ index 000000000000..111111111111
 +end2:
 +	trilin_dp_aux_cleanup(dp);
 +end1:
-+	dp->state &= ~DP_STATE_CONFIGURED;
++	dp->state &= ~DPTX_STATE_CONFIGURED;
 +	cancel_delayed_work_sync(&dp->hpd_irq_work);
 +	cancel_delayed_work_sync(&dp->hpd_event_work);
 +	return rc;
@@ -8540,21 +8474,12 @@ index 000000000000..111111111111
 +		.ops = &dptx_audio_codec_ops,
 +		.spdif = 0,
 +		.i2s = 1,
-+		.no_i2s_capture = 1,
 +		.max_i2s_channels = 8,
 +		.data = dp,
 +	};
-+	int id = PLATFORM_DEVID_AUTO;
-+	u64 uid;
-+
-+	/* Use ACPI _UID for deterministic device naming under ACPI */
-+	if (ACPI_COMPANION(dp->dev) &&
-+	    !acpi_dev_uid_to_integer(ACPI_COMPANION(dp->dev), &uid))
-+		id = uid;
-+
 +	dptx_aud->running = false;
 +	dptx_aud->pdev = platform_device_register_data(
-+		dp->dev, HDMI_CODEC_DRV_NAME, id, &codec_data,
++		dp->dev, HDMI_CODEC_DRV_NAME, PLATFORM_DEVID_AUTO, &codec_data,
 +		sizeof(codec_data));
 +
 +	return PTR_ERR_OR_ZERO(dptx_aud->pdev);
@@ -8637,17 +8562,13 @@ index 000000000000..111111111111
 +	dev = &pdev->dev;
 +	fwnode_edp_panel = fwnode_find_reference(dev->fwnode, "edp-panel", 0);
 +	if (!IS_ERR_OR_NULL(fwnode_edp_panel)) {
-+		struct device_node *np = to_of_node(fwnode_edp_panel);
-+
-+		if (np) {
-+			edp_panel = of_drm_find_panel(np);
-+			if (IS_ERR(edp_panel)) {
-+				dev_err(dev, "%s, invalid drm_panel\n", __func__);
-+				return PTR_ERR(edp_panel);
-+			} else
-+				dev_info(dev, "%s, edp-panel %s is found\n", __func__,
-+					 dev_name(edp_panel->dev));
-+		}
++		edp_panel = fwnode_drm_find_panel(fwnode_edp_panel);
++		if (IS_ERR(edp_panel)) {
++			dev_err(dev, "%s, invalid drm_panel\n", __func__);
++			return PTR_ERR(edp_panel);
++		} else
++			dev_info(dev, "%s, edp-panel %s is found\n", __func__,
++				 dev_name(edp_panel->dev));
 +	}
 +
 +	dp = devm_kzalloc(dpsub->dev, sizeof(*dp), GFP_KERNEL);
@@ -8679,7 +8600,11 @@ index 000000000000..111111111111
 +	dp->num_lanes = TRILIN_DPTX_MAX_LANES;
 +	dp->max_rate = DP_HIGH_BIT_RATE3;
 +	dp->max_streams = 2;
-+	dp->state = DP_STATE_DISCONNECTED;
++	dp->state = DPTX_STATE_DISCONNECTED;
++	dp->platform_id = CIX_PLATFORM_SOC;
++#ifdef CONFIG_ARCH_CIX_EMU_FPGA
++	dp->platform_id = CIX_PLATFORM_FPGA;
++#endif
 +	dp->force_pixel_per_cycle = 0;
 +	dp->pixel_per_cycle = 1;
 +	dp->edp_panel = edp_panel;
@@ -8720,6 +8645,7 @@ index 000000000000..111111111111
 +	if (dp->irq < 0)
 +		return dp->irq;
 +
++	device_property_read_u32(dev, "cix,platform-id", &dp->platform_id);
 +	device_property_read_u32(dev, "cix,dp-lane-number", &dp->num_lanes);
 +	device_property_read_u32(dev, "cix,dp-max-rate", &dp->max_rate);
 +	device_property_read_u32(dev, "cix,aux-clock-divider",
@@ -8736,8 +8662,7 @@ index 000000000000..111111111111
 +		dp->enabled_by_gop = 0;
 +
 +	device_property_read_u32(dev, "cix,dp-psr-default-on", &psr_default_on);
-+	dp->psr_default_on = !!psr_default_on;
-+	dp->psr_config_on = dp->psr_default_on;
++	dp->psr_config_on = dp->psr_default_on = !!psr_default_on;
 +
 +	dp->fasttrain_default_on =
 +			device_property_read_bool(dev, "cix,dp-fasttrain-default-on");
@@ -8785,11 +8710,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_dptx.h
-@@ -0,0 +1,577 @@
+@@ -0,0 +1,586 @@
 +/* SPDX-License-Identifier: GPL-2.0*/
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -8946,6 +8872,12 @@ index 000000000000..111111111111
 +
 +#define TRILIN_DPTX_INTERRUPT_MASK_ALL 0x3f
 +#define TRILIN_DPTX_INTERRUPT_CFG 0x1c
++
++/* PLATFORM define */
++#define CIX_PLATFORM_SOC 0
++#define CIX_PLATFORM_EMU 1
++#define CIX_PLATFORM_FPGA 2
++#define CIX_PLATFORM_INVALID -1
 +
 +#define TRILIN_DPTX_MAX_LANES 4
 +#define TRILIN_DPTX_AUX_DIVIDER 200
@@ -9115,16 +9047,16 @@ index 000000000000..111111111111
 +};
 +
 +enum trilin_dptx_state {
-+	DP_STATE_DISCONNECTED = 0,
-+	DP_STATE_CONFIGURED = BIT(0),
-+	DP_STATE_INITIALIZED = BIT(1),
-+	DP_STATE_READY = BIT(2),
-+	DP_STATE_CONNECTED = BIT(3),
-+	DP_STATE_CONNECT_NOTIFIED = BIT(4),
-+	DP_STATE_DISCONNECT_NOTIFIED = BIT(5),
-+	DP_STATE_ENABLED = BIT(6),
-+	DP_STATE_SUSPENDED = BIT(7),
-+	DP_STATE_INIT_TRAIN = BIT(8),
++	DPTX_STATE_DISCONNECTED = 0,
++	DPTX_STATE_CONFIGURED = BIT(0),
++	DPTX_STATE_INITIALIZED = BIT(1),
++	DPTX_STATE_READY = BIT(2),
++	DPTX_STATE_CONNECTED = BIT(3),
++	DPTX_STATE_CONNECT_NOTIFIED = BIT(4),
++	DPTX_STATE_DISCONNECT_NOTIFIED = BIT(5),
++	DPTX_STATE_ENABLED = BIT(6),
++	DPTX_STATE_SUSPENDED = BIT(7),
++	DPTX_STATE_INIT_TRAIN = BIT(8),
 +};
 +
 +struct trilin_dp_panel {
@@ -9205,7 +9137,6 @@ index 000000000000..111111111111
 +	struct trilin_encoder encoder; //for sst
 +	struct trilin_connector connector; //for sst
 +	struct drm_panel *edp_panel;
-+	struct drm_bridge *next_bridge;
 +	struct device *dev;
 +	struct trilin_dpsub *dpsub;
 +	struct drm_device **drm;
@@ -9250,6 +9181,7 @@ index 000000000000..111111111111
 +
 +	struct trilin_phy_t phy;
 +	enum trilin_dptx_state state;
++	int platform_id;
 +
 +	struct drm_display_mode *adjusted_mode;
 +	struct dptx_audio dp_audio;
@@ -9275,6 +9207,7 @@ index 000000000000..111111111111
 +	bool support_d3_cmd;
 +	struct trilin_dp_psr psr;
 +	bool edp_panel_ready;
++	int my_copied_modes;
 +};
 +
 +//------------------------------------------------------------------------------
@@ -9361,6 +9294,7 @@ index 000000000000..111111111111
 +	struct trilin_dp_panel *dp_panel);
 +void trilind_dp_psr_disable(struct trilin_dp *dp,
 +	struct trilin_dp_panel *dp_panel);
++bool trilin_dp_plugged_status(struct trilin_dp *dp);
 +//---------------------------------------------------------
 +#endif /* _TRILIN_DPTX_H_ */
 diff --git a/drivers/gpu/drm/cix/dptx/trilin_dptx_audio.c b/drivers/gpu/drm/cix/dptx/trilin_dptx_audio.c
@@ -9368,15 +9302,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_dptx_audio.c
-@@ -0,0 +1,250 @@
+@@ -0,0 +1,179 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/* Copyright 2024 Cix Technology Group Co., Ltd. */
 +#include <linux/kernel.h>
-+#include <linux/hdmi.h>
-+#include <drm/drm_eld.h>
 +#include "trilin_dptx_reg.h"
 +#include "trilin_dptx.h"
-+#include "dptx_infoframe.h"
 +
 +/* dp audio */
 +void dptx_audio_handle_plugged_change(struct dptx_audio *dp_audio, bool plugged)
@@ -9430,22 +9361,6 @@ index 000000000000..111111111111
 +		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_44100HZ;
 +		cs_freq_clock_accuracy = DPTX_CS_SAMPLING_FREQ_44100Hz;
 +		break;
-+	case 88200:
-+		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_88200HZ;
-+		cs_freq_clock_accuracy = DPTX_CS_SAMPLING_FREQ_88200Hz;
-+		break;
-+	case 96000:
-+		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_96000HZ;
-+		cs_freq_clock_accuracy = DPTX_CS_SAMPLING_FREQ_96000Hz;
-+		break;
-+	case 176400:
-+		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_176400HZ;
-+		cs_freq_clock_accuracy = DPTX_CS_SAMPLING_FREQ_176400Hz;
-+		break;
-+	case 192000:
-+		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_192000HZ;
-+		cs_freq_clock_accuracy = DPTX_CS_SAMPLING_FREQ_192000Hz;
-+		break;
 +	case 48000:
 +	default:
 +		cs_length_orig_freq |= DPTX_CS_SAMPLING_ORIG_FREQ_48000HZ;
@@ -9469,52 +9384,12 @@ index 000000000000..111111111111
 +	trilin_dp_write(dp, TRILIN_DPTX_SEC0_INPUT_SELECT + offset, source);
 +}
 +
-+/*
-+ * Send an Audio InfoFrame SDP so the sink knows the channel layout.
-+ * Without this, the sink defaults to stereo regardless of how many
-+ * channels are being transmitted.
-+ */
-+static void dptx_audio_send_infoframe(struct trilin_dp *dp, int source,
-+				       const struct hdmi_audio_infoframe *cea)
-+{
-+	struct dp_sdp sdp;
-+	ssize_t len;
-+
-+	len = hdmi_audio_infoframe_pack_for_dp(cea, &sdp, dp->dpcd[DP_DPCD_REV]);
-+	if (len < 0) {
-+		dev_warn(dp->dev, "failed to pack audio infoframe: %zd\n", len);
-+		return;
-+	}
-+
-+	cix_infoframe_write_packet(dp, source, CIX_AUDIO_INFO_SDP, &sdp, 1);
-+}
-+
-+static int dptx_audio_get_eld(struct device *dev, void *data,
-+			      uint8_t *buf, size_t len)
-+{
-+	struct trilin_dp *dp = data;
-+
-+	/* Only copy the ELD if the sink is connected AND the ELD has
-+	 * been populated from EDID (baseline_eld_len > 0).  At boot
-+	 * the plugged callback fires before EDID is read, so the
-+	 * connector ELD is still all-zeros ��� returning that causes
-+	 * noisy "Unknown ELD version 0" warnings from snd_parse_eld.
-+	 */
-+	if (!dp->plugin || !dp->connector.base.eld[DRM_ELD_BASELINE_ELD_LEN])
-+		return -ENODEV;
-+
-+	memcpy(buf, dp->connector.base.eld,
-+	       min(sizeof(dp->connector.base.eld), len));
-+
-+	return 0;
-+}
-+
 +static int dptx_audio_startup(struct device *dev, void *data)
 +{
 +	struct trilin_dp *dp = (struct trilin_dp *)data;
 +	struct dptx_audio *dp_audio = &dp->dp_audio;
 +
-+	if (!dp->plugin)
++	if (!trilin_dp_plugged_status(dp))
 +		return 0;
 +
 +	trilin_dp_write(dp, TRILIN_DPTX_SEC0_AUDIO_ENABLE, 1);
@@ -9529,13 +9404,10 @@ index 000000000000..111111111111
 +	struct trilin_dp *dp = (struct trilin_dp *)data;
 +	struct dptx_audio *dp_audio = &dp->dp_audio;
 +
-+	dp_audio->running = false;
++	if (!trilin_dp_plugged_status(dp))
++		return;
 +
-+	/* Disable audio packets in hardware.  If the sink was already
-+	 * unplugged, core_off has powered down the PHY but this write
-+	 * is still safe (MMIO register block remains accessible).
-+	 */
-+	trilin_dp_write(dp, TRILIN_DPTX_SEC0_AUDIO_ENABLE, 0);
++	dp_audio->running = false;
 +}
 +
 +static int dptx_audio_hw_params(struct device *dev, void *data,
@@ -9545,32 +9417,28 @@ index 000000000000..111111111111
 +	struct trilin_dp *dp = (struct trilin_dp *)data;
 +	struct dptx_audio *dp_audio = &dp->dp_audio;
 +
-+	if (!dp->plugin)
++	if (!trilin_dp_plugged_status(dp))
 +		return 0;
 +
 +	dp_audio->params.sample_width = params->sample_width;
 +	dp_audio->params.sample_rate = params->sample_rate;
 +	dp_audio->params.channels = params->channels;
-+	dp_audio->params.cea = params->cea;
 +
 +	dev_dbg(dev,
-+		"%s, daifmt fmt:%d, bit_clk_inv:%d, frame_clk_inv:%d, bit_clk_master:%d, frame_clk_master:%d, params sample_rate:%d, sample_width:%d, channels:%d, ca:%d\n",
++		"%s, daifmt fmt:%d, bit_clk_inv:%d, frame_clk_inv:%d, bit_clk_master:%d, frame_clk_master:%d, params sample_rate:%d, sample_width:%d, channels:%d\n",
 +		__func__, daifmt->fmt, daifmt->bit_clk_inv,
 +		daifmt->frame_clk_inv, daifmt->bit_clk_provider,
 +		daifmt->frame_clk_provider, params->sample_rate,
-+		params->sample_width, params->channels,
-+		params->cea.channel_allocation);
++		params->sample_width, params->channels);
 +
 +	dptx_audio_setup(dp, 0, params->sample_rate, params->sample_width,
 +			 params->channels);
-+	dptx_audio_send_infoframe(dp, 0, &params->cea);
 +
 +	return 0;
 +}
 +
 +static int dptx_audio_get_dai_id(struct snd_soc_component *comment,
-+				 struct device_node *endpoint,
-+				 void *data)
++				 struct device_node *endpoint)
 +{
 +	return 0;
 +}
@@ -9581,18 +9449,15 @@ index 000000000000..111111111111
 +{
 +	struct trilin_dp *dp = (struct trilin_dp *)data;
 +	struct dptx_audio *dp_audio = &dp->dp_audio;
++	bool connected;
 +
 +	dp_audio->plugged_cb = fn;
 +	dp_audio->codec_dev = codec_dev;
++	connected = trilin_dp_plugged_status(dp);
 +
-+	/* Only fire the initial plugged notification if the ELD has
-+	 * already been populated (i.e. EDID was read before hdmi-codec
-+	 * registered).  Otherwise, trilin_connector_update_modes()
-+	 * will fire it after the ELD is ready.  This avoids the
-+	 * "Unknown ELD version 0" warning from snd_parse_eld.
-+	 */
-+	if (dp->plugin && dp->connector.base.eld[DRM_ELD_BASELINE_ELD_LEN])
-+		dptx_audio_handle_plugged_change(dp_audio, true);
++	/* dp plugin event report before this callback install when boot, have a check here */
++	dev_dbg(dp->dev, "dp audio plugin status = %d\n", connected);
++	dptx_audio_handle_plugged_change(dp_audio, connected);
 +
 +	return 0;
 +}
@@ -9605,7 +9470,6 @@ index 000000000000..111111111111
 +	dptx_audio_setup(dp, 0, dp_audio->params.sample_rate,
 +			 dp_audio->params.sample_width,
 +			 dp_audio->params.channels);
-+	dptx_audio_send_infoframe(dp, 0, &dp_audio->params.cea);
 +
 +	/* enable dptx audio */
 +	trilin_dp_write(dp, TRILIN_DPTX_SEC0_AUDIO_ENABLE, 1);
@@ -9615,7 +9479,6 @@ index 000000000000..111111111111
 +	.hw_params = dptx_audio_hw_params,
 +	.audio_startup = dptx_audio_startup,
 +	.audio_shutdown = dptx_audio_shutdown,
-+	.get_eld = dptx_audio_get_eld,
 +	.get_dai_id = dptx_audio_get_dai_id,
 +	.hook_plugged_cb = dptx_audio_hook_plugged_cb
 +};
@@ -9624,7 +9487,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_dptx_audio.h
-@@ -0,0 +1,59 @@
+@@ -0,0 +1,51 @@
 +/* SPDX-License-Identifier: GPL-2.0*/
 +/* Copyright 2024 Cix Technology Group Co., Ltd. */
 +
@@ -9645,10 +9508,6 @@ index 000000000000..111111111111
 +#define DPTX_CS_SAMPLING_FREQ_32000Hz (0b1100 << 4)
 +#define DPTX_CS_SAMPLING_FREQ_44100Hz (0b0000 << 4)
 +#define DPTX_CS_SAMPLING_FREQ_48000Hz (0b0100 << 4)
-+#define DPTX_CS_SAMPLING_FREQ_88200Hz (0b0001 << 4)
-+#define DPTX_CS_SAMPLING_FREQ_96000Hz (0b0101 << 4)
-+#define DPTX_CS_SAMPLING_FREQ_176400Hz (0b0011 << 4)
-+#define DPTX_CS_SAMPLING_FREQ_192000Hz (0b0111 << 4)
 +/* bit 32~35 Word length */
 +#define DPTX_CS_SAMPLE_WORD_LENGTH_16BITS (0b0100 << 4)
 +#define DPTX_CS_SAMPLE_WORD_LENGTH_18BITS (0b0010 << 4)
@@ -9658,10 +9517,6 @@ index 000000000000..111111111111
 +#define DPTX_CS_SAMPLING_ORIG_FREQ_32000HZ (0b0011)
 +#define DPTX_CS_SAMPLING_ORIG_FREQ_44100HZ (0b1111)
 +#define DPTX_CS_SAMPLING_ORIG_FREQ_48000HZ (0b1011)
-+#define DPTX_CS_SAMPLING_ORIG_FREQ_88200HZ (0b1110)
-+#define DPTX_CS_SAMPLING_ORIG_FREQ_96000HZ (0b1010)
-+#define DPTX_CS_SAMPLING_ORIG_FREQ_176400HZ (0b1100)
-+#define DPTX_CS_SAMPLING_ORIG_FREQ_192000HZ (0b1000)
 +#define DPTX_CS_SOURCE_NUMBER_SHIFT (4)
 +#define DPTX_CS_CATEGORY_CODE (0)
 +#define DPTX_CS_COPYRIGHT (0)
@@ -9689,11 +9544,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_dptx_cix.c
-@@ -0,0 +1,440 @@
+@@ -0,0 +1,439 @@
 +// SPDX-License-Identifier: GPL-2.0
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -9708,7 +9564,6 @@ index 000000000000..111111111111
 +//	along with this program. If not, see <http://www.gnu.org/licenses/>.
 +//------------------------------------------------------------------------------
 +#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_bridge.h>
 +#include <drm/drm_device.h>
 +//#include <drm/display/drm_dp_helper.h>
 +#include <drm/drm_of.h>
@@ -9815,6 +9670,7 @@ index 000000000000..111111111111
 +	void *np;
 +	const void *match;
 +	struct drm_device *drm = master_data;
++	struct trilin_dptx_pdata *pdata;
 +	struct trilin_dptx_cix_dev *cix_dptx = dev_get_drvdata(comp);
 +	struct drm_encoder *encoder;
 +	struct trilin_dpsub *dpsub;
@@ -9837,10 +9693,16 @@ index 000000000000..111111111111
 +	if (!np)
 +		return -ENODEV;
 +
-+	if (has_acpi_companion(comp))
++	if (has_acpi_companion(comp)) {
 +		match = acpi_device_get_match_data(comp);
-+	else
++		pdata = (struct trilin_dptx_pdata *)(((struct acpi_device_id *)
++							      match)
++							     ->driver_data);
++	} else {
 +		match = of_match_node(trilin_dptx_dt_ids, np);
++		pdata = (struct trilin_dptx_pdata
++				 *)(((struct of_device_id *)match)->data);
++	}
 +
 +	if (unlikely(!match))
 +		return -ENODEV;
@@ -9852,25 +9714,12 @@ index 000000000000..111111111111
 +	if (ret)
 +		return ret;
 +
-+	/* Look for downstream bridge on output port (port 2) */
-+	{
-+		struct drm_bridge *bridge;
-+
-+		bridge = devm_drm_of_get_bridge(comp, comp->of_node, 2, 0);
-+		if (IS_ERR(bridge)) {
-+			if (PTR_ERR(bridge) == -EPROBE_DEFER)
-+				return -EPROBE_DEFER;
-+			bridge = NULL;
-+		}
-+		dpsub->dp->next_bridge = bridge;
-+	}
-+
 +	ret = trilin_dp_drm_init(dpsub);
 +	if (ret)
 +		return ret;
 +
-+	dpsub->link = device_link_add(drm->dev, comp, DL_FLAG_STATELESS |
-+					DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE);
++	// dpsub->link = device_link_add(drm->dev, comp, DL_FLAG_STATELESS |
++	// 				DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE);
 +
 +	return 0;
 +}
@@ -9887,8 +9736,7 @@ index 000000000000..111111111111
 +
 +	trilin_dp_remove(dpsub);
 +
-+	if (dpsub->link)
-+		device_link_del(dpsub->link);
++	device_link_del(dpsub->link);
 +}
 +
 +static const struct component_ops trilin_dptx_cix_ops = {
@@ -10019,24 +9867,20 @@ index 000000000000..111111111111
 +#endif
 +}
 +
-+static void trilin_dptx_cix_remove(struct platform_device *pdev)
++static int trilin_dptx_cix_remove(struct platform_device *pdev)
 +{
 +#if !IS_ENABLED(CONFIG_DRM_CIX_COMPONENT_BIND_BYPASSED)
 +	component_del(&pdev->dev, &trilin_dptx_cix_ops);
 +#else
 +	trilin_dptx_cix_unbind(&pdev->dev, NULL, NULL);
 +#endif
-+}
-+
-+#ifdef CONFIG_PM
-+static int trilin_dptx_pm_suspend(struct device *dev)
-+{
-+	dev_info(dev, "%s\n", __func__);
 +	return 0;
 +}
 +
++#ifdef CONFIG_PM
 +static int trilin_dptx_pm_prepare(struct device *dev)
 +{
++	/* TODO */
 +	struct trilin_dptx_cix_dev *cix_dptx = dev_get_drvdata(dev);
 +	struct trilin_dpsub *dpsub = &cix_dptx->dpsub;
 +	struct trilin_dp *dp = dpsub->dp;
@@ -10046,8 +9890,16 @@ index 000000000000..111111111111
 +	return 0;
 +}
 +
++
++static int trilin_dptx_pm_suspend(struct device *dev)
++{
++	dev_info(dev, "%s\n", __func__);
++	return 0;
++}
++
 +static int trilin_dptx_pm_resume_early(struct device *dev)
 +{
++	/* TODO */
 +	struct trilin_dptx_cix_dev *cix_dptx = dev_get_drvdata(dev);
 +	struct trilin_dpsub *dpsub = &cix_dptx->dpsub;
 +	struct trilin_dp *dp = dpsub->dp;
@@ -10065,16 +9917,18 @@ index 000000000000..111111111111
 +
 +static void trilin_dptx_pm_complete(struct device *dev)
 +{
++	/* TODO */
 +	struct trilin_dptx_cix_dev *cix_dptx = dev_get_drvdata(dev);
 +	struct trilin_dpsub *dpsub = &cix_dptx->dpsub;
 +	struct trilin_dp *dp = dpsub->dp;
 +
-+	if (dp)
-+		trilin_dp_pm_complete(dp);
++	trilin_dp_pm_complete(dp);
 +}
 +
 +static const struct dev_pm_ops trilin_dptx_pm_ops = {
 +	SET_SYSTEM_SLEEP_PM_OPS(trilin_dptx_pm_suspend, trilin_dptx_pm_resume)
++	//SET_RUNTIME_PM_OPS(trilin_dptx_runtime_suspend,
++	//		trilin_dptx_runtime_resume, NULL)
 +	.prepare = trilin_dptx_pm_prepare,
 +	.complete = trilin_dptx_pm_complete,
 +	.resume_early = trilin_dptx_pm_resume_early,
@@ -10593,27 +10447,11 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_drm.c
-@@ -0,0 +1,1256 @@
+@@ -0,0 +1,1236 @@
 +// SPDX-License-Identifier: GPL-2.0
-+//------------------------------------------------------------------------------
-+//	Trilinear Technologies DisplayPort DRM Driver
-+//	Copyright (C) 2023 Trilinear Technologies
-+//
-+//	This program is free software: you can redistribute it and/or modify
-+//	it under the terms of the GNU General Public License as published by
-+//	the Free Software Foundation, version 2.
-+//
-+//	This program is distributed in the hope that it will be useful, but
-+//	WITHOUT ANY WARRANTY; without even the implied warranty of
-+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-+//	General Public License for more details.
-+//
-+//	You should have received a copy of the GNU General Public License
-+//	along with this program. If not, see <http://www.gnu.org/licenses/>.
-+//------------------------------------------------------------------------------
++// Copyright 2024 Cix Technology Group Co., Ltd.
 +
 +#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_bridge.h>
 +#include <drm/drm_crtc.h>
 +#include <drm/drm_device.h>
 +#include <drm/drm_edid.h>
@@ -10622,10 +10460,8 @@ index 000000000000..111111111111
 +#include <drm/drm_of.h>
 +#include <drm/drm_probe_helper.h>
 +#include <drm/drm_simple_kms_helper.h>
-+#include <drm/display/drm_dp_helper.h>
 +
 +#include <linux/clk.h>
-+#include <linux/debugfs.h>
 +#include <linux/delay.h>
 +#include <linux/device.h>
 +#include <linux/module.h>
@@ -10700,8 +10536,8 @@ index 000000000000..111111111111
 +	DP_DEBUG("enter\n");
 +
 +	mutex_lock(&dp->session_lock);
-+	if (dp->state & DP_STATE_SUSPENDED) {
-+		DP_DEBUG("DP_STATE_SUSPENDED return\n");
++	if (dp->state & DPTX_STATE_SUSPENDED) {
++		DP_DEBUG("DPTX_STATE_SUSPENDED return\n");
 +		goto end;
 +	}
 +
@@ -10738,6 +10574,11 @@ index 000000000000..111111111111
 +	return dp->status;
 +}
 +
++bool trilin_dp_plugged_status(struct trilin_dp *dp)
++{
++	return (dp->status == connector_status_connected);
++}
++
 +static int trilin_dp_connector_atomic_check(struct drm_connector *conn,
 +					    struct drm_atomic_state *state)
 +{
@@ -10763,12 +10604,14 @@ index 000000000000..111111111111
 +	if (!crtc)
 +		return 0;
 +
++	if (dp->caps.psr_sink_support && dp->psr_config_on)
++		new_con_state->self_refresh_aware = true;
++	else
++		new_con_state->self_refresh_aware = false;
++
 +	new_crtc_state = drm_atomic_get_crtc_state(state, crtc);
 +	if (IS_ERR(new_crtc_state))
 +		return PTR_ERR(new_crtc_state);
-+
-+	if (dp->caps.psr_sink_support && dp->psr_config_on)
-+		new_con_state->self_refresh_aware = true;
 +
 +	if (new_crtc_state->self_refresh_active && !dp->psr.enable) {
 +		DP_WARN("self_refresh_active is true but no psr sink support");
@@ -10828,12 +10671,6 @@ index 000000000000..111111111111
 +	drm_connector_update_edid_property(connector, edid);
 +	ret = drm_add_edid_modes(connector, edid);
 +
-+	/* Notify hdmi-codec now that the ELD is populated from EDID.
-+	 * The HPD handler deliberately skips this notification so that
-+	 * hdmi-codec never sees an empty ELD.
-+	 */
-+	dptx_audio_handle_plugged_change(&dp->dp_audio, dp->plugin);
-+
 +	return ret;
 +}
 +
@@ -10882,9 +10719,15 @@ index 000000000000..111111111111
 +	struct drm_display_mode *mode;
 +	struct drm_display_mode *preferred_mode;
 +	struct drm_device *dev = connector->dev;
++	struct trilin_dp *dp = connector_to_dp(connector);
 +
 +	preferred_mode = list_first_entry(&connector->probed_modes,
 +					  struct drm_display_mode, head);
++	dp->my_copied_modes = 0;
++	list_for_each_entry(mode, &connector->probed_modes, head) {
++		dp->my_copied_modes++;
++	}
++	DP_DEBUG("preferred_mode: %s %d\n", preferred_mode->name, preferred_mode->clock);
 +
 +	count = ARRAY_SIZE(trilin_drm_dmt_modes);
 +	for (i = 0; i < count; i++) {
@@ -10916,42 +10759,45 @@ index 000000000000..111111111111
 +
 +	DP_DEBUG("enter\n");
 +
-+	edid = drm_get_edid(connector, &dp->aux.ddc);
-+	if (!edid) { /* try once again */
-+		for (int count = 0; count < GET_EDID_RETRY_MAX;
-+		     count++) {
-+			msleep(20);
-+			edid = drm_get_edid(connector, &dp->aux.ddc);
-+			if (edid)
-+				break;
++	if (dp->platform_id != CIX_PLATFORM_EMU) {
++		edid = drm_get_edid(connector, &dp->aux.ddc);
++		if (!edid) { /* try once again */
++			for (int count = 0; count < GET_EDID_RETRY_MAX;
++			     count++) {
++				msleep(20);
++				edid = drm_get_edid(connector, &dp->aux.ddc);
++				if (edid)
++					break;
++			}
 +		}
++
++		if (!edid) {
++			mode = drm_dp_downstream_mode(connector->dev, dp->dpcd,
++						      dp->downstream_ports);
++			if (mode) {
++				drm_mode_probed_add(connector, mode);
++				ret++;
++			}
++			if (ret == 0) {
++				/* fall back to be 1080p */
++				ret = drm_add_modes_noedid(connector, 1920,
++							   1080);
++				drm_set_preferred_mode(connector, 1920, 1080);
++				DP_INFO("edid is null and read downstream: count=%d",
++					ret);
++			}
++			return ret;
++		}
++
++		ret = trilin_connector_update_modes(connector, edid);
++		kfree(edid);
++
++		if (connector->connector_type == DRM_MODE_CONNECTOR_eDP)
++			ret += trilin_dp_add_virtual_modes_noedid(connector);
++	} else {
++		ret = drm_add_modes_noedid(connector, 4096, 4096);
++		drm_set_preferred_mode(connector, 640, 480);
 +	}
-+
-+	if (!edid) {
-+		mode = drm_dp_downstream_mode(connector->dev, dp->dpcd,
-+					      dp->downstream_ports);
-+		if (mode) {
-+			drm_mode_probed_add(connector, mode);
-+			ret++;
-+		}
-+		if (ret == 0) {
-+			/* fall back to be 1080p */
-+			ret = drm_add_modes_noedid(connector, 1920,
-+						   1080);
-+			drm_set_preferred_mode(connector, 1920, 1080);
-+			DP_INFO("edid is null and read downstream: count=%d",
-+				ret);
-+		}
-+		return ret;
-+	}
-+
-+	drm_dp_cec_set_edid(&dp->aux, edid);
-+	ret = trilin_connector_update_modes(connector, edid);
-+	kfree(edid);
-+
-+	if (connector->connector_type == DRM_MODE_CONNECTOR_eDP)
-+		ret += trilin_dp_add_virtual_modes_noedid(connector);
-+
 +	DP_DEBUG("mode count = %d bpc=%d\n", ret, info->bpc);
 +	return ret;
 +}
@@ -10967,7 +10813,7 @@ index 000000000000..111111111111
 +
 +enum drm_mode_status
 +trilin_dp_connector_mode_valid(struct drm_connector *connector,
-+			       const struct drm_display_mode *mode)
++			       struct drm_display_mode *mode)
 +{
 +	struct trilin_dp *dp = connector_to_dp(connector);
 +	//struct trilin_connector *conn = connector_to_trilin(connector);
@@ -11076,6 +10922,9 @@ index 000000000000..111111111111
 +{
 +	struct drm_connector *connector = m->private;
 +	struct trilin_connector *conn = connector_to_trilin(connector);
++	struct trilin_dp *dp = connector_to_dp(connector);
++	u8 link_status[DP_LINK_STATUS_SIZE];
++	int ret;
 +
 +	if (connector->status != connector_status_connected) {
 +		seq_puts(m, "not connected\n");
@@ -11084,6 +10933,20 @@ index 000000000000..111111111111
 +
 +	seq_printf(m, "link rate: %d lanes: %d\n", conn->dp->mode.link_rate,
 +		   conn->dp->mode.lane_cnt);
++
++	seq_printf(m, "clock_recovery_ok : %s\nchannel_eq_ok : %s\n",
++			dp->train_cr_done ? "yes" : "no",
++			dp->train_ce_done ? "yes" : "no");
++
++	seq_puts(m, "\n------------ dpcd status ------------\n");
++	ret = drm_dp_dpcd_read_link_status(&dp->aux, link_status);
++	if (ret < 0) {
++		seq_printf(m, "read link status failed\n");
++	} else {
++		seq_printf(m, "DP_LANE0_1_STATUS : %x\nDP_LANE2_3_STATUS: %x\n",
++			    link_status[0], link_status[1]);
++	}
++
 +	return 0;
 +}
 +
@@ -11237,7 +11100,7 @@ index 000000000000..111111111111
 +					TRILIN_DPTX_INTERRUPT_CFG);
 +		} else {
 +			mutex_lock(&dp->session_lock);
-+			dp->state &= ~DP_STATE_INITIALIZED;
++			dp->state &= ~DPTX_STATE_INITIALIZED;
 +			dp->enabled_by_gop = 0;
 +			mutex_unlock(&dp->session_lock);
 +			DP_INFO("reset dp->state for gop\n");
@@ -11273,7 +11136,7 @@ index 000000000000..111111111111
 +	struct drm_crtc *crtc;
 +	struct drm_crtc_state *new_crtc_state;
 +
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		DP_DEBUG("[not init]");
 +		return;
 +	}
@@ -11448,7 +11311,8 @@ index 000000000000..111111111111
 +		else
 +			adjusted_mode->flags |= DRM_MODE_FLAG_PHSYNC;
 +
-+		DP_DEBUG("adjust_mode flags: 0x%0x", adjusted_mode->flags);
++		DP_DEBUG("adjust_mode flags: 0x%0x adjust_mode: %s-%d mode: %s"
++			, adjusted_mode->flags, adjusted_mode->name, adjusted_mode->clock, mode->name);
 +	}
 +
 +	return 0;
@@ -11468,6 +11332,7 @@ index 000000000000..111111111111
 +		bpc = trilin_dp_cal_bpc(dp, connector_state, bpc);
 +		bpp = trilin_dp_cal_bpp(bpc, color_format);
 +		rate = trilin_dp_max_rate(max_rate, max_lanes, bpp);
++
 +		if (clock <= rate) {
 +			*rt_bpc = bpc;
 +			*rt_bpp = bpp;
@@ -11475,37 +11340,6 @@ index 000000000000..111111111111
 +		}
 +	}
 +	return false;
-+}
-+
-+/*
-+ * Select the optimal link rate for the given mode and bpp.
-+ *
-+ * Instead of picking the absolute minimum link rate that can carry the pixel
-+ * clock, this function selects a rate with adequate bandwidth margin. A link
-+ * rate is considered adequate when the available bandwidth exceeds the required
-+ * pixel clock by at least 5%, accounting for SSC jitter and protocol overhead.
-+ * If no rate meets the margin threshold, the highest supported rate is used.
-+ */
-+static int select_link_rate(struct trilin_dp *dp, int clock, int bpp)
-+{
-+	int max_rate = dp->link_config.max_rate;
-+	u8 max_lanes = dp->link_config.max_lanes;
-+	int i, capacity;
-+	int best_rate = max_rate;
-+
-+	for (i = 0; i < ARRAY_SIZE(DP_COMMON_LINK_RATES); i++) {
-+		if (DP_COMMON_LINK_RATES[i] > max_rate)
-+			break;
-+		capacity = trilin_dp_max_rate(DP_COMMON_LINK_RATES[i],
-+					      max_lanes, bpp);
-+		/* Require 5% margin over pixel clock for SSC and overhead */
-+		if (clock * 100 <= capacity * 95) {
-+			best_rate = DP_COMMON_LINK_RATES[i];
-+			break;
-+		}
-+	}
-+
-+	return best_rate;
 +}
 +
 +int trilin_dp_encoder_compute_config(struct drm_encoder *encoder,
@@ -11525,9 +11359,10 @@ index 000000000000..111111111111
 +	int color_format;// = BIT(__ffs(info->color_formats));
 +	int info_formats = info->color_formats;
 +	bool success = false;
++	int rate, max_rate = dp->link_config.max_rate;
 +	u8 link_rate_bw_code, i;
 +	u8 max_lanes = dp->link_config.max_lanes;
-+	int link_rate = dp->link_config.max_rate;
++	int link_rate = max_rate;
 +
 +	if (!(info_formats & DRM_COLOR_FORMAT_RGB444)) {
 +		info_formats |= DRM_COLOR_FORMAT_RGB444;
@@ -11574,18 +11409,25 @@ index 000000000000..111111111111
 +
 +	kcrtc_st->output_format = color_format; //Let DPU to know the format.
 +
-+	if (!dp->mst.mst_active)
-+		link_rate = select_link_rate(dp, adjusted_mode->clock, bpp);
++	if (!dp->mst.mst_active) {
++		for (i = 0; i < ARRAY_SIZE(DP_COMMON_LINK_RATES); i++) {
++			if (DP_COMMON_LINK_RATES[i] > max_rate)
++				break;
++			rate = trilin_dp_max_rate(DP_COMMON_LINK_RATES[i], max_lanes, bpp);
++			if (adjusted_mode->clock <= rate) {
++				link_rate = DP_COMMON_LINK_RATES[i];
++				break;
++			}
++		}
++	}
 +
 +	link_rate_bw_code = drm_dp_link_rate_to_bw_code(link_rate);
 +
-+	DP_INFO("mode %s clock=%d bpc=%d bpp=%d link_rate=%d (%s) lanes=%d max_bpc=%d\n",
-+		adjusted_mode->name, adjusted_mode->clock, bpc, bpp,
-+		link_rate,
-+		link_rate == 810000 ? "HBR3" :
-+		link_rate == 540000 ? "HBR2" :
-+		link_rate == 270000 ? "HBR" : "RBR",
-+		max_lanes, connector_state->max_requested_bpc);
++	DP_DEBUG(
++		"Note: disp->bpc(%d) bpc(%d) bpp(%d) colorspace=%d clock=%d format=0x%0x color_formats=%0x link_rate_bw=%0x %d request_max_bpc=%d\n",
++		info->bpc, bpc, bpp, colorspace, adjusted_mode->clock,
++		color_format, info->color_formats, link_rate_bw_code, link_rate,
++		connector_state->max_requested_bpc);
 +
 +	ret = trilin_dp_mode_configure(dp, adjusted_mode->clock, link_rate_bw_code, bpp, false);
 +	if (ret < 0)
@@ -11600,7 +11442,7 @@ index 000000000000..111111111111
 +	return 0;
 +}
 +
-+static int trilin_dp_encoder_atomic_check(struct drm_encoder *encoder,
++int trilin_dp_encoder_atomic_check(struct drm_encoder *encoder,
 +				  struct drm_crtc_state *crtc_state,
 +				  struct drm_connector_state *connector_state)
 +{
@@ -11610,35 +11452,47 @@ index 000000000000..111111111111
 +	struct drm_display_info *info =
 +		&connector_state->connector->display_info;
 +	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-+	struct drm_display_mode *mode = &crtc_state->mode;
++	struct drm_display_mode *crtc_mode = &crtc_state->mode;
++	struct drm_display_mode *mode;
++	struct drm_display_mode *preferred_mode = NULL;
++	int i = 0;
 +
 +	DP_DEBUG("enter\n");
 +
 +	if (crtc_state->self_refresh_active && !crtc_state->vrr_enabled)
 +		return 0;
 +
-+	/*
-+	 * Skip mode computation for non-modeset commits.  DRM core calls
-+	 * encoder_atomic_check on every atomic commit that includes the
-+	 * connector, even simple plane updates or pan operations.  Running
-+	 * compute_config here would needlessly reconfigure link parameters
-+	 * and print to the console, which can trigger a feedback loop when
-+	 * fbcon is active (console output -> pan_display -> atomic commit ->
-+	 * encoder_atomic_check -> console output).
-+	 */
-+	if (!drm_atomic_crtc_needs_modeset(crtc_state))
-+		return 0;
-+
-+	trilin_dp_encoder_atomic_adjust_mode(dp, mode, adjusted_mode);
-+
 +	if (connector->connector_type == DRM_MODE_CONNECTOR_eDP) {
-+		struct drm_display_mode *preferred_mode;
++		list_for_each_entry(mode, &connector->modes, head) {
++			if (mode->hdisplay == adjusted_mode->hdisplay &&
++				mode->vdisplay == adjusted_mode->vdisplay &&
++				drm_mode_vrefresh(mode) == drm_mode_vrefresh(adjusted_mode)) {
++				preferred_mode = mode;
++				DP_DEBUG("same preferred_mode: %s %d", preferred_mode->name, preferred_mode->clock);
++				break;
++			} else if (mode->hdisplay >= adjusted_mode->hdisplay &&
++				mode->vdisplay >= adjusted_mode->vdisplay &&
++				drm_mode_vrefresh(mode) == drm_mode_vrefresh(adjusted_mode)) {
++				preferred_mode = mode;
++				DP_DEBUG("vfresh same preferred_mode: %s %d", preferred_mode->name, preferred_mode->clock);
++				break;
++			}
++			if (++i >= dp->my_copied_modes) {
++				break;
++			}
++		}
 +
-+		preferred_mode = list_first_entry(
-+			&connector->modes, struct drm_display_mode, head);
++		if (preferred_mode == NULL) {
++			preferred_mode = list_first_entry(&connector->modes,
++						struct drm_display_mode, head);
++			DP_DEBUG("use first preferred_mode");
++		}
 +
 +		drm_mode_copy(adjusted_mode, preferred_mode);
 +	}
++
++	trilin_dp_encoder_atomic_adjust_mode(dp, crtc_mode, adjusted_mode);
++
 +	return trilin_dp_encoder_compute_config(encoder, crtc_state,
 +						connector_state, info->bpc);
 +}
@@ -11722,7 +11576,6 @@ index 000000000000..111111111111
 +	}
 +	trilin_dp_rcsu_cfg_adapter(dp, connector_state);
 +
-+	/* Disable PSR in 2ppc mode */
 +	if (dp->pixel_per_cycle == 2
 +		&& dp->psr_config_on && dp->caps.psr_sink_support) {
 +		dp->psr_config_on = false;
@@ -11799,23 +11652,8 @@ index 000000000000..111111111111
 +	drm_encoder_helper_add(encoder, &trilin_dp_encoder_helper_funcs);
 +
 +	connector->polled = DRM_CONNECTOR_POLL_HPD;
-+	if (dp->edp_panel) {
++	if (dp->edp_panel)
 +		drm_mode_connector = DRM_MODE_CONNECTOR_eDP;
-+	} else if (dp->next_bridge) {
-+		ret = drm_bridge_attach(encoder, dp->next_bridge, NULL,
-+					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-+		if (!ret) {
-+			/* Walk chain to terminal bridge for connector type */
-+			struct drm_bridge *b;
-+
-+			for (b = dp->next_bridge;
-+			     drm_bridge_get_next_bridge(b);
-+			     b = drm_bridge_get_next_bridge(b))
-+				;
-+			if (b->type)
-+				drm_mode_connector = b->type;
-+		}
-+	}
 +
 +	ret = drm_connector_init(encoder->dev, connector,
 +				 &trilin_dp_connector_funcs,
@@ -11843,11 +11681,7 @@ index 000000000000..111111111111
 +	drm_atomic_helper_connector_reset(connector);
 +	trilin_dp_add_properties(dp, connector);
 +	//dp hardware init now
-+	ret = trilin_dp_init_config(dp);
-+	if (ret)
-+		return ret;
-+
-+	drm_dp_cec_register_connector(&dp->aux, connector);
++	trilin_dp_init_config(dp);
 +	return 0;
 +}
 diff --git a/drivers/gpu/drm/cix/dptx/trilin_drm.h b/drivers/gpu/drm/cix/dptx/trilin_drm.h
@@ -11855,8 +11689,10 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_drm.h
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: GPL-2.0*/
+@@ -0,0 +1,29 @@
++//	SPDX-License-Identifier: GPL-2.0
++//	Copyright 2024 Cix Technology Group Co., Ltd.
++
 +#ifndef __TRILIN_DP_DRM_H__
 +#define __TRILIN_DP_DRM_H__
 +
@@ -11878,7 +11714,7 @@ index 000000000000..111111111111
 +	struct drm_display_mode *adjusted_mode);
 +enum drm_mode_status
 +trilin_dp_connector_mode_valid(struct drm_connector *connector,
-+			       const struct drm_display_mode *mode);
++			       struct drm_display_mode *mode);
 +void trilin_dp_connector_reset(struct drm_connector *connector);
 +int trilin_dp_fill_modes(struct drm_connector *connector, uint32_t maxX,
 +			 uint32_t maxY);
@@ -11889,24 +11725,10 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_drm_mst.c
-@@ -0,0 +1,935 @@
-+// SPDX-License-Identifier: GPL-2.0
-+//------------------------------------------------------------------------------
-+//	Trilinear Technologies DisplayPort DRM Driver
-+//	Copyright (C) 2023 Trilinear Technologies
-+//
-+//	This program is free software: you can redistribute it and/or modify
-+//	it under the terms of the GNU General Public License as published by
-+//	the Free Software Foundation, version 2.
-+//
-+//	This program is distributed in the hope that it will be useful, but
-+//	WITHOUT ANY WARRANTY; without even the implied warranty of
-+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-+//	General Public License for more details.
-+//
-+//	You should have received a copy of the GNU General Public License
-+//	along with this program. If not, see <http://www.gnu.org/licenses/>.
-+//------------------------------------------------------------------------------
+@@ -0,0 +1,920 @@
++//	SPDX-License-Identifier: GPL-2.0
++//	Copyright 2024 Cix Technology Group Co., Ltd.
++
 +#include <drm/drm_atomic_helper.h>
 +#include <drm/drm_crtc.h>
 +#include <drm/drm_device.h>
@@ -12079,7 +11901,7 @@ index 000000000000..111111111111
 +	struct trilin_dp *dp = topology_mgr_to_trilin(mgr);
 +	struct trilin_dp_mst_private *mst = &dp->mst.private_info;
 +
-+	if (!mst->mst_session_state) { //(dp->state & DP_STATE_SUSPENDED)
++	if (!mst->mst_session_state) { //(dp->state & DPTX_STATE_SUSPENDED)
 +		DP_DEBUG("mst_hpd_irq received before mst session start\n");
 +		return;
 +	}
@@ -12115,7 +11937,7 @@ index 000000000000..111111111111
 +{
 +	int ret = 0;
 +
-+	if (dp->mst.mst_active && (dp->state & DP_STATE_SUSPENDED)) {
++	if (dp->mst.mst_active && (dp->state & DPTX_STATE_SUSPENDED)) {
 +		ret = drm_dp_mst_topology_mgr_resume(dp->mst_mgr, true);
 +		if (ret) {
 +			DP_WARN("mst resume failed.");
@@ -12312,8 +12134,8 @@ index 000000000000..111111111111
 +	return ret;
 +}
 +
-+static enum drm_mode_status trilin_dp_mst_mode_valid(struct drm_connector *connector,
-+					      const struct drm_display_mode *mode)
++enum drm_mode_status trilin_dp_mst_mode_valid(struct drm_connector *connector,
++					      struct drm_display_mode *mode)
 +{
 +	const int min_bpp = 6 * 3;
 +	struct trilin_connector *conn = connector_to_trilin(connector);
@@ -12551,7 +12373,7 @@ index 000000000000..111111111111
 +
 +	mst_state = to_drm_dp_mst_topology_state(mgr->base.state);
 +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
-+	drm_dp_add_payload_part2(mgr, payload);
++	drm_dp_add_payload_part2(mgr, state, payload);
 +	DP_MST_DEBUG(
 +		"mst encoder [%d] _pre enable part-2 complete [state=%p]\n",
 +		mst_encoder->id, state);
@@ -12590,8 +12412,7 @@ index 000000000000..111111111111
 +	new_payload =
 +		drm_atomic_get_mst_payload_state(new_mst_state, conn->port);
 +
-+	drm_dp_remove_payload_part1(mgr, new_mst_state, new_payload);
-+	drm_dp_remove_payload_part2(mgr, new_mst_state, old_payload, new_payload);
++	drm_dp_remove_payload(mgr, new_mst_state, old_payload, new_payload);
 +	trilin_dp_mst_update_timeslots(mst, new_mst_state, mst_encoder);
 +
 +	mst_encoder->vcpi = 0;
@@ -12653,7 +12474,7 @@ index 000000000000..111111111111
 +	DP_MST_DEBUG("enter\n");
 +	mutex_lock(&mst->mst_lock);
 +
-+	if (!(dp->state & DP_STATE_INITIALIZED)) {
++	if (!(dp->state & DPTX_STATE_INITIALIZED)) {
 +		DP_DEBUG("[not init]");
 +		return;
 +	}
@@ -12726,9 +12547,9 @@ index 000000000000..111111111111
 +		ret = trilin_dp_encoder_compute_config(encoder, crtc_state, conn_state, suggest_bpc);
 +		if (ret < 0)
 +			break;
-+		if (!mst_state->pbn_div.full)
++		if (!mst_state->pbn_div)
 +			mst_state->pbn_div =
-+				drm_dp_get_vc_payload_bw(dp->mode.link_rate, dp->mode.lane_cnt);
++				drm_dp_get_vc_payload_bw(mst_mgr, dp->mode.link_rate, dp->mode.lane_cnt);
 +
 +		mst_encoder->pbn = drm_dp_calc_pbn_mode(adjusted_mode->clock, conn->config.bpp << 4);
 +		mst_encoder->num_slots = drm_dp_atomic_find_time_slots(state, mst_mgr, mst_port, mst_encoder->pbn);
@@ -12738,8 +12559,8 @@ index 000000000000..111111111111
 +		} else {
 +			drm_dp_mst_update_slots(mst_state, link_coding_cap);
 +			ret = drm_dp_mst_atomic_check(state);
-+			DP_MST_DEBUG("drm_dp_mst_atomic_check : %d pbn=%d num_slots=%d pbn_div=%u update state=%p (duplicated=%d)\n", ret
-+				, mst_encoder->pbn, mst_encoder->num_slots, mst_state->pbn_div.full, state, state->duplicated);
++			DP_MST_DEBUG("drm_dp_mst_atomic_check : %d pbn=%d num_slots=%d pbn_div=%d update state=%p (duplicated=%d)\n", ret
++				, mst_encoder->pbn, mst_encoder->num_slots, mst_state->pbn_div, state, state->duplicated);
 +			if (ret == 0)
 +				break;
 +		}
@@ -12830,24 +12651,9 @@ new file mode 100755
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_drm_mst.h
-@@ -0,0 +1,29 @@
-+/* SPDX-License-Identifier: GPL-2.0*/
-+//------------------------------------------------------------------------------
-+//	Trilinear Technologies DisplayPort DRM Driver
-+//	Copyright (C) 2023 Trilinear Technologies
-+//
-+//	This program is free software: you can redistribute it and/or modify
-+//	it under the terms of the GNU General Public License as published by
-+//	the Free Software Foundation, version 2.
-+//
-+//	This program is distributed in the hope that it will be useful, but
-+//	WITHOUT ANY WARRANTY; without even the implied warranty of
-+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-+//	General Public License for more details.
-+//
-+//	You should have received a copy of the GNU General Public License
-+//	along with this program. If not, see <http://www.gnu.org/licenses/>.
-+//------------------------------------------------------------------------------
+@@ -0,0 +1,14 @@
++//  SPDX-License-Identifier: GPL-2.0
++//  Copyright 2024 Cix Technology Group Co., Ltd.
 +
 +#ifndef __TRILIN_DP_MST_H__
 +#define __TRILIN_DP_MST_H__
@@ -12865,11 +12671,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_edp_phy.c
-@@ -0,0 +1,1185 @@
+@@ -0,0 +1,1186 @@
 +// SPDX-License-Identifier: GPL-2.0
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -13524,7 +13331,7 @@ index 000000000000..111111111111
 +	{ 0x08A4, 0x0003, 0x0000, 0x0000 },
 +};
 +
-+static const __maybe_unused phy_voltage_conf_t edp_volt_high_cfg[] = {
++static const phy_voltage_conf_t edp_volt_high_cfg[] = {
 +	{ 0x08A4, 0x0003, 0x0027, 0x0000 }, // swing level == 0
 +	{ 0x08A4, 0x0003, 0x0023, 0x0009 },
 +	{ 0x08A4, 0x0003, 0x001E, 0x0010 },
@@ -15136,11 +14943,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_phy.h
-@@ -0,0 +1,126 @@
+@@ -0,0 +1,127 @@
 +/* SPDX-License-Identifier: GPL-2.0*/
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023~2024 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -15268,11 +15076,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/dptx/trilin_usbdp_phy.c
-@@ -0,0 +1,595 @@
+@@ -0,0 +1,596 @@
 +// SPDX-License-Identifier: GPL-2.0
 +//------------------------------------------------------------------------------
 +//	Trilinear Technologies DisplayPort DRM Driver
 +//	Copyright (C) 2023~2024 Trilinear Technologies
++//	Copyright 2024 Cix Technology Group Co., Ltd.
 +//
 +//	This program is free software: you can redistribute it and/or modify
 +//	it under the terms of the GNU General Public License as published by
@@ -15941,8 +15750,12 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/Makefile
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,28 @@
 +# SPDX-License-Identifier: GPL-2.0
++
++ccflags-y := \
++    -I $(srctree)/$(src)/include \
++    -I $(srctree)/$(src)
 +
 +linlon-dp-y := \
 +    linlondp_drv.o \
@@ -15982,7 +15795,7 @@ index 000000000000..111111111111
 +#include <linux/of.h>
 +#include <drm/drm_print.h>
 +#include "dp_dev.h"
-+#include "../linlondp_io.h"
++#include "linlondp_io.h"
 +
 +enum dp_property_id {
 +	LW_AWCACHE,
@@ -16246,10 +16059,10 @@ index 000000000000..111111111111
 + *
 + */
 +#include "dp_dev.h"
-+#include "../linlondp_kms.h"
-+#include "../linlondp_io.h"
-+#include "../linlondp_framebuffer.h"
-+#include "../linlondp_color_mgmt.h"
++#include "linlondp_kms.h"
++#include "linlondp_io.h"
++#include "linlondp_framebuffer.h"
++#include "linlondp_color_mgmt.h"
 +
 +static void get_resources_id(u32 hw_id, u32 *pipe_id, u32 *comp_id)
 +{
@@ -17951,7 +17764,7 @@ index 000000000000..111111111111
 +#include <drm/drm_blend.h>
 +#include <drm/drm_print.h>
 +#include "dp_dev.h"
-+#include "../linlondp_io.h"
++#include "linlondp_io.h"
 +
 +static u64 get_lpu_event(struct dp_pipeline *dp_pipeline)
 +{
@@ -18659,8 +18472,8 @@ index 000000000000..111111111111
 +#ifndef _DP_DEV_H_
 +#define _DP_DEV_H_
 +
-+#include "../linlondp_dev.h"
-+#include "../linlondp_pipeline.h"
++#include "linlondp_dev.h"
++#include "linlondp_pipeline.h"
 +#include "dp_regs.h"
 +
 +struct dp_pipeline {
@@ -19281,6 +19094,181 @@ index 000000000000..111111111111
 +}
 +
 +#endif /* !_DP_REG_H_ */
+diff --git a/drivers/gpu/drm/cix/linlon-dp/include/linlondp_drm.h b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_drm.h
+new file mode 100644
+index 000000000000..111111111111
+--- /dev/null
++++ b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_drm.h
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ *
++ * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
++ * ALL RIGHTS RESERVED
++ *
++ * This program is free software and is provided to you under the terms of the
++ * GNU General Public License version 2 as published by the Free Software
++ * Foundation, and any use by you of this program is subject to the terms
++ * of such GNU licence.
++ *
++ */
++
++#ifndef _LINLONDP_DRM_H_
++#define _LINLONDP_DRM_H_
++
++enum linlondp_hdr_eotf {
++	LINLONDP_HDR_NONE,
++	LINLONDP_HDR_ST2084,
++	LINLONDP_HDR_HLG,
++};
++
++struct color_ctm_ext {
++	uint64_t matrix[12];
++};
++#endif
+diff --git a/drivers/gpu/drm/cix/linlon-dp/include/linlondp_io.h b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_io.h
+new file mode 100644
+index 000000000000..111111111111
+--- /dev/null
++++ b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_io.h
+@@ -0,0 +1,46 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
++ * ALL RIGHTS RESERVED
++ *
++ */
++#ifndef _LINLONDP_IO_H_
++#define _LINLONDP_IO_H_
++
++#include <linux/io.h>
++
++static inline u32 linlondp_read32(u32 __iomem *base, u32 offset)
++{
++	return readl((base + (offset >> 2)));
++}
++
++static inline void linlondp_write32(u32 __iomem *base, u32 offset, u32 v)
++{
++	writel(v, (base + (offset >> 2)));
++}
++
++static inline void linlondp_write64(u32 __iomem *base, u32 offset, u64 v)
++{
++	writel(lower_32_bits(v), (base + (offset >> 2)));
++	writel(upper_32_bits(v), (base + (offset >> 2) + 1));
++}
++
++static inline void linlondp_write32_mask(u32 __iomem *base, u32 offset, u32 m,
++					 u32 v)
++{
++	u32 tmp = linlondp_read32(base, offset);
++
++	tmp &= (~m);
++	linlondp_write32(base, offset, v | tmp);
++}
++
++static inline void linlondp_write_group(u32 __iomem *base, u32 offset, int num,
++					const u32 *values)
++{
++	int i;
++
++	for (i = 0; i < num; i++)
++		linlondp_write32(base, offset + i * 4, values[i]);
++}
++
++#endif /*_LINLONDP_IO_H_*/
+diff --git a/drivers/gpu/drm/cix/linlon-dp/include/linlondp_product.h b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_product.h
+new file mode 100644
+index 000000000000..111111111111
+--- /dev/null
++++ b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_product.h
+@@ -0,0 +1,36 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
++ * ALL RIGHTS RESERVED
++ *
++ */
++#ifndef _LINLONDP_PRODUCT_H_
++#define _LINLONDP_PRODUCT_H_
++
++/* Product identification */
++#define LINLONDP_CORE_ID(__product, __major, __minor, __status)   \
++	((((__product)&0xFFFF) << 16) | (((__major)&0xF) << 12) | \
++	 (((__minor)&0xF) << 8) | ((__status)&0xFF))
++
++#define LINLONDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
++#define LINLONDP_CORE_ID_MAJOR(__core_id) (((__u32)(__core_id) >> 12) & 0xF)
++#define LINLONDP_CORE_ID_MINOR(__core_id) (((__u32)(__core_id) >> 8) & 0xF)
++#define LINLONDP_CORE_ID_STATUS(__core_id) (((__u32)(__core_id)) & 0xFF)
++
++/* Linlon-display product IDs */
++#define LINLONDP_D8_PRODUCT_ID 0x0080
++#define LINLONDP_D6_PRODUCT_ID 0x0060
++#define LINLONDP_D2_PRODUCT_ID 0x0020
++union linlondp_config_id {
++	struct {
++		__u32 max_line_sz : 16, n_pipelines : 2,
++			n_scalers : 2, /* number of scalers per pipeline */
++			n_layers : 3, /* number of layers per pipeline */
++			n_richs : 3, /* number of rich layers per pipeline */
++			side_by_side : 1, /* if HW works on side_by_side mode */
++			reserved_bits : 5;
++	};
++	__u32 value;
++};
++
++#endif /* _LINLONDP_PRODUCT_H_ */
+diff --git a/drivers/gpu/drm/cix/linlon-dp/include/linlondp_utils.h b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_utils.h
+new file mode 100644
+index 000000000000..111111111111
+--- /dev/null
++++ b/drivers/gpu/drm/cix/linlon-dp/include/linlondp_utils.h
+@@ -0,0 +1,43 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
++ * ALL RIGHTS RESERVED
++ *
++ */
++#ifndef _LINLONDP_UTILS_
++#define _LINLONDP_UTILS_
++
++#include <linux/delay.h>
++#include <linux/errno.h>
++
++#define has_bit(nr, mask) (BIT(nr) & (mask))
++#define has_bits(bits, mask) (((bits) & (mask)) == (bits))
++
++#define dp_wait_cond(__cond, __tries, __min_range, __max_range) \
++	({                                                      \
++		int num_tries = __tries;                        \
++		while (!__cond && (num_tries > 0)) {            \
++			usleep_range(__min_range, __max_range); \
++			num_tries--;                            \
++		}                                               \
++		(__cond) ? 0 : -ETIMEDOUT;                      \
++	})
++
++/* the restriction of range is [start, end] */
++struct linlondp_range {
++	u32 start;
++	u32 end;
++};
++
++static inline void set_range(struct linlondp_range *rg, u32 start, u32 end)
++{
++	rg->start = start;
++	rg->end = end;
++}
++
++static inline bool in_range(struct linlondp_range *rg, u32 v)
++{
++	return (v >= rg->start) && (v <= rg->end);
++}
++
++#endif /* _LINLONDP_UTILS_ */
 diff --git a/drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.c b/drivers/gpu/drm/cix/linlon-dp/linlondp_coeffs.c
 new file mode 100644
 index 000000000000..111111111111
@@ -19504,7 +19492,7 @@ index 000000000000..111111111111
 +
 +#include "linlondp_utils.h"
 +#include "linlondp_color_mgmt.h"
-+#include "linlondp_drm.h"
++#include "include/linlondp_drm.h"
 +
 +/* 10bit precision YUV2RGB matrix */
 +static const s32 yuv2rgb_bt601_narrow[LINLONDP_N_YUV2RGB_COEFFS] = {
@@ -19823,7 +19811,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_crtc.c
-@@ -0,0 +1,1028 @@
+@@ -0,0 +1,1026 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -19834,7 +19822,6 @@ index 000000000000..111111111111
 +#include <linux/pm_runtime.h>
 +#include <linux/spinlock.h>
 +#include <linux/clk-provider.h>
-+#include <linux/timer.h>
 +
 +#include <drm/drm_atomic.h>
 +#include <drm/drm_atomic_helper.h>
@@ -20107,7 +20094,7 @@ index 000000000000..111111111111
 +
 +static void linlondp_wb_job_timer_callback(struct timer_list *t)
 +{
-+	struct linlondp_wb_timer_data *data = timer_container_of(data, t, timer);
++	struct linlondp_wb_timer_data *data = from_timer(data, t, timer);
 +	struct drm_writeback_job *job;
 +	unsigned long flags;
 +	struct linlondp_crtc *kcrtc;
@@ -20144,7 +20131,7 @@ index 000000000000..111111111111
 +	struct linlondp_wb_connector *wb_conn = kcrtc->wb_conn;
 +
 +	if (wb_conn->timer_data.timer_started)
-+		timer_delete(&wb_conn->timer_data.timer);
++		del_timer(&wb_conn->timer_data.timer);
 +
 +	wb_conn->timer_data.param = kcrtc;
 +	timer_setup(&wb_conn->timer_data.timer, linlondp_wb_job_timer_callback, 0);
@@ -20293,7 +20280,7 @@ index 000000000000..111111111111
 +	if (disable_crtc)
 +		mdev->funcs->flush(mdev, kcrtc->master->id, 0);
 +
-+	/* wait the flip take affect. wait for a maximum time of 3 frames */
++	/* wait the flip take affect. wait for a maximum time of 60 frames*/
 +	timeout = 3 * vblank->framedur_ns / 1000000;
 +	timeout = wait_for_completion_timeout(flip_done, msecs_to_jiffies(timeout));
 +	if (timeout == 0) {
@@ -20307,7 +20294,6 @@ index 000000000000..111111111111
 +		} else {
 +			struct drm_crtc *crtc = &kcrtc->base;
 +			struct drm_pending_vblank_event *event;
-+
 +			event = crtc->state->event;
 +			spin_lock_irqsave(&drm->event_lock, flags);
 +			crtc->state->event = NULL;
@@ -20533,7 +20519,7 @@ index 000000000000..111111111111
 +	if (kcrtc->master->force_pixel_per_cycle != 0)
 +		pixel_per_cycle = kcrtc->master->force_pixel_per_cycle;
 +
-+	if ((m->clock > 600000) && (m->clock < 600000 * 2)) {
++	if ((adjusted_mode->clock > 600000) && (adjusted_mode->clock < 600000 * 2)) {
 +		pixel_per_cycle = 2;
 +		if (!mdev->side_by_side) {
 +			mdev->side_by_side = 1;
@@ -20857,7 +20843,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_dev.c
-@@ -0,0 +1,845 @@
+@@ -0,0 +1,832 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -20872,7 +20858,6 @@ index 000000000000..111111111111
 +#include <linux/platform_device.h>
 +#include <linux/pm_runtime.h>
 +#include <linux/dma-mapping.h>
-+#include <linux/reset.h>
 +#ifdef CONFIG_DEBUG_FS
 +#include <linux/debugfs.h>
 +#include <linux/seq_file.h>
@@ -21398,18 +21383,6 @@ index 000000000000..111111111111
 +        return mdev->irq;
 +    }
 +
-+    /* Acquire reset controls via RSTL (optional ��� don't fail probe) */
-+    mdev->ip_rst = devm_reset_control_get_optional(dev, "ip_reset");
-+    if (IS_ERR(mdev->ip_rst)) {
-+        dev_warn(dev, "failed to get reset ip_reset: %pe\n", mdev->ip_rst);
-+        mdev->ip_rst = NULL;
-+    }
-+    mdev->rcsu_rst = devm_reset_control_get_optional(dev, "rcsu_reset");
-+    if (IS_ERR(mdev->rcsu_rst)) {
-+        dev_warn(dev, "failed to get reset rcsu_reset: %pe\n", mdev->rcsu_rst);
-+        mdev->rcsu_rst = NULL;
-+    }
-+
 +    ret = 0;
 +    fwnode_for_each_child_node(np, child) {
 +        tmp_name = child->ops->get_name(child);
@@ -21708,7 +21681,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_dev.h
-@@ -0,0 +1,306 @@
+@@ -0,0 +1,305 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -21867,8 +21840,7 @@ index 000000000000..111111111111
 +	/** @gop_mode_changed: test if gop mode changed */
 +	bool (*gop_mode_changed)(struct linlondp_dev *mdev,
 +				 struct drm_display_mode *mode);
-+
-+	/** @dpu_reset: SW reset for DPU on flip timeout */
++	/** @reset_dpu: sw reset linlon_dp */
 +	void (*dpu_reset)(struct linlondp_dev *mdev);
 +};
 +
@@ -22015,44 +21987,12 @@ index 000000000000..111111111111
 +#endif
 +
 +#endif /*_LINLONDP_DEV_H_*/
-diff --git a/drivers/gpu/drm/cix/linlon-dp/linlondp_drm.h b/drivers/gpu/drm/cix/linlon-dp/linlondp_drm.h
-new file mode 100644
-index 000000000000..111111111111
---- /dev/null
-+++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_drm.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ *
-+ * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
-+ * ALL RIGHTS RESERVED
-+ *
-+ * This program is free software and is provided to you under the terms of the
-+ * GNU General Public License version 2 as published by the Free Software
-+ * Foundation, and any use by you of this program is subject to the terms
-+ * of such GNU licence.
-+ *
-+ */
-+
-+#ifndef _LINLONDP_DRM_H_
-+#define _LINLONDP_DRM_H_
-+
-+enum linlondp_hdr_eotf {
-+	LINLONDP_HDR_NONE,
-+	LINLONDP_HDR_ST2084,
-+	LINLONDP_HDR_HLG,
-+};
-+
-+struct color_ctm_ext {
-+	uint64_t matrix[12];
-+};
-+#endif
 diff --git a/drivers/gpu/drm/cix/linlon-dp/linlondp_drv.c b/drivers/gpu/drm/cix/linlon-dp/linlondp_drv.c
 new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_drv.c
-@@ -0,0 +1,362 @@
+@@ -0,0 +1,361 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -22064,18 +22004,16 @@ index 000000000000..111111111111
 +#include <linux/platform_device.h>
 +#include <linux/component.h>
 +#include <linux/pm_runtime.h>
-+#include <linux/property.h>
 +#include <drm/drm_fb_helper.h>
 +#include <drm/drm_module.h>
 +#include <drm/drm_of.h>
-+#include <drm/clients/drm_client_setup.h>
++#include <drm/drm_fbdev_generic.h>
 +#include "linlondp_dev.h"
 +#include "linlondp_kms.h"
 +
-+/* Framebuffer emulation (fbdev) is always enabled ��� required for console
-+ * and boot splash.  Previously a module parameter; hardcoded to avoid
-+ * accidental misconfiguration.
-+ */
++static bool enable_fb = true;
++module_param_named(enable_fb, enable_fb, bool, 0644);
++MODULE_PARM_DESC(enable_fb, "Enable/Disable drm framebuffer support");
 +
 +struct linlondp_drv {
 +	struct linlondp_dev *mdev;
@@ -22135,7 +22073,8 @@ index 000000000000..111111111111
 +	}
 +
 +	dev_set_drvdata(dev, mdrv);
-+	drm_client_setup(&mdrv->kms->base, NULL);
++	if (enable_fb)
++		drm_fbdev_generic_setup(&mdrv->kms->base, 32);
 +
 +	if (mdrv->mdev->enabled_by_gop)
 +		pm_runtime_set_active(dev);
@@ -22155,7 +22094,6 @@ index 000000000000..111111111111
 +	return err;
 +}
 +
-+#if !IS_ENABLED(CONFIG_DRM_CIX_COMPONENT_BIND_BYPASSED)
 +static const struct component_master_ops linlondp_master_ops = {
 +	.bind = linlondp_bind,
 +	.unbind = linlondp_unbind,
@@ -22168,7 +22106,11 @@ index 000000000000..111111111111
 +	if (has_acpi_companion(dev)) {
 +		ret = dev->fwnode == data;
 +	} else {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 0, 0)
 +		ret = component_compare_of(dev, data);
++#else
++		ret = dev->of_node == data;
++#endif
 +	}
 +
 +	return ret;
@@ -22189,6 +22131,7 @@ index 000000000000..111111111111
 +	remote = fwnode_graph_get_remote_node(np, port, endpoint);
 +
 +	if (remote) {
++		pr_info("%s. remote.name=%s\n", __func__, dev_name(remote->dev));
 +		fwnode_handle_get(remote);
 +		component_match_add_release(master, match, drm_release_fwnode,
 +					    compare_of, remote);
@@ -22208,28 +22151,27 @@ index 000000000000..111111111111
 +		of_node_put(remote);
 +	}
 +}
-+#endif
 +
 +static int linlondp_platform_probe(struct platform_device *pdev)
 +{
 +	struct device *dev = &pdev->dev;
-+#if !IS_ENABLED(CONFIG_DRM_CIX_COMPONENT_BIND_BYPASSED)
 +	struct component_match *match = NULL;
 +	struct fwnode_handle *acpi_child;
 +	struct device_node *of_child;
 +	const char *tmp_name = NULL;
-+#endif
 +
-+	dev_dbg(dev, "probe enter\n");
++	pr_info("%s enter. dev.name=%s\n", __func__, dev_name(dev));
++	pr_info("linlondp enable fb is %d", enable_fb);
 +#if !IS_ENABLED(CONFIG_DRM_CIX_COMPONENT_BIND_BYPASSED)
 +	if (has_acpi_companion(dev)) {
-+		dev_dbg(dev, "probe via ACPI\n");
++		pr_info("%s via acpi.\n", __func__);
 +		fwnode_for_each_child_node(dev->fwnode, acpi_child) {
 +			tmp_name = acpi_child->ops->get_name(acpi_child);
 +			if (strncmp(tmp_name, "pipeline", 8))
 +				continue;
 +
 +			/* add connector */
++			pr_info("%s enter to add connector.\n", __func__);
 +			linlondp_add_acpi_slave(dev, &match, acpi_child,
 +						LINLONDP_OF_PORT_OUTPUT, 0);
 +			linlondp_add_acpi_slave(dev, &match, acpi_child,
@@ -22238,7 +22180,7 @@ index 000000000000..111111111111
 +			dev_pm_set_driver_flags(&pdev->dev, DPM_FLAG_NO_DIRECT_COMPLETE);
 +		}
 +	} else {
-+		dev_dbg(dev, "probe via DT\n");
++		pr_info("%s via dt.\n", __func__);
 +		for_each_available_child_of_node(dev->of_node, of_child) {
 +			if (of_node_cmp(of_child->name, "pipeline") != 0)
 +				continue;
@@ -22250,11 +22192,7 @@ index 000000000000..111111111111
 +					   LINLONDP_OF_PORT_OUTPUT, 1);
 +		}
 +	}
-+	if (!match) {
-+		dev_dbg(dev, "no display connectors found, skipping\n");
-+		return -ENODEV;
-+	}
-+
++	pr_info("%s end. match=%p\n", __func__, match);
 +	return component_master_add_with_match(dev, &linlondp_master_ops,
 +					       match);
 +#else
@@ -22262,13 +22200,14 @@ index 000000000000..111111111111
 +#endif
 +}
 +
-+static void linlondp_platform_remove(struct platform_device *pdev)
++static int linlondp_platform_remove(struct platform_device *pdev)
 +{
 +#if !IS_ENABLED(CONFIG_DRM_CIX_COMPONENT_BIND_BYPASSED)
 +	component_master_del(&pdev->dev, &linlondp_master_ops);
 +#else
 +	linlondp_unbind(&pdev->dev);
 +#endif
++	return 0;
 +}
 +
 +static const struct of_device_id linlondp_of_match[] = {
@@ -22369,8 +22308,8 @@ index 000000000000..111111111111
 +{
 +	struct linlondp_drv *mdrv = dev_get_drvdata(dev);
 +
-+	device_property_read_u32(dev, "enabled_by_gop",
-+				(u32 *)&mdrv->mdev->enabled_by_gop);
++	of_property_read_u32(dev->of_node, "enabled_by_gop",
++			     (u32 *)&mdrv->mdev->enabled_by_gop);
 +
 +	if (!pm_runtime_status_suspended(dev))
 +		linlondp_dev_resume(mdrv->mdev);
@@ -22847,7 +22786,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.c
-@@ -0,0 +1,289 @@
+@@ -0,0 +1,288 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -23009,7 +22948,6 @@ index 000000000000..111111111111
 +
 +struct drm_framebuffer *
 +linlondp_fb_create(struct drm_device *dev, struct drm_file *file,
-+		   const struct drm_format_info *info,
 +		   const struct drm_mode_fb_cmd2 *mode_cmd)
 +{
 +	struct linlondp_dev *mdev = dev->dev_private;
@@ -23029,7 +22967,7 @@ index 000000000000..111111111111
 +		return ERR_PTR(-EINVAL);
 +	}
 +
-+	drm_helper_mode_fill_fb_struct(dev, &kfb->base, info, mode_cmd);
++	drm_helper_mode_fill_fb_struct(dev, &kfb->base, mode_cmd);
 +
 +	if (kfb->base.modifier)
 +		ret = linlondp_fb_afbc_size_check(kfb, file, mode_cmd);
@@ -23142,7 +23080,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_framebuffer.h
-@@ -0,0 +1,49 @@
+@@ -0,0 +1,48 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -23182,7 +23120,6 @@ index 000000000000..111111111111
 +
 +struct drm_framebuffer *
 +linlondp_fb_create(struct drm_device *dev, struct drm_file *file,
-+		   const struct drm_format_info *info,
 +		   const struct drm_mode_fb_cmd2 *mode_cmd);
 +int linlondp_fb_check_src_coords(const struct linlondp_fb *kfb, u32 src_x,
 +				 u32 src_y, u32 src_w, u32 src_h);
@@ -23249,7 +23186,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_kms.c
-@@ -0,0 +1,412 @@
+@@ -0,0 +1,413 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -23263,7 +23200,6 @@ index 000000000000..111111111111
 +#include <drm/drm_atomic_helper.h>
 +#include <drm/drm_drv.h>
 +#include <drm/drm_fb_helper.h>
-+#include <drm/drm_fbdev_dma.h>
 +#include <drm/drm_gem_dma_helper.h>
 +#include <drm/drm_gem_framebuffer_helper.h>
 +#include <drm/drm_managed.h>
@@ -23277,11 +23213,9 @@ index 000000000000..111111111111
 +
 +DEFINE_DRM_GEM_DMA_FOPS(linlondp_cma_fops);
 +
-+/*
-+ * The DPU is a display-only device and must NOT expose a render node.
-+ * Doing so conflicts with the Panthor GPU render node, causing userspace
-+ * compositors to pick the wrong device for rendering.
-+ */
++static bool enable_render = true;
++module_param(enable_render, bool, 0644);
++MODULE_PARM_DESC(enable_render, "Enable render node support (true/false)");
 +
 +static int linlondp_gem_dma_dumb_create(struct drm_file *file,
 +					struct drm_device *dev,
@@ -23319,11 +23253,12 @@ index 000000000000..111111111111
 +
 +static struct drm_driver linlondp_kms_driver = {
 +	.driver_features = DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
++	.lastclose = drm_fb_helper_lastclose,
 +	DRM_GEM_DMA_DRIVER_OPS_WITH_DUMB_CREATE(linlondp_gem_dma_dumb_create),
-+	DRM_FBDEV_DMA_DRIVER_OPS,
 +	.fops = &linlondp_cma_fops,
 +	.name = "linlondp",
 +	.desc = "Linlon Display Processor driver",
++	.date = "20230426",
 +	.major = 0,
 +	.minor = 0,
 +};
@@ -23585,6 +23520,9 @@ index 000000000000..111111111111
 +	struct linlondp_kms_dev *kms;
 +	struct drm_device *drm;
 +	int err;
++
++	if(enable_render)
++		linlondp_kms_driver.driver_features |= DRIVER_RENDER;
 +
 +	kms = devm_drm_dev_alloc(mdev->dev, &linlondp_kms_driver,
 +				 struct linlondp_kms_dev, base);
@@ -25085,7 +25023,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_pipeline_state.c
-@@ -0,0 +1,1733 @@
+@@ -0,0 +1,1735 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
@@ -25993,10 +25931,12 @@ index 000000000000..111111111111
 +	struct linlondp_scaler *scaler = layer->base.pipeline->scalers[0];
 +	u32 w = dflow->in_w;
 +	u32 h = dflow->in_h;
++	struct linlondp_pipeline *pipe = layer->base.pipeline;
 +
 +	dflow->total_in_w = dflow->in_w;
 +	dflow->total_in_h = dflow->in_h;
 +	dflow->total_out_w = dflow->out_w;
++	u32 out_w = pipe->pixel_per_cycle == 1 ? dflow->out_w : dflow->out_w / 2;
 +
 +	/* if format doesn't have alpha, fix blend mode to PIXEL_NONE */
 +	if (!fb->format->has_alpha)
@@ -26016,7 +25956,7 @@ index 000000000000..111111111111
 +	 */
 +	if (dflow->en_scaling && scaler)
 +		dflow->en_split = !linlon_in_range(&scaler->hsize, dflow->in_w) ||
-+				  !linlon_in_range(&scaler->hsize, dflow->out_w);
++				  !linlon_in_range(&scaler->hsize, out_w);
 +}
 +
 +static bool merger_is_available(struct linlondp_pipeline *pipe,
@@ -26824,69 +26764,22 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_plane.c
-@@ -0,0 +1,727 @@
+@@ -0,0 +1,649 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
 + * ALL RIGHTS RESERVED
 + *
 + */
-+#include <linux/debugfs.h>
-+#include <linux/moduleparam.h>
-+
 +#include <drm/drm_atomic.h>
 +#include <drm/drm_atomic_helper.h>
 +#include <drm/drm_blend.h>
-+#include <drm/drm_fourcc.h>
 +#include <drm/drm_print.h>
 +#include <drm/drm_file.h>
 +#include "linlondp_dev.h"
 +#include "linlondp_drm.h"
 +#include "linlondp_kms.h"
 +#include "linlondp_framebuffer.h"
-+
-+/*
-+ * Diagnostic knob:
-+ * Force scanout planes to advertise and accept LINEAR modifiers only.
-+ * Use this to isolate AFBC decode/fetch issues in the display path.
-+ */
-+static bool force_linear_scanout_modifiers;
-+module_param(force_linear_scanout_modifiers, bool, 0644);
-+MODULE_PARM_DESC(force_linear_scanout_modifiers,
-+		 "Force linear scanout modifiers only (default: off)");
-+
-+/*
-+ * Diagnostic knob:
-+ * Mask 10bpc RGB scanout formats from KMS plane capabilities so compositors
-+ * prefer 8bpc formats (e.g. AR24/XR24). This is useful for isolating
-+ * AB30/XB30 + AFBC specific issues.
-+ */
-+static bool force_scanout_8bpc_formats;
-+module_param(force_scanout_8bpc_formats, bool, 0644);
-+MODULE_PARM_DESC(force_scanout_8bpc_formats,
-+		 "Mask 10bpc RGB scanout formats from plane capabilities (default: off)");
-+
-+static const u64 linlondp_linear_only_modifiers[] = {
-+	DRM_FORMAT_MOD_LINEAR,
-+	DRM_FORMAT_MOD_INVALID,
-+};
-+
-+static bool linlondp_is_10bpc_rgb_format(u32 format)
-+{
-+	switch (format) {
-+	case DRM_FORMAT_ARGB2101010:
-+	case DRM_FORMAT_ABGR2101010:
-+	case DRM_FORMAT_RGBA1010102:
-+	case DRM_FORMAT_BGRA1010102:
-+	case DRM_FORMAT_XRGB2101010:
-+	case DRM_FORMAT_XBGR2101010:
-+	case DRM_FORMAT_RGBX1010102:
-+	case DRM_FORMAT_BGRX1010102:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
 +
 +static int linlondp_plane_init_data_flow(struct drm_plane_state *st,
 +					 struct linlondp_crtc_state *kcrtc_st,
@@ -26922,24 +26815,22 @@ index 000000000000..111111111111
 +	dflow->out_w = st->crtc_w;
 +	dflow->out_h = st->crtc_h;
 +
-+	if (pipe->pixel_per_cycle == 1) {
-+		crtc_st = drm_atomic_get_new_crtc_state(st->state, st->crtc);
-+		mode = &crtc_st->mode;
-+		adjusted_mode = &crtc_st->adjusted_mode;
-+		hdisplay = mode->hdisplay;
-+		vdisplay = mode->vdisplay;
-+		crtc_hdisplay = adjusted_mode->crtc_hdisplay;
-+		crtc_vdisplay = adjusted_mode->crtc_vdisplay;
++	crtc_st = drm_atomic_get_new_crtc_state(st->state, st->crtc);
++	mode = &crtc_st->mode;
++	adjusted_mode = &crtc_st->adjusted_mode;
++	hdisplay = mode->hdisplay;
++	vdisplay = mode->vdisplay;
++	crtc_hdisplay = adjusted_mode->crtc_hdisplay * pipe->pixel_per_cycle;
++	crtc_vdisplay = adjusted_mode->crtc_vdisplay;
 +
-+		if (crtc_hdisplay != hdisplay) {
-+			dflow->out_x = dflow->out_x * crtc_hdisplay / hdisplay;
-+			dflow->out_w = dflow->out_w * crtc_hdisplay / hdisplay;
-+		}
++	if (crtc_hdisplay != hdisplay) {
++		dflow->out_x = dflow->out_x * crtc_hdisplay / hdisplay;
++		dflow->out_w = dflow->out_w * crtc_hdisplay / hdisplay;
++	}
 +
-+		if (crtc_vdisplay != vdisplay) {
-+			dflow->out_y = dflow->out_y * crtc_vdisplay / vdisplay;
-+			dflow->out_h = dflow->out_h * crtc_vdisplay / vdisplay;
-+		}
++	if (crtc_vdisplay != vdisplay) {
++		dflow->out_y = dflow->out_y * crtc_vdisplay / vdisplay;
++		dflow->out_h = dflow->out_h * crtc_vdisplay / vdisplay;
 +	}
 +
 +	dflow->in_x = st->src_x >> 16;
@@ -27192,15 +27083,6 @@ index 000000000000..111111111111
 +	struct linlondp_plane *kplane = to_kplane(plane);
 +	u32 layer_type = kplane->layer->layer_type;
 +
-+	if (force_scanout_8bpc_formats &&
-+	    linlondp_is_10bpc_rgb_format(format))
-+		return false;
-+
-+	if (force_linear_scanout_modifiers &&
-+	    modifier != DRM_FORMAT_MOD_LINEAR &&
-+	    modifier != DRM_FORMAT_MOD_INVALID)
-+		return false;
-+
 +	return linlondp_format_mod_supported(&mdev->fmt_tbl, layer_type, format,
 +					     modifier, 0);
 +}
@@ -27434,7 +27316,6 @@ index 000000000000..111111111111
 +	struct linlondp_color_manager *color_mgr;
 +	struct linlondp_plane *kplane;
 +	struct drm_plane *plane;
-+	const u64 *supported_modifiers;
 +	u32 *formats, n_formats = 0;
 +	int err;
 +
@@ -27449,29 +27330,10 @@ index 000000000000..111111111111
 +	formats = linlondp_get_layer_fourcc_list(&mdev->fmt_tbl,
 +						 layer->layer_type, &n_formats);
 +
-+	if (force_scanout_8bpc_formats) {
-+		u32 i, j = 0;
-+
-+		for (i = 0; i < n_formats; i++) {
-+			if (linlondp_is_10bpc_rgb_format(formats[i]))
-+				continue;
-+			formats[j++] = formats[i];
-+		}
-+		n_formats = j;
-+	}
-+
-+	if (!n_formats) {
-+		err = -EINVAL;
-+		goto cleanup;
-+	}
-+
-+	supported_modifiers = force_linear_scanout_modifiers ?
-+		linlondp_linear_only_modifiers : linlondp_supported_modifiers;
-+
 +	err = drm_universal_plane_init(&kms->base, plane,
 +				       get_possible_crtcs(kms, c->pipeline),
 +				       &linlondp_plane_funcs, formats,
-+				       n_formats, supported_modifiers,
++				       n_formats, linlondp_supported_modifiers,
 +				       get_plane_type(kms, c), "%s", c->name);
 +
 +	linlondp_put_fourcc_list(formats);
@@ -28088,15 +27950,13 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/gpu/drm/cix/linlon-dp/linlondp_wb_connector.c
-@@ -0,0 +1,391 @@
+@@ -0,0 +1,389 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * (C) COPYRIGHT 2022-2023 Arm Technology (China) Co., Ltd.
 + * ALL RIGHTS RESERVED
 + *
 + */
-+#include <linux/debugfs.h>
-+
 +#include <drm/drm_framebuffer.h>
 +#include "linlondp_dev.h"
 +#include "linlondp_kms.h"
@@ -28188,7 +28048,7 @@ index 000000000000..111111111111
 +
 +static enum drm_mode_status
 +linlondp_wb_connector_mode_valid(struct drm_connector *connector,
-+				 const struct drm_display_mode *mode)
++				 struct drm_display_mode *mode)
 +{
 +	struct drm_device *dev = connector->dev;
 +	struct drm_mode_config *mode_config = &dev->mode_config;
@@ -28480,128 +28340,6 @@ index 000000000000..111111111111
 +
 +	return 0;
 +}
-diff --git a/drivers/video/backlight/pwm_bl.c b/drivers/video/backlight/pwm_bl.c
-index 111111111111..222222222222 100644
---- a/drivers/video/backlight/pwm_bl.c
-+++ b/drivers/video/backlight/pwm_bl.c
-@@ -5,12 +5,14 @@
-  * 2) platform_data being correctly configured
-  */
- 
-+#include <linux/acpi.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/backlight.h>
- #include <linux/err.h>
- #include <linux/pwm.h>
-@@ -221,13 +223,11 @@ static int pwm_backlight_parse_dt(struct device *dev,
- 	struct device_node *node = dev->of_node;
- 	unsigned int num_levels;
- 	unsigned int num_steps = 0;
--	struct property *prop;
- 	unsigned int *table;
--	int length;
- 	u32 value;
- 	int ret;
- 
--	if (!node)
-+	if (!node && !dev->fwnode)
- 		return -ENODEV;
- 
- 	memset(data, 0, sizeof(*data));
-@@ -236,35 +236,39 @@ static int pwm_backlight_parse_dt(struct device *dev,
- 	 * These values are optional and set as 0 by default, the out values
- 	 * are modified only if a valid u32 value can be decoded.
- 	 */
--	of_property_read_u32(node, "post-pwm-on-delay-ms",
--			     &data->post_pwm_on_delay);
--	of_property_read_u32(node, "pwm-off-delay-ms", &data->pwm_off_delay);
-+	device_property_read_u32(dev, "post-pwm-on-delay-ms",
-+				 &data->post_pwm_on_delay);
-+	device_property_read_u32(dev, "pwm-off-delay-ms",
-+				 &data->pwm_off_delay);
- 
- 	/*
- 	 * Determine the number of brightness levels, if this property is not
- 	 * set a default table of brightness levels will be used.
- 	 */
--	prop = of_find_property(node, "brightness-levels", &length);
--	if (!prop)
-+	if (!device_property_present(dev, "brightness-levels"))
- 		return 0;
- 
--	num_levels = length / sizeof(u32);
-+	ret = device_property_count_u32(dev, "brightness-levels");
-+	if (ret < 0)
-+		return ret;
-+	num_levels = ret;
- 
--	/* read brightness levels from DT property */
-+	/* read brightness levels from DT/ACPI property */
- 	if (num_levels > 0) {
- 		data->levels = devm_kcalloc(dev, num_levels,
- 					    sizeof(*data->levels), GFP_KERNEL);
- 		if (!data->levels)
- 			return -ENOMEM;
- 
--		ret = of_property_read_u32_array(node, "brightness-levels",
--						 data->levels,
--						 num_levels);
-+		ret = device_property_read_u32_array(dev, "brightness-levels",
-+						     data->levels,
-+						     num_levels);
- 		if (ret < 0)
- 			return ret;
- 
--		ret = of_property_read_u32(node, "default-brightness-level",
--					   &value);
-+		ret = device_property_read_u32(dev,
-+					       "default-brightness-level",
-+					       &value);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -275,8 +279,8 @@ static int pwm_backlight_parse_dt(struct device *dev,
- 		 * interpolation between each of the values of brightness levels
- 		 * and creates a new pre-computed table.
- 		 */
--		of_property_read_u32(node, "num-interpolated-steps",
--				     &num_steps);
-+		device_property_read_u32(dev, "num-interpolated-steps",
-+					 &num_steps);
- 
- 		/*
- 		 * Make sure that there is at least two entries in the
-@@ -351,8 +355,15 @@ static const struct of_device_id pwm_backlight_of_match[] = {
- 	{ .compatible = "pwm-backlight" },
- 	{ }
- };
--
- MODULE_DEVICE_TABLE(of, pwm_backlight_of_match);
-+
-+#ifdef CONFIG_ACPI
-+static const struct acpi_device_id pwm_backlight_acpi_match[] = {
-+	{ "CIXH5041", 0 },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(acpi, pwm_backlight_acpi_match);
-+#endif
- #else
- static int pwm_backlight_parse_dt(struct device *dev,
- 				  struct platform_pwm_backlight_data *data)
-@@ -695,6 +706,7 @@ static struct platform_driver pwm_backlight_driver = {
- 		.name		= "pwm-backlight",
- 		.pm		= &pwm_backlight_pm_ops,
- 		.of_match_table	= of_match_ptr(pwm_backlight_of_match),
-+		.acpi_match_table = ACPI_PTR(pwm_backlight_acpi_match),
- 	},
- 	.probe		= pwm_backlight_probe,
- 	.remove		= pwm_backlight_remove,
 -- 
 Armbian
 

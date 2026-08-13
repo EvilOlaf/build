@@ -805,7 +805,7 @@ index 111111111111..222222222222 100644
  	init_completion(&ptdev->unplug.done);
  	ret = drmm_mutex_init(&ptdev->base, &ptdev->unplug.lock);
  	if (ret)
-@@ -219,30 +488,96 @@ int panthor_device_init(struct panthor_device *ptdev)
+@@ -222,30 +491,96 @@ int panthor_device_init(struct panthor_device *ptdev)
  	if (ret)
  		return ret;
  
@@ -910,7 +910,7 @@ index 111111111111..222222222222 100644
  	}
  
  	ret = panthor_hw_init(ptdev);
-@@ -257,6 +592,11 @@ int panthor_device_init(struct panthor_device *ptdev)
+@@ -260,6 +595,11 @@ int panthor_device_init(struct panthor_device *ptdev)
  	if (ret)
  		goto err_unplug_gpu;
  
@@ -922,7 +922,7 @@ index 111111111111..222222222222 100644
  	ret = panthor_mmu_init(ptdev);
  	if (ret)
  		goto err_unplug_gpu;
-@@ -295,6 +635,9 @@ int panthor_device_init(struct panthor_device *ptdev)
+@@ -298,6 +638,9 @@ int panthor_device_init(struct panthor_device *ptdev)
  
  err_rpm_put:
  	pm_runtime_put_sync_suspend(ptdev->base.dev);
@@ -1044,7 +1044,7 @@ diff --git a/drivers/gpu/drm/panthor/panthor_fw.c b/drivers/gpu/drm/panthor/pant
 index 111111111111..222222222222 100644
 --- a/drivers/gpu/drm/panthor/panthor_fw.c
 +++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -1354,7 +1354,15 @@ int panthor_fw_init(struct panthor_device *ptdev)
+@@ -1374,7 +1374,15 @@ int panthor_fw_init(struct panthor_device *ptdev)
  	INIT_LIST_HEAD(&fw->sections);
  	INIT_DELAYED_WORK(&fw->watchdog.ping_work, panthor_fw_ping_work);
  
