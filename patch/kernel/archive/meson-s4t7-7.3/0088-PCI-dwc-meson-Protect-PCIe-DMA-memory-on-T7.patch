@@ -15,19 +15,19 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 61 insertions(+)
 
 diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
-index 15ed59b8764f..006c466bc527 100644
+index 8559d132d..f8e96ca4b 100644
 --- a/drivers/pci/controller/dwc/pci-meson.c
 +++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -17,6 +17,8 @@
+@@ -16,6 +16,8 @@
+ #include <linux/types.h>
  #include <linux/phy/phy.h>
- #include <linux/mod_devicetable.h>
  #include <linux/module.h>
 +#include <linux/arm-smccc.h>
 +#include <linux/of_reserved_mem.h>
  
  #include "pcie-designware.h"
  
-@@ -44,6 +46,10 @@
+@@ -43,6 +45,10 @@
  #define PCIE_SHARED_RESET		1
  #define PCIE_NORMAL_RESET		0
  
@@ -38,7 +38,7 @@ index 15ed59b8764f..006c466bc527 100644
  enum pcie_data_rate {
  	PCIE_GEN1,
  	PCIE_GEN2,
-@@ -71,6 +77,10 @@ struct meson_pcie {
+@@ -70,6 +76,10 @@ struct meson_pcie {
  	struct phy *phy;
  };
  
@@ -49,7 +49,7 @@ index 15ed59b8764f..006c466bc527 100644
  static struct reset_control *meson_pcie_get_reset(struct meson_pcie *mp,
  						  const char *id,
  						  u32 reset_type)
-@@ -368,6 +378,39 @@ static int meson_pcie_host_init(struct dw_pcie_rp *pp)
+@@ -369,6 +379,45 @@ static int meson_pcie_host_init(struct dw_pcie_rp *pp)
  	return 0;
  }
  
@@ -57,6 +57,12 @@ index 15ed59b8764f..006c466bc527 100644
 +				     phys_addr_t base, size_t size)
 +{
 +	struct arm_smccc_res res;
++
++	/* The SMC takes 32-bit base and size */
++	if (!size || upper_32_bits(base) || upper_32_bits((u64)base + size - 1)) {
++		dev_err(dev, "PCIe DMA pool must be below 4 GiB\n");
++		return -EINVAL;
++	}
 +
 +	arm_smccc_smc(MESON_SMC_PROTECT_MEM,
 +		      0xc,        /* TEE_MEM_TYPE_PCIE */
@@ -89,7 +95,7 @@ index 15ed59b8764f..006c466bc527 100644
  static const struct dw_pcie_host_ops meson_pcie_host_ops = {
  	.init = meson_pcie_host_init,
  };
-@@ -379,6 +422,7 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+@@ -380,6 +429,7 @@ static const struct dw_pcie_ops dw_pcie_ops = {
  
  static int meson_pcie_probe(struct platform_device *pdev)
  {
@@ -97,7 +103,7 @@ index 15ed59b8764f..006c466bc527 100644
  	struct device *dev = &pdev->dev;
  	struct dw_pcie *pci;
  	struct meson_pcie *mp;
-@@ -430,6 +474,15 @@ static int meson_pcie_probe(struct platform_device *pdev)
+@@ -431,6 +481,15 @@ static int meson_pcie_probe(struct platform_device *pdev)
  		goto err_phy;
  	}
  
@@ -113,8 +119,8 @@ index 15ed59b8764f..006c466bc527 100644
  	ret = meson_pcie_probe_clocks(mp);
  	if (ret) {
  		dev_err(dev, "init clock resources failed, %d\n", ret);
-@@ -451,6 +504,10 @@ static int meson_pcie_probe(struct platform_device *pdev)
- 	return ret;
+@@ -460,6 +519,10 @@ static void meson_pcie_remove(struct platform_device *pdev)
+ 	meson_pcie_power_off(mp);
  }
  
 +static const struct meson_pcie_data t7_pcie_data = {
@@ -124,7 +130,7 @@ index 15ed59b8764f..006c466bc527 100644
  static const struct of_device_id meson_pcie_of_match[] = {
  	{
  		.compatible = "amlogic,axg-pcie",
-@@ -458,6 +515,10 @@ static const struct of_device_id meson_pcie_of_match[] = {
+@@ -467,6 +530,10 @@ static const struct of_device_id meson_pcie_of_match[] = {
  	{
  		.compatible = "amlogic,g12a-pcie",
  	},
@@ -136,5 +142,4 @@ index 15ed59b8764f..006c466bc527 100644
  };
  MODULE_DEVICE_TABLE(of, meson_pcie_of_match);
 -- 
-2.53.0
-
+Armbian

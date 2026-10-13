@@ -18,7 +18,7 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 43 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/thermal/khadas_mcu_fan.c b/drivers/thermal/khadas_mcu_fan.c
-index d35e5313bea4..24559bf65de4 100644
+index 21b3d0a71..2a14717d8 100644
 --- a/drivers/thermal/khadas_mcu_fan.c
 +++ b/drivers/thermal/khadas_mcu_fan.c
 @@ -13,13 +13,15 @@
@@ -69,7 +69,19 @@ index d35e5313bea4..24559bf65de4 100644
  		return -EINVAL;
  
  	if (state == ctx->level)
-@@ -83,11 +86,32 @@ static int khadas_mcu_fan_probe(struct platform_device *pdev)
+@@ -76,6 +79,11 @@ static const struct thermal_cooling_device_ops khadas_mcu_fan_cooling_ops = {
+ 	.set_cur_state = khadas_mcu_fan_set_cur_state,
+ };
+ 
++static void khadas_mcu_fan_disable_power(void *data)
++{
++	regulator_disable(data);
++}
++
+ static int khadas_mcu_fan_probe(struct platform_device *pdev)
+ {
+ 	struct khadas_mcu *mcu = dev_get_drvdata(pdev->dev.parent);
+@@ -83,11 +91,37 @@ static int khadas_mcu_fan_probe(struct platform_device *pdev)
  	struct device *dev = &pdev->dev;
  	struct khadas_mcu_fan_ctx *ctx;
  	int ret;
@@ -97,12 +109,17 @@ index d35e5313bea4..24559bf65de4 100644
 +			dev_err(dev, "Failed to enable fan power supply: %d\n", ret);
 +			return ret;
 +		}
++
++		ret = devm_add_action_or_reset(dev, khadas_mcu_fan_disable_power,
++					       ctx->power);
++		if (ret)
++			return ret;
 +	}
 +
  	platform_set_drvdata(pdev, ctx);
  
- 	cdev = devm_thermal_of_cooling_device_register(dev->parent,
-@@ -124,12 +148,25 @@ static int khadas_mcu_fan_suspend(struct device *dev)
+ 	cdev = devm_thermal_of_child_cooling_device_register(dev->parent,
+@@ -125,12 +159,25 @@ static int khadas_mcu_fan_suspend(struct device *dev)
  
  	ctx->level = level_save;
  
@@ -129,5 +146,4 @@ index d35e5313bea4..24559bf65de4 100644
  	return khadas_mcu_fan_set_level(ctx, ctx->level);
  }
 -- 
-2.53.0
-
+Armbian

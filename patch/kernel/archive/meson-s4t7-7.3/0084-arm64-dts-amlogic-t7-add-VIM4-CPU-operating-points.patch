@@ -10,12 +10,12 @@ Signed-off-by: Nick Xie <nick@khadas.com>
  2 files changed, 380 insertions(+), 68 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index 8ca2d0dc0730..e1d0744eb2df 100644
+index 0520b8e6a..4ba3bebe2 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -157,6 +157,103 @@ wifi32k: wifi32k {
- 		clock-frequency = <32768>;
- 			pwms = <&pwm_ab 0 30518 0>;
+@@ -256,6 +256,103 @@ xtal: xtal-clk {
+ 		clock-output-names = "xtal";
+ 		#clock-cells = <0>;
  	};
 +
 +	vddcpua: regulator-vddcpu-a {
@@ -117,7 +117,7 @@ index 8ca2d0dc0730..e1d0744eb2df 100644
  };
  
  &a53_thermal {
-@@ -246,6 +343,46 @@ &ethmac {
+@@ -345,6 +442,46 @@ &ethmac {
  	amlogic,tx-delay-ns = <2>;
  };
  
@@ -164,7 +164,16 @@ index 8ca2d0dc0730..e1d0744eb2df 100644
  &i2c_m_ao_a {
  	status = "okay";
  	pinctrl-0 = <&i2c0_ao_d_pins>;
-@@ -288,6 +425,16 @@ &pwm_ab {
+@@ -389,6 +526,8 @@ &pwm_ab {
+ 
+ &pwm_ao_ab {
+ 	status = "okay";
++	pinctrl-0 = <&pwm_ao_b_pins>;
++	pinctrl-names = "default";
+ 	pinctrl-0 = <&pwm_ao_a_pins>, <&pwm_ao_b_pins>;
+ 	pinctrl-names = "default";
+ };
+@@ -411,6 +550,16 @@ &pwm_ao_gh {
  	pinctrl-names = "default";
  };
  
@@ -182,7 +191,7 @@ index 8ca2d0dc0730..e1d0744eb2df 100644
  &sd_emmc_a {
  	status = "okay";
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index eb5788672946..58e744dbe4f8 100644
+index c186b8c08..ee61fe53f 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 @@ -24,100 +24,45 @@ cpus {
@@ -555,5 +564,4 @@ index eb5788672946..58e744dbe4f8 100644
  		compatible = "amlogic,meson-vrtc";
  		reg = <0x0 0xfe010288 0x0 0x4>;
 -- 
-2.53.0
-
+Armbian

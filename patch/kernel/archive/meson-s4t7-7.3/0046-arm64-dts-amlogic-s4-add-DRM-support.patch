@@ -9,7 +9,7 @@ Signed-off-by: Nick Xie <nick@khadas.com>
  1 file changed, 119 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index a0400f6517b7..a50fc3aef2f0 100644
+index a0400f651..05821fc28 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 @@ -9,6 +9,7 @@
@@ -43,7 +43,7 @@ index a0400f6517b7..a50fc3aef2f0 100644
 +				resets = <&reset RESET_HDMITX_APB>,
 +						<&reset RESET_HDMITXPHY>,
 +						<&reset RESET_HDMI_TX>;
-+				reset-names = "hdmitx_apb", "hdmitx", "hdmitx_phy";
++				reset-names = "hdmitx_apb", "hdmitx_phy", "hdmitx";
 +				clocks = <&clkc_periphs CLKID_HDMI>,
 +						<&clkc_periphs CLKID_HDMITX_APB>,
 +						<&clkc_periphs CLKID_VPU_INTR>;
@@ -160,5 +160,4 @@ index a0400f6517b7..a50fc3aef2f0 100644
  
  	tdmif_a: audio-controller-0 {
 -- 
-2.53.0
-
+Armbian
