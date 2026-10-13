@@ -10,10 +10,10 @@ DATA_INVALID_FAULT. The GPU runs at 800 MHz from fclk_div2p5.
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index 34d589ed4..15d1f2f33 100644
+index f073b9350..2902cce5c 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -730,3 +730,7 @@ bluetooth {
+@@ -728,3 +728,7 @@ bluetooth {
  		vddio-supply = <&vddao_1v8>;
  	};
  };
@@ -22,16 +22,15 @@ index 34d589ed4..15d1f2f33 100644
 +	status = "okay";
 +};
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index fe325f9d8..fefd0c88b 100644
+index fe325f9d8..77b55be5b 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -956,6 +956,32 @@ uart_c: serial@7c000 {
+@@ -956,6 +956,31 @@ uart_c: serial@7c000 {
  				status = "disabled";
  			};
  
 +			gpu: gpu@400000 {
-+				compatible = "amlogic,t7-mali", "amlogic,meson-g12a-mali",
-+					     "arm,mali-bifrost";
++				compatible = "amlogic,meson-g12a-mali", "arm,mali-bifrost";
 +				reg = <0x0 0x400000 0x0 0x4000>;
 +				interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
 +					     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
