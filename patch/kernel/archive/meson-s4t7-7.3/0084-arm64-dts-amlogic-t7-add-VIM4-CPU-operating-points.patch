@@ -164,16 +164,7 @@ index 0520b8e6a..4ba3bebe2 100644
  &i2c_m_ao_a {
  	status = "okay";
  	pinctrl-0 = <&i2c0_ao_d_pins>;
-@@ -389,6 +526,8 @@ &pwm_ab {
- 
- &pwm_ao_ab {
- 	status = "okay";
-+	pinctrl-0 = <&pwm_ao_b_pins>;
-+	pinctrl-names = "default";
- 	pinctrl-0 = <&pwm_ao_a_pins>, <&pwm_ao_b_pins>;
- 	pinctrl-names = "default";
- };
-@@ -411,6 +550,16 @@ &pwm_ao_gh {
+@@ -411,6 +548,16 @@ &pwm_ao_gh {
  	pinctrl-names = "default";
  };
  
