@@ -1,8 +1,7 @@
-From 7c506f574baecf6ff05368a8340d650f66468381 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:09:21 +0200
-Subject: [PATCH 76/91] dt-bindings: phy: amlogic: usb3: Add compatible for
- Amlogic T7 SoC
+Subject: dt-bindings: phy: amlogic: usb3: Add compatible for Amlogic T7 SoC
 
 On the G12A, a single combo PHY handles both USB3 and PCIe.
 The Amlogic T7 splits this into two dedicated PHYs,
@@ -12,11 +11,11 @@ Add amlogic,t7-usb3-phy with a fallback to amlogic,g12a-usb3-pcie-phy.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- .../bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml         | 9 +++++++--
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml | 9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
-index 1a5a12adb72b..16c72cb80c47 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
 @@ -12,8 +12,13 @@ maintainers:
@@ -36,5 +35,5 @@ index 1a5a12adb72b..16c72cb80c47 100644
    reg:
      maxItems: 1
 -- 
-2.53.0
+Armbian
 

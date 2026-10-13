@@ -1,19 +1,19 @@
-From 3a64974739737d499ce30f750860bee2ff2baa95 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jiebing Chen <jiebing.chen@amlogic.com>
 Date: Mon, 26 Jan 2026 06:01:46 +0000
-Subject: [PATCH 38/91] arm64: dts: amlogic: Add Amlogic S4 Audio
+Subject: arm64: dts: amlogic: Add Amlogic S4 Audio
 
 Add basic audio driver support for the Amlogic S4 based
 Amlogic AQ222 board.
 
 Signed-off-by: Jiebing Chen <jiebing.chen@amlogic.com>
 ---
- .../dts/amlogic/meson-s4-s805x2-aq222.dts     | 222 +++++++++++
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi     | 361 ++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts | 222 ++++++
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi             | 361 ++++++++++
  2 files changed, 583 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts b/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
-index 0a3f81ea0fb0..43493bc9da46 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
 @@ -75,6 +75,19 @@ vddio_ao1v8: regulator-vddio-ao1v8 {
@@ -253,7 +253,7 @@ index 0a3f81ea0fb0..43493bc9da46 100644
  
  &pwm_ef {
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index 2a6fbd530836..905d230f8d8b 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 @@ -11,6 +11,11 @@
@@ -630,5 +630,5 @@ index 2a6fbd530836..905d230f8d8b 100644
 +	};
  };
 -- 
-2.53.0
+Armbian
 

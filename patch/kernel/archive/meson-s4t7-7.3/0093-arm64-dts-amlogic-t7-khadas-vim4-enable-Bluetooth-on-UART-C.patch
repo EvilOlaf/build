@@ -1,18 +1,22 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Igor Pecovnik <igor@armbian.com>
 Date: Tue, 13 Oct 2026 00:00:00 +0200
-Subject: [PATCH] arm64: dts: amlogic: t7: khadas-vim4: enable Bluetooth on UART C
+Subject: arm64: dts: amlogic: t7: khadas-vim4: enable Bluetooth on UART C
 
 Linux 7.3 has uart_a. Add the uart_c node and pins, and the
 BCM43438 Bluetooth node on the Khadas VIM4.
 
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 19 +++++++++
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi                   | 21 ++++++++++
+ 2 files changed, 40 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index fda573c99..403c4bddb 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -695,3 +695,22 @@ &usb2_phy1 {
+@@ -693,3 +693,22 @@ &usb2_phy1 {
  &usb3_phy {
  	phy-supply = <&vddao_1v8>;
  };
@@ -36,10 +40,10 @@ index fda573c99..403c4bddb 100644
 +	};
 +};
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index e13a614e6..fe325f9d8 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -798,6 +798,18 @@ mux {
+@@ -805,6 +805,18 @@ mux {
  					};
  				};
  
@@ -58,7 +62,7 @@ index e13a614e6..fe325f9d8 100644
  				sdio_pins: sdio {
  					mux {
  						groups = "sdio_d0",
-@@ -935,6 +947,15 @@ uart_a: serial@78000 {
+@@ -942,6 +954,15 @@ uart_a: serial@78000 {
  				status = "disabled";
  			};
  
@@ -76,3 +80,4 @@ index e13a614e6..fe325f9d8 100644
  				reg = <0x0 0x28000 0x0 0xa4>;
 -- 
 Armbian
+

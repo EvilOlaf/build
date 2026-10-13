@@ -1,7 +1,7 @@
-From 300a705bc9c59afae60ed719eebd3799499dffac Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jiebing Chen <jiebing.chen@amlogic.com>
 Date: Mon, 26 Jan 2026 06:01:45 +0000
-Subject: [PATCH 37/91] clk: meson: axg_audio: add S4 support
+Subject: clk: meson: axg_audio: add S4 support
 
 Add S4 support the axg audio clock controllers, Compared with the
 previous version, the selection of the audio's clock and data pad
@@ -10,11 +10,11 @@ this is to distinguish between clock control and pin control selection.
 
 Signed-off-by: Jiebing Chen <jiebing.chen@amlogic.com>
 ---
- drivers/clk/meson/axg-audio.c | 165 ++++++++++++++++++++++++++++++++++
+ drivers/clk/meson/axg-audio.c | 165 ++++++++++
  1 file changed, 165 insertions(+)
 
 diff --git a/drivers/clk/meson/axg-audio.c b/drivers/clk/meson/axg-audio.c
-index fd7eca652261..ab8c05b0509e 100644
+index 111111111111..222222222222 100644
 --- a/drivers/clk/meson/axg-audio.c
 +++ b/drivers/clk/meson/axg-audio.c
 @@ -1150,6 +1150,159 @@ static struct clk_hw *g12a_audio_hw_clks[] = {
@@ -204,5 +204,5 @@ index fd7eca652261..ab8c05b0509e 100644
  		.compatible = "amlogic,sm1-audio-clkc",
  		.data = &sm1_audioclk_data
 -- 
-2.53.0
+Armbian
 

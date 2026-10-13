@@ -1,7 +1,7 @@
-From 150a2eb222d6539042ac50a85264d190071ec849 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jiebing Chen <jiebing.chen@amlogic.com>
 Date: Mon, 26 Jan 2026 06:01:44 +0000
-Subject: [PATCH 36/91] ASoC: meson: g12a-toacodec: Add S4 tocodec driver
+Subject: ASoC: meson: g12a-toacodec: Add S4 tocodec driver
 
 The S4 requires additional clock control bits to be turn on while enabled.
 The S4 has 8 TDM lanes, instead of 4 on previous SoC.
@@ -9,11 +9,11 @@ Update the widget accordingly.
 
 Signed-off-by: Jiebing Chen <jiebing.chen@amlogic.com>
 ---
- sound/soc/meson/g12a-toacodec.c | 36 +++++++++++++++++++++++++++++++++
+ sound/soc/meson/g12a-toacodec.c | 36 ++++++++++
  1 file changed, 36 insertions(+)
 
 diff --git a/sound/soc/meson/g12a-toacodec.c b/sound/soc/meson/g12a-toacodec.c
-index a95375b53f0a..a7f9ac2d08f7 100644
+index 111111111111..222222222222 100644
 --- a/sound/soc/meson/g12a-toacodec.c
 +++ b/sound/soc/meson/g12a-toacodec.c
 @@ -41,6 +41,9 @@
@@ -95,5 +95,5 @@ index a95375b53f0a..a7f9ac2d08f7 100644
  };
  MODULE_DEVICE_TABLE(of, g12a_toacodec_of_match);
 -- 
-2.53.0
+Armbian
 

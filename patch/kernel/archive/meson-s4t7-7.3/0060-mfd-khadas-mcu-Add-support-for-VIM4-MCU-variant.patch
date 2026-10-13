@@ -1,10 +1,7 @@
-From a9fab113912f84ed648dad92394d91f5564f5791 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 18:08:37 +0200
-Subject: [PATCH 60/91] mfd: khadas-mcu: Add support for VIM4 MCU variant
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: mfd: khadas-mcu: Add support for VIM4 MCU variant
 
 Refactor probe() to use per-variant khadas_mcu_data
 instead of hardcoded globals.
@@ -13,17 +10,17 @@ Add dedicated regmap configuration and device data for the VIM4 MCU,
 with its own volatile/writeable registers.
 
 Add the fan control register
-(0–100 levels vs 0–3 for previous supported boards).
+(0-100 levels vs 0-3 for previous supported boards).
 
 Add a new compatible string "khadas,vim4-mcu".
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- drivers/mfd/khadas-mcu.c | 106 +++++++++++++++++++++++++++++++++++----
+ drivers/mfd/khadas-mcu.c | 106 +++++++++-
  1 file changed, 95 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/mfd/khadas-mcu.c b/drivers/mfd/khadas-mcu.c
-index ba981a788692..b36b3b3ab73c 100644
+index 111111111111..222222222222 100644
 --- a/drivers/mfd/khadas-mcu.c
 +++ b/drivers/mfd/khadas-mcu.c
 @@ -75,15 +75,91 @@ static const struct regmap_config khadas_mcu_regmap_config = {
@@ -175,5 +172,5 @@ index ba981a788692..b36b3b3ab73c 100644
  };
  MODULE_DEVICE_TABLE(of, khadas_mcu_of_match);
 -- 
-2.53.0
+Armbian
 

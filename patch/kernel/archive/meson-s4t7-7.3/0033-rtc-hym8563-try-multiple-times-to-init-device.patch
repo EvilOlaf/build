@@ -1,16 +1,16 @@
-From 292b1f1a5fa96422149d5cfe1f2f47359ee27df5 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Wed, 20 Aug 2025 10:23:32 +0800
-Subject: [PATCH 33/91] rtc: hym8563: try multiple times to init device
+Subject: rtc: hym8563: try multiple times to init device
 
 Signed-off-by: Nick Xie <nick@khadas.com>
 Change-Id: I28da2c1edc4b51f616675b4f5478d2b092fbdf42
 ---
- drivers/rtc/rtc-hym8563.c | 11 +++++++++--
+ drivers/rtc/rtc-hym8563.c | 11 ++++++++--
  1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/rtc/rtc-hym8563.c b/drivers/rtc/rtc-hym8563.c
-index 7a170c0f9710..3852c5087bf6 100644
+index 111111111111..222222222222 100644
 --- a/drivers/rtc/rtc-hym8563.c
 +++ b/drivers/rtc/rtc-hym8563.c
 @@ -13,6 +13,7 @@
@@ -41,5 +41,5 @@ index 7a170c0f9710..3852c5087bf6 100644
  		return ret;
  
 -- 
-2.53.0
+Armbian
 

@@ -1,7 +1,7 @@
-From 15e834eae90bbf568a0a39936a7949c1c4c78104 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: jiebing chen <jiebing.chen@amlogic.com>
 Date: Mon, 2 Feb 2026 10:55:50 +0800
-Subject: [PATCH 39/91] ASoC: meson: add s4 tohdmitx control
+Subject: ASoC: meson: add s4 tohdmitx control
 
 Add support for the hdmitx control glue of the Amlogic S4 SoC family.
 This glue links the 3 TDM and 2 SPDIF output interfaces of the SoC to
@@ -9,12 +9,12 @@ the related inputs of the Synopsys HDMI controller found in these SoCs.
 
 Signed-off-by: jiebing chen <jiebing.chen@amlogic.com>
 ---
- .../bindings/sound/amlogic,g12a-tohdmitx.yaml |  1 +
- sound/soc/meson/g12a-tohdmitx.c               | 78 ++++++++++++++++++-
+ Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml |  1 +
+ sound/soc/meson/g12a-tohdmitx.c                                    | 78 +++++++++-
  2 files changed, 77 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml b/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
-index b4b78475c..016d3cd3e 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
 +++ b/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
 @@ -22,6 +22,7 @@ properties:
@@ -26,7 +26,7 @@ index b4b78475c..016d3cd3e 100644
            - const: amlogic,g12a-tohdmitx
  
 diff --git a/sound/soc/meson/g12a-tohdmitx.c b/sound/soc/meson/g12a-tohdmitx.c
-index 967109ca2..dac2f070c 100644
+index 111111111111..222222222222 100644
 --- a/sound/soc/meson/g12a-tohdmitx.c
 +++ b/sound/soc/meson/g12a-tohdmitx.c
 @@ -31,6 +31,15 @@
@@ -169,3 +169,4 @@ index 967109ca2..dac2f070c 100644
  
 -- 
 Armbian
+

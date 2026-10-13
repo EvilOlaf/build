@@ -1,19 +1,18 @@
-From 2c367f63241831a39f8f259dba03a6f2cc9398ad Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jiebing Chen <jiebing.chen@amlogic.com>
 Date: Mon, 26 Jan 2026 06:01:42 +0000
-Subject: [PATCH 34/91] dt-bindings: clock: meson: Add audio power domain for
- S4 soc
+Subject: dt-bindings: clock: meson: Add audio power domain for S4 soc
 
 The audio power domain has been found on S4 device.
 It must be enabled prior to audio operations.
 
 Signed-off-by: Jiebing Chen <jiebing.chen@amlogic.com>
 ---
- .../bindings/clock/amlogic,axg-audio-clkc.yaml | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/clock/amlogic,axg-audio-clkc.yaml | 23 ++++++++--
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/clock/amlogic,axg-audio-clkc.yaml b/Documentation/devicetree/bindings/clock/amlogic,axg-audio-clkc.yaml
-index fd7982dd4..e296a97f5 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/clock/amlogic,axg-audio-clkc.yaml
 +++ b/Documentation/devicetree/bindings/clock/amlogic,axg-audio-clkc.yaml
 @@ -20,6 +20,7 @@ properties:
@@ -76,3 +75,4 @@ index fd7982dd4..e296a97f5 100644
  examples:
 -- 
 Armbian
+

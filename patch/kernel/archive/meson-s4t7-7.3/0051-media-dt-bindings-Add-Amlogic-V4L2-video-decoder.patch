@@ -1,20 +1,19 @@
-From e2886022eb070d869b8548bc8934a225cbaaaafd Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Zhentao Guo <zhentao.guo@amlogic.com>
 Date: Fri, 13 Feb 2026 13:12:38 +0800
-Subject: [PATCH 51/91] media: dt-bindings: Add Amlogic V4L2 video decoder
+Subject: media: dt-bindings: Add Amlogic V4L2 video decoder
 
 Describe the initial support for the V4L2 stateless video decoder
 driver used with the Amlogic S4 (S805X2) platform.
 
 Signed-off-by: Zhentao Guo <zhentao.guo@amlogic.com>
 ---
- .../bindings/media/amlogic,s4-vcodec-dec.yaml | 96 +++++++++++++++++++
+ Documentation/devicetree/bindings/media/amlogic,s4-vcodec-dec.yaml | 96 ++++++++++
  1 file changed, 96 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/media/amlogic,s4-vcodec-dec.yaml
 
 diff --git a/Documentation/devicetree/bindings/media/amlogic,s4-vcodec-dec.yaml b/Documentation/devicetree/bindings/media/amlogic,s4-vcodec-dec.yaml
 new file mode 100644
-index 000000000000..88780514d06c
+index 000000000000..111111111111
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/media/amlogic,s4-vcodec-dec.yaml
 @@ -0,0 +1,96 @@
@@ -115,5 +114,5 @@ index 000000000000..88780514d06c
 +      resets = <&reset RESET_DOS>;
 +    };
 -- 
-2.53.0
+Armbian
 

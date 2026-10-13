@@ -1,15 +1,18 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Igor Pecovnik <igor@armbian.com>
 Date: Tue, 13 Oct 2026 00:00:00 +0200
-Subject: [PATCH] ASoC: dt-bindings: amlogic,g12a-tohdmitx: add T7
+Subject: ASoC: dt-bindings: amlogic,g12a-tohdmitx: add T7
 
 The T7 tohdmitx control matches S4.
 Add the T7 compatible with the S4 and G12A fallbacks.
 
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
+ Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 diff --git a/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml b/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
-index 016d3cd3e..e827b78ea 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
 +++ b/Documentation/devicetree/bindings/sound/amlogic,g12a-tohdmitx.yaml
 @@ -25,6 +25,10 @@ properties:
@@ -25,3 +28,4 @@ index 016d3cd3e..e827b78ea 100644
      maxItems: 1
 -- 
 Armbian
+

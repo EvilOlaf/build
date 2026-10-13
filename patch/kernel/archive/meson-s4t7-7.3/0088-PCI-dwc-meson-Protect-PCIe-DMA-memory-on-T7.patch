@@ -1,7 +1,7 @@
-From 1b2884a028991a982d477cd51919ccfa81ad1a2c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Mon, 4 May 2026 15:20:57 +0200
-Subject: [PATCH 88/91] PCI: dwc: meson: Protect PCIe DMA memory on T7
+Subject: PCI: dwc: meson: Protect PCIe DMA memory on T7
 
 On T7, PCIe endpoint DMA access must be restricted to a dedicated
 memory region.
@@ -11,11 +11,11 @@ as DMA-accessible window for the PCIe bus.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- drivers/pci/controller/dwc/pci-meson.c | 61 ++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ drivers/pci/controller/dwc/pci-meson.c | 67 ++++++++++
+ 1 file changed, 67 insertions(+)
 
 diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
-index 8559d132d..f8e96ca4b 100644
+index 111111111111..222222222222 100644
 --- a/drivers/pci/controller/dwc/pci-meson.c
 +++ b/drivers/pci/controller/dwc/pci-meson.c
 @@ -16,6 +16,8 @@
@@ -143,3 +143,4 @@ index 8559d132d..f8e96ca4b 100644
  MODULE_DEVICE_TABLE(of, meson_pcie_of_match);
 -- 
 Armbian
+

@@ -1,8 +1,8 @@
-From 3a4f08cda095de97c739bcdf2b91d78996ebf228 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 18:08:36 +0200
-Subject: [PATCH 59/91] mfd: khadas-mcu: Add per-variant configuration
- infrastructure and VIM4 support
+Subject: mfd: khadas-mcu: Add per-variant configuration infrastructure and
+ VIM4 support
 
 Introduce a per-variant configuration structure (khadas_mcu_data)
 holding the regmap config and MFD cells,
@@ -14,11 +14,11 @@ maximum level to the fan sub-driver, removing the hardcoded constants.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- include/linux/mfd/khadas-mcu.h | 39 ++++++++++++++++++++++++++++++++--
+ include/linux/mfd/khadas-mcu.h | 39 +++++++++-
  1 file changed, 37 insertions(+), 2 deletions(-)
 
 diff --git a/include/linux/mfd/khadas-mcu.h b/include/linux/mfd/khadas-mcu.h
-index a99ba2ed0e4e..75e275d3fa8d 100644
+index 111111111111..222222222222 100644
 --- a/include/linux/mfd/khadas-mcu.h
 +++ b/include/linux/mfd/khadas-mcu.h
 @@ -70,6 +70,13 @@
@@ -77,5 +77,5 @@ index a99ba2ed0e4e..75e275d3fa8d 100644
  
  #endif /* MFD_KHADAS_MCU_H */
 -- 
-2.53.0
+Armbian
 

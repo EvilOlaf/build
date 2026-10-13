@@ -1,7 +1,7 @@
-From 85013626b14ea7c5758db33ac78fdfc4ca3eb42c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Zhentao Guo <zhentao.guo@amlogic.com>
 Date: Fri, 13 Feb 2026 13:12:39 +0800
-Subject: [PATCH 52/91] decoder: Add V4L2 stateless H.264 decoder driver
+Subject: decoder: Add V4L2 stateless H.264 decoder driver
 
 Add initial support for V4L2 stateless video decoder
 driver on Amlogic S4(S805X2) platform. In phase 1,
@@ -10,44 +10,30 @@ only progressive streams are supported.
 
 Signed-off-by: Zhentao Guo <zhentao.guo@amlogic.com>
 ---
- MAINTAINERS                                   |    7 +
- drivers/media/platform/amlogic/Kconfig        |    1 +
- drivers/media/platform/amlogic/Makefile       |    1 +
- drivers/media/platform/amlogic/vdec/Kconfig   |   16 +
- drivers/media/platform/amlogic/vdec/Makefile  |    4 +
- drivers/media/platform/amlogic/vdec/TODO      |    7 +
- .../media/platform/amlogic/vdec/aml_vdec.c    |  734 ++++++
- .../media/platform/amlogic/vdec/aml_vdec.h    |   33 +
- .../platform/amlogic/vdec/aml_vdec_drv.c      |  239 ++
- .../platform/amlogic/vdec/aml_vdec_drv.h      |  172 ++
- .../media/platform/amlogic/vdec/aml_vdec_hw.c |  596 +++++
- .../media/platform/amlogic/vdec/aml_vdec_hw.h |  158 ++
- .../platform/amlogic/vdec/aml_vdec_platform.c |   85 +
- .../platform/amlogic/vdec/aml_vdec_platform.h |   50 +
- drivers/media/platform/amlogic/vdec/h264.c    | 2129 +++++++++++++++++
- drivers/media/platform/amlogic/vdec/h264.h    |  299 +++
- .../media/platform/amlogic/vdec/reg_defines.h |  177 ++
+ MAINTAINERS                                             |    7 +
+ drivers/media/platform/amlogic/Kconfig                  |    1 +
+ drivers/media/platform/amlogic/Makefile                 |    1 +
+ drivers/media/platform/amlogic/vdec/Kconfig             |   16 +
+ drivers/media/platform/amlogic/vdec/Makefile            |    4 +
+ drivers/media/platform/amlogic/vdec/TODO                |    7 +
+ drivers/media/platform/amlogic/vdec/aml_vdec.c          |  734 ++++
+ drivers/media/platform/amlogic/vdec/aml_vdec.h          |   33 +
+ drivers/media/platform/amlogic/vdec/aml_vdec_drv.c      |  239 ++
+ drivers/media/platform/amlogic/vdec/aml_vdec_drv.h      |  172 +
+ drivers/media/platform/amlogic/vdec/aml_vdec_hw.c       |  596 +++
+ drivers/media/platform/amlogic/vdec/aml_vdec_hw.h       |  158 +
+ drivers/media/platform/amlogic/vdec/aml_vdec_platform.c |   85 +
+ drivers/media/platform/amlogic/vdec/aml_vdec_platform.h |   50 +
+ drivers/media/platform/amlogic/vdec/h264.c              | 2129 ++++++++++
+ drivers/media/platform/amlogic/vdec/h264.h              |  299 ++
+ drivers/media/platform/amlogic/vdec/reg_defines.h       |  177 +
  17 files changed, 4708 insertions(+)
- create mode 100644 drivers/media/platform/amlogic/vdec/Kconfig
- create mode 100644 drivers/media/platform/amlogic/vdec/Makefile
- create mode 100644 drivers/media/platform/amlogic/vdec/TODO
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec.c
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec.h
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_drv.c
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_drv.h
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_hw.c
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_hw.h
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_platform.c
- create mode 100644 drivers/media/platform/amlogic/vdec/aml_vdec_platform.h
- create mode 100644 drivers/media/platform/amlogic/vdec/h264.c
- create mode 100644 drivers/media/platform/amlogic/vdec/h264.h
- create mode 100644 drivers/media/platform/amlogic/vdec/reg_defines.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d1cc0e12fe1f..4e7227817918 100644
+index 111111111111..222222222222 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1375,6 +1375,13 @@ S:	Maintained
+@@ -1431,6 +1431,13 @@ S:	Maintained
  F:	Documentation/devicetree/bindings/spi/amlogic,a4-spisg.yaml
  F:	drivers/spi/spi-amlogic-spisg.c
  
@@ -62,7 +48,7 @@ index d1cc0e12fe1f..4e7227817918 100644
  M:	Javier Carrasco <javier.carrasco.cruz@gmail.com>
  L:	linux-hwmon@vger.kernel.org
 diff --git a/drivers/media/platform/amlogic/Kconfig b/drivers/media/platform/amlogic/Kconfig
-index 458acf3d5fa8..7c541ac0d0c3 100644
+index 111111111111..222222222222 100644
 --- a/drivers/media/platform/amlogic/Kconfig
 +++ b/drivers/media/platform/amlogic/Kconfig
 @@ -4,3 +4,4 @@ comment "Amlogic media platform drivers"
@@ -71,7 +57,7 @@ index 458acf3d5fa8..7c541ac0d0c3 100644
  source "drivers/media/platform/amlogic/meson-ge2d/Kconfig"
 +source "drivers/media/platform/amlogic/vdec/Kconfig"
 diff --git a/drivers/media/platform/amlogic/Makefile b/drivers/media/platform/amlogic/Makefile
-index c744afcd1b9e..7409de674c0b 100644
+index 111111111111..222222222222 100644
 --- a/drivers/media/platform/amlogic/Makefile
 +++ b/drivers/media/platform/amlogic/Makefile
 @@ -2,3 +2,4 @@
@@ -81,7 +67,7 @@ index c744afcd1b9e..7409de674c0b 100644
 +obj-y += vdec/
 diff --git a/drivers/media/platform/amlogic/vdec/Kconfig b/drivers/media/platform/amlogic/vdec/Kconfig
 new file mode 100644
-index 000000000000..158fd31ac6a2
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/Kconfig
 @@ -0,0 +1,16 @@
@@ -103,7 +89,7 @@ index 000000000000..158fd31ac6a2
 +      To compile this driver as a module choose m here.
 diff --git a/drivers/media/platform/amlogic/vdec/Makefile b/drivers/media/platform/amlogic/vdec/Makefile
 new file mode 100644
-index 000000000000..9a4e3102a9b8
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/Makefile
 @@ -0,0 +1,4 @@
@@ -113,7 +99,7 @@ index 000000000000..9a4e3102a9b8
 +obj-$(CONFIG_VIDEO_AMLOGIC_VDEC) += aml-vdec-drv.o
 diff --git a/drivers/media/platform/amlogic/vdec/TODO b/drivers/media/platform/amlogic/vdec/TODO
 new file mode 100644
-index 000000000000..54c60145770e
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/TODO
 @@ -0,0 +1,7 @@
@@ -126,7 +112,7 @@ index 000000000000..54c60145770e
 +4. Support interlaced stream decoding for H.264, HEVC, and MPEG-2.
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec.c b/drivers/media/platform/amlogic/vdec/aml_vdec.c
 new file mode 100644
-index 000000000000..bbcb3978dd6b
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec.c
 @@ -0,0 +1,734 @@
@@ -866,7 +852,7 @@ index 000000000000..bbcb3978dd6b
 +}
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec.h b/drivers/media/platform/amlogic/vdec/aml_vdec.h
 new file mode 100644
-index 000000000000..32f7fa245f7e
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec.h
 @@ -0,0 +1,33 @@
@@ -905,7 +891,7 @@ index 000000000000..32f7fa245f7e
 +#endif
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_drv.c b/drivers/media/platform/amlogic/vdec/aml_vdec_drv.c
 new file mode 100644
-index 000000000000..55668d01b526
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_drv.c
 @@ -0,0 +1,239 @@
@@ -1150,7 +1136,7 @@ index 000000000000..55668d01b526
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_drv.h b/drivers/media/platform/amlogic/vdec/aml_vdec_drv.h
 new file mode 100644
-index 000000000000..fa86233ea5b3
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_drv.h
 @@ -0,0 +1,172 @@
@@ -1328,7 +1314,7 @@ index 000000000000..fa86233ea5b3
 +#endif
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_hw.c b/drivers/media/platform/amlogic/vdec/aml_vdec_hw.c
 new file mode 100644
-index 000000000000..9100878601e5
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_hw.c
 @@ -0,0 +1,596 @@
@@ -1930,7 +1916,7 @@ index 000000000000..9100878601e5
 +}
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_hw.h b/drivers/media/platform/amlogic/vdec/aml_vdec_hw.h
 new file mode 100644
-index 000000000000..6aac89a6356c
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_hw.h
 @@ -0,0 +1,158 @@
@@ -2094,7 +2080,7 @@ index 000000000000..6aac89a6356c
 +#endif
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_platform.c b/drivers/media/platform/amlogic/vdec/aml_vdec_platform.c
 new file mode 100644
-index 000000000000..5b43c72375e9
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_platform.c
 @@ -0,0 +1,85 @@
@@ -2185,7 +2171,7 @@ index 000000000000..5b43c72375e9
 +};
 diff --git a/drivers/media/platform/amlogic/vdec/aml_vdec_platform.h b/drivers/media/platform/amlogic/vdec/aml_vdec_platform.h
 new file mode 100644
-index 000000000000..6bde55891f4b
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/aml_vdec_platform.h
 @@ -0,0 +1,50 @@
@@ -2241,7 +2227,7 @@ index 000000000000..6bde55891f4b
 +#endif
 diff --git a/drivers/media/platform/amlogic/vdec/h264.c b/drivers/media/platform/amlogic/vdec/h264.c
 new file mode 100644
-index 000000000000..e37781b31b6e
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/h264.c
 @@ -0,0 +1,2129 @@
@@ -4376,7 +4362,7 @@ index 000000000000..e37781b31b6e
 +}
 diff --git a/drivers/media/platform/amlogic/vdec/h264.h b/drivers/media/platform/amlogic/vdec/h264.h
 new file mode 100644
-index 000000000000..830ab3241a1e
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/h264.h
 @@ -0,0 +1,299 @@
@@ -4681,7 +4667,7 @@ index 000000000000..830ab3241a1e
 +#endif
 diff --git a/drivers/media/platform/amlogic/vdec/reg_defines.h b/drivers/media/platform/amlogic/vdec/reg_defines.h
 new file mode 100644
-index 000000000000..ea50018a078d
+index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/media/platform/amlogic/vdec/reg_defines.h
 @@ -0,0 +1,177 @@
@@ -4863,5 +4849,5 @@ index 000000000000..ea50018a078d
 +#endif
 +
 -- 
-2.53.0
+Armbian
 

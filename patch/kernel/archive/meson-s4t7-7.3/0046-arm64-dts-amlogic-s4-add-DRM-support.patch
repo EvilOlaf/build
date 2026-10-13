@@ -1,15 +1,15 @@
-From 92966b12e06c9d2f9b48fe5da7a776c1dc551783 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Mon, 2 Feb 2026 11:29:10 +0800
-Subject: [PATCH 46/91] arm64: dts: amlogic: s4: add DRM support
+Subject: arm64: dts: amlogic: s4: add DRM support
 
 Signed-off-by: Nick Xie <nick@khadas.com>
 ---
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 119 ++++++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 119 ++++++++++
  1 file changed, 119 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index a0400f651..4e8402ae2 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 @@ -9,6 +9,7 @@
@@ -161,3 +161,4 @@ index a0400f651..4e8402ae2 100644
  	tdmif_a: audio-controller-0 {
 -- 
 Armbian
+

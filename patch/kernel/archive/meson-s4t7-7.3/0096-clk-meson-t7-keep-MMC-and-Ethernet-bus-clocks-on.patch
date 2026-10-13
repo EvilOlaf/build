@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Igor Pecovnik <igor@armbian.com>
 Date: Tue, 13 Oct 2026 00:00:00 +0200
-Subject: [PATCH] clk: meson: t7: keep MMC and Ethernet bus clocks on
+Subject: clk: meson: t7: keep MMC and Ethernet bus clocks on
 
 The MMC and Ethernet controllers need the MMC APB, NAND and Ethernet
 pipe, and AXI bridge gates, but no device node references them.
@@ -12,9 +12,14 @@ Mark these gates CLK_IGNORE_UNUSED, like the vendor clock driver.
 
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
+ drivers/clk/meson/t7-peripherals.c | 17 ++++++----
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/clk/meson/t7-peripherals.c b/drivers/clk/meson/t7-peripherals.c
+index 111111111111..222222222222 100644
 --- a/drivers/clk/meson/t7-peripherals.c
 +++ b/drivers/clk/meson/t7-peripherals.c
-@@ -945,11 +945,16 @@
+@@ -945,11 +945,16 @@ static T7_SYS_PCLK(sys_aucpu,		SYS_CLK_EN0_REG0, 14,	0);
  static T7_SYS_PCLK(sys_cec,		SYS_CLK_EN0_REG0, 16,	0);
  static T7_SYS_PCLK(sys_gdc,		SYS_CLK_EN0_REG0, 17,	0);
  static T7_SYS_PCLK(sys_deswarp,		SYS_CLK_EN0_REG0, 18,	0);
@@ -36,7 +41,7 @@ Signed-off-by: Igor Pecovnik <igor@armbian.com>
  static T7_SYS_PCLK(sys_sd_emmc_a,	SYS_CLK_EN0_REG0, 24,	0);
  static T7_SYS_PCLK(sys_sd_emmc_b,	SYS_CLK_EN0_REG0, 25,	0);
  static T7_SYS_PCLK(sys_sd_emmc_c,	SYS_CLK_EN0_REG0, 26,	0);
-@@ -990,7 +995,7 @@
+@@ -990,7 +995,7 @@ static T7_SYS_PCLK(sys_i2c_m_f,		SYS_CLK_EN0_REG2, 3,	0);
  static T7_SYS_PCLK(sys_hdmitx_apb,	SYS_CLK_EN0_REG2, 4,	0);
  static T7_SYS_PCLK(sys_i2c_s_a,		SYS_CLK_EN0_REG2, 5,	0);
  static T7_SYS_PCLK(sys_hdmirx_pclk,	SYS_CLK_EN0_REG2, 8,	0);
@@ -47,3 +52,4 @@ Signed-off-by: Igor Pecovnik <igor@armbian.com>
  static T7_SYS_PCLK(sys_pclk_sys_apb,	SYS_CLK_EN0_REG2, 19,	0);
 -- 
 Armbian
+

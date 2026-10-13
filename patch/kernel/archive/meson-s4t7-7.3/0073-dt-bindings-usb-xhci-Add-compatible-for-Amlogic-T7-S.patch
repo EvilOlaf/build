@@ -1,8 +1,7 @@
-From 34b4185d717f33a49c3aab4995f687a8f8785cc9 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:01:34 +0200
-Subject: [PATCH 73/91] dt-bindings: usb: xhci: Add compatible for Amlogic T7
- SoC
+Subject: dt-bindings: usb: xhci: Add compatible for Amlogic T7 SoC
 
 The Amlogic T7 SoC uses Corigine USB IP that is xHCI compliant.
 Add a dedicated compatible to apply the required quirks:
@@ -15,7 +14,7 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 3 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/usb/generic-xhci.yaml b/Documentation/devicetree/bindings/usb/generic-xhci.yaml
-index 62678abd74b5..7c7fc04d4de4 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/usb/generic-xhci.yaml
 +++ b/Documentation/devicetree/bindings/usb/generic-xhci.yaml
 @@ -34,6 +34,9 @@ properties:
@@ -29,5 +28,5 @@ index 62678abd74b5..7c7fc04d4de4 100644
          const: xhci-platform
          deprecated: true
 -- 
-2.53.0
+Armbian
 

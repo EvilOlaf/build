@@ -1,7 +1,7 @@
-From e24e9fda5873fb4be56896a079f5aecc30116e23 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: jiebing chen <jiebing.chen@amlogic.com>
 Date: Mon, 2 Feb 2026 11:17:46 +0800
-Subject: [PATCH 45/91] ASoC: meson: add s4 tohdmitx control
+Subject: ASoC: meson: add s4 tohdmitx control
 
 Add support for the hdmitx control glue of the Amlogic S4 SoC family.
 This glue links the 3 TDM and 2 SPDIF output interfaces of the SoC to
@@ -13,7 +13,7 @@ Signed-off-by: jiebing chen <jiebing.chen@amlogic.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index 47557ef333e2..a0400f6517b7 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 @@ -974,7 +974,7 @@ tdmif_b: audio-controller-1 {
@@ -35,5 +35,5 @@ index 47557ef333e2..a0400f6517b7 100644
  		reg = <0x0 0x330744 0x0 0x4>;
  		#sound-dai-cells = <1>;
 -- 
-2.53.0
+Armbian
 

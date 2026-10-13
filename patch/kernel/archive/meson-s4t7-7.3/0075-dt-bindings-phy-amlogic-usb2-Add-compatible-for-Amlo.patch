@@ -1,8 +1,7 @@
-From e4f1e956cf8f7d1ee81213a42396412bfad36588 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:08:16 +0200
-Subject: [PATCH 75/91] dt-bindings: phy: amlogic: usb2: Add compatible for
- Amlogic T7 SoC
+Subject: dt-bindings: phy: amlogic: usb2: Add compatible for Amlogic T7 SoC
 
 The Amlogic T7 USB2 PHY uses the same register layout
 and initialization sequence as the G12A USB2 PHY.
@@ -10,11 +9,11 @@ Add amlogic,t7-usb2-phy with a fallback to amlogic,g12a-usb2-phy.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- .../bindings/phy/amlogic,g12a-usb2-phy.yaml           | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml | 13 +++++++---
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-index 54058d2e6..ac8b02f33 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
 @@ -12,10 +12,15 @@ maintainers:
@@ -39,3 +38,4 @@ index 54058d2e6..ac8b02f33 100644
      maxItems: 1
 -- 
 Armbian
+

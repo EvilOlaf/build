@@ -1,7 +1,7 @@
-From 78c59aded56ac3f9338d12164438d6ff0377f535 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Wed, 22 Apr 2026 11:52:56 +0200
-Subject: [PATCH 91/91] arm64: dts: amlogic: t7: khadas-vim4: Enable PCIE
+Subject: arm64: dts: amlogic: t7: khadas-vim4: Enable PCIE
 
 The VIM4 exposes the T7 PCIe-A port through an M.2 slot driven by
 GPIOH_3 as the active-low endpoint reset.
@@ -13,11 +13,11 @@ controller via memory-region and enable the node.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- .../dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts  | 14 ++++++++++++++
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 14 ++++++++++
  1 file changed, 14 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index e1d0744eb2df..b799e2613766 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 @@ -45,6 +45,14 @@ secmon_reserved_bl32: secmon@5300000 {
@@ -34,8 +34,8 @@ index e1d0744eb2df..b799e2613766 100644
 +		};
  	};
  
- 	xtal: xtal-clk {
-@@ -419,6 +427,12 @@ map {
+ 	dc_in: regulator-dc-in {
+@@ -516,6 +524,12 @@ map {
  	};
  };
  
@@ -49,5 +49,5 @@ index e1d0744eb2df..b799e2613766 100644
  	status = "okay";
  	pinctrl-0 = <&pwm_a_pins>;
 -- 
-2.53.0
+Armbian
 

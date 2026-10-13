@@ -1,7 +1,7 @@
-From 28fef8b9c5852eeb4321cdfe2028d7242f24572d Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:11:34 +0200
-Subject: [PATCH 77/91] usb: host: xhci-plat: Add support for Amlogic T7 SoC
+Subject: usb: host: xhci-plat: Add support for Amlogic T7 SoC
 
 The Amlogic T7 SoC integrates Corigine USB IP
 which is xHCI compliant.
@@ -16,7 +16,7 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 7 insertions(+)
 
 diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index 074d9c731639..b0ad6e8972bf 100644
+index 111111111111..222222222222 100644
 --- a/drivers/usb/host/xhci-plat.c
 +++ b/drivers/usb/host/xhci-plat.c
 @@ -124,6 +124,10 @@ static const struct xhci_plat_priv xhci_plat_brcm = {
@@ -41,5 +41,5 @@ index 074d9c731639..b0ad6e8972bf 100644
  	{},
  };
 -- 
-2.53.0
+Armbian
 

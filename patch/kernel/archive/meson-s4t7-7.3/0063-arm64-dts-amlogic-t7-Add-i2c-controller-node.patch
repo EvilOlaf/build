@@ -1,7 +1,7 @@
-From b7be6198bf050c55f34c945cdeb49ccd79198836 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 18:08:40 +0200
-Subject: [PATCH 63/91] arm64: dts: amlogic: t7: Add i2c controller node
+Subject: arm64: dts: amlogic: t7: Add i2c controller node
 
 Add the T7 i2c controller node used by the Khadas VIM4
 for MCU communication.
@@ -14,10 +14,10 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 10 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index dd45eaf51502..99d4718e3460 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -709,6 +709,16 @@ pwm_ao_cd: pwm@60000 {
+@@ -756,6 +756,16 @@ pwm_ao_cd: pwm@60000 {
  				status = "disabled";
  			};
  
@@ -35,5 +35,5 @@ index dd45eaf51502..99d4718e3460 100644
  				compatible = "amlogic,t7-mmc", "amlogic,meson-axg-mmc";
  				reg = <0x0 0x88000 0x0 0x800>;
 -- 
-2.53.0
+Armbian
 

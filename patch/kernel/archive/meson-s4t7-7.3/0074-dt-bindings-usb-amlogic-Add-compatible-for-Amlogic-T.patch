@@ -1,8 +1,7 @@
-From 0e48025fbaf054c1d94ffe0c3627c2eb55e423ce Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:05:22 +0200
-Subject: [PATCH 74/91] dt-bindings: usb: amlogic: Add compatible for Amlogic
- T7 SoC
+Subject: dt-bindings: usb: amlogic: Add compatible for Amlogic T7 SoC
 
 The Amlogic T7 SoC uses Corigine USB IP and is compatible with
 the existing Amlogic G12A glue driver.
@@ -12,11 +11,11 @@ T7 exposes an xHCI controller.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- .../usb/amlogic,meson-g12a-usb-ctrl.yaml       | 18 ++++++++++++------
+ Documentation/devicetree/bindings/usb/amlogic,meson-g12a-usb-ctrl.yaml | 18 ++++++----
  1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/usb/amlogic,meson-g12a-usb-ctrl.yaml b/Documentation/devicetree/bindings/usb/amlogic,meson-g12a-usb-ctrl.yaml
-index da757c1155d4..5b34158390aa 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/usb/amlogic,meson-g12a-usb-ctrl.yaml
 +++ b/Documentation/devicetree/bindings/usb/amlogic,meson-g12a-usb-ctrl.yaml
 @@ -29,12 +29,17 @@ description: |
@@ -52,5 +51,5 @@ index da757c1155d4..5b34158390aa 100644
  additionalProperties: false
  
 -- 
-2.53.0
+Armbian
 

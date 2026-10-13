@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Igor Pecovnik <igor@armbian.com>
 Date: Tue, 13 Oct 2026 00:00:00 +0200
-Subject: [PATCH] arm64: dts: amlogic: t7: add audio nodes
+Subject: arm64: dts: amlogic: t7: add audio nodes
 
 Add the audio clock controller, FRDDR, TODDR, TDM, SPDIF, PDM
 and tohdmitx nodes. The audio block has the S4 layout.
@@ -9,8 +9,11 @@ Only the clock parents, power domain and SPDIF-in IRQ differ.
 
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 342 ++++++++++
+ 1 file changed, 342 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index 77b55be5b..ef23bb7dc 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 @@ -11,6 +11,10 @@
@@ -24,7 +27,7 @@ index 77b55be5b..ef23bb7dc 100644
  
  / {
  	interrupt-parent = <&gic>;
-@@ -1477,3 +1481,341 @@ mdio0: mdio {
+@@ -1483,3 +1487,341 @@ mdio0: mdio {
  		};
  	};
  };
@@ -368,3 +371,4 @@ index 77b55be5b..ef23bb7dc 100644
 +};
 -- 
 Armbian
+

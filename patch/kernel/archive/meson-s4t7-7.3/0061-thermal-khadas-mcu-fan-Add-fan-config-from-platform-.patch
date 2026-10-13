@@ -1,8 +1,8 @@
-From 37a1e4193ff93896f8172f9a8f11032ee43de3ce Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 18:08:38 +0200
-Subject: [PATCH 61/91] thermal: khadas-mcu-fan: Add fan config from platform
- data Add regulator support
+Subject: thermal: khadas-mcu-fan: Add fan config from platform data Add
+ regulator support
 
 Replace the hardcoded MAX_LEVEL constant and fan register
 with values read from platform_data (fan_reg, max_level),
@@ -14,11 +14,11 @@ so boards that gate fan power through a regulator are handled.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- drivers/thermal/khadas_mcu_fan.c | 49 ++++++++++++++++++++++++++++----
- 1 file changed, 43 insertions(+), 6 deletions(-)
+ drivers/thermal/khadas_mcu_fan.c | 59 +++++++++-
+ 1 file changed, 53 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/thermal/khadas_mcu_fan.c b/drivers/thermal/khadas_mcu_fan.c
-index 21b3d0a71..2a14717d8 100644
+index 111111111111..222222222222 100644
 --- a/drivers/thermal/khadas_mcu_fan.c
 +++ b/drivers/thermal/khadas_mcu_fan.c
 @@ -13,13 +13,15 @@
@@ -147,3 +147,4 @@ index 21b3d0a71..2a14717d8 100644
  }
 -- 
 Armbian
+

@@ -1,16 +1,16 @@
-From a87a484ccdec1b9e366546bed748decea1f95a8d Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Mon, 13 Apr 2026 16:09:23 +0800
-Subject: [PATCH 84/91] arm64: dts: amlogic: t7: add VIM4 CPU operating points
+Subject: arm64: dts: amlogic: t7: add VIM4 CPU operating points
 
 Signed-off-by: Nick Xie <nick@khadas.com>
 ---
- .../amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 147 +++++++++
- arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi   | 301 ++++++++++++++----
- 2 files changed, 380 insertions(+), 68 deletions(-)
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 145 +++++
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi                   | 308 ++++++++--
+ 2 files changed, 385 insertions(+), 68 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index 0520b8e6a..d230f6f1d 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 @@ -256,6 +256,101 @@ xtal: xtal-clk {
@@ -180,7 +180,7 @@ index 0520b8e6a..d230f6f1d 100644
  &sd_emmc_a {
  	status = "okay";
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index c186b8c08..cc63613c0 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 @@ -24,100 +24,43 @@ cpus {
@@ -561,3 +561,4 @@ index c186b8c08..cc63613c0 100644
  		reg = <0x0 0xfe010288 0x0 0x4>;
 -- 
 Armbian
+

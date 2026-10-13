@@ -1,17 +1,17 @@
-From 90c3491d01dc6d992c6cd7b606b86d491f26a384 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Thu, 9 Apr 2026 11:12:21 +0800
-Subject: [PATCH 81/91] arm64: dts: amlogic: t7: add VIM4 ethernet support
+Subject: arm64: dts: amlogic: t7: add VIM4 ethernet support
 
 Signed-off-by: Nick Xie <nick@khadas.com>
 ---
- .../bindings/net/amlogic,meson-dwmac.yaml     |  1 +
- .../amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 19 ++++
- arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi   | 88 +++++++++++++++++++
+ Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml |  1 +
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts  | 19 ++
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi                    | 88 ++++++++++
  3 files changed, 108 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml b/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
-index 5c91716d1f21..682e2c7b2ec7 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
 +++ b/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
 @@ -142,6 +142,7 @@ properties:
@@ -23,10 +23,10 @@ index 5c91716d1f21..682e2c7b2ec7 100644
  
    reg:
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index e1468349a52a..b4a5f5ce3e90 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -225,6 +225,25 @@ map {
+@@ -324,6 +324,25 @@ map {
  	};
  };
  
@@ -53,10 +53,10 @@ index e1468349a52a..b4a5f5ce3e90 100644
  	status = "okay";
  	pinctrl-0 = <&i2c0_ao_d_pins>;
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index 3995689caad5..6603a91c3eb1 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -572,6 +572,36 @@ mux {
+@@ -614,6 +614,36 @@ mux {
  						bias-pull-up;
  					};
  				};
@@ -93,7 +93,7 @@ index 3995689caad5..6603a91c3eb1 100644
  			};
  
  			gpio_intc: interrupt-controller@4080 {
-@@ -659,6 +689,38 @@ uart_a: serial@78000 {
+@@ -701,6 +731,38 @@ uart_a: serial@78000 {
  				status = "disabled";
  			};
  
@@ -132,7 +132,7 @@ index 3995689caad5..6603a91c3eb1 100644
  			gp0: clock-controller@8080 {
  				compatible = "amlogic,t7-gp0-pll";
  				reg = <0x0 0x8080 0x0 0x20>;
-@@ -1078,4 +1140,30 @@ vpu_critical: vpu-critical {
+@@ -1125,4 +1187,30 @@ vpu_critical: vpu-critical {
  			};
  		};
  	};
@@ -164,5 +164,5 @@ index 3995689caad5..6603a91c3eb1 100644
 +	};
  };
 -- 
-2.53.0
+Armbian
 

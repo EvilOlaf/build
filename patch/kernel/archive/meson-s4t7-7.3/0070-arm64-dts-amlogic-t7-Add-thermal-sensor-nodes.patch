@@ -1,7 +1,7 @@
-From dd8d5e2b79551670981a7e1de8fe41cc3fee4fee Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 10 Apr 2026 17:35:39 +0200
-Subject: [PATCH 70/91] arm64: dts: amlogic: t7: Add thermal sensor nodes
+Subject: arm64: dts: amlogic: t7: Add thermal sensor nodes
 
 Add six temperature sensor nodes using the amlogic,t7-thermal compatible:
 a73, a53, gpu, nna, vpu, and hevc. Each sensor retrieves its calibration
@@ -10,14 +10,14 @@ the corresponding tsensor_id argument.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 58 +++++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 58 ++++++++++
  1 file changed, 58 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index a49d4e5be451..63465814bd6a 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -654,6 +654,24 @@ sec_ao: ao-secure@10220 {
+@@ -696,6 +696,24 @@ sec_ao: ao-secure@10220 {
  				amlogic,has-chip-id;
  			};
  
@@ -42,7 +42,7 @@ index a49d4e5be451..63465814bd6a 100644
  			pwm_ao_ef: pwm@30000 {
  				compatible = "amlogic,t7-pwm", "amlogic,meson-s4-pwm";
  				reg = <0x0 0x30000 0x0 0x24>;
-@@ -768,6 +786,46 @@ sd_emmc_c: mmc@8c000 {
+@@ -815,6 +833,46 @@ sd_emmc_c: mmc@8c000 {
  				assigned-clock-parents = <&xtal>;
  				status = "disabled";
  			};
@@ -90,5 +90,5 @@ index a49d4e5be451..63465814bd6a 100644
  
  	};
 -- 
-2.53.0
+Armbian
 

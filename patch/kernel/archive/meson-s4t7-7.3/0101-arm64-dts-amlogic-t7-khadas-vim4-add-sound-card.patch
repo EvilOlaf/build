@@ -1,18 +1,21 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Igor Pecovnik <igor@armbian.com>
 Date: Tue, 13 Oct 2026 00:00:00 +0200
-Subject: [PATCH] arm64: dts: amlogic: t7: khadas-vim4: add sound card
+Subject: arm64: dts: amlogic: t7: khadas-vim4: add sound card
 
 Add the HDMI sound card. TDM A/B/C and SPDIF A/B feed tohdmitx.
 The HDMI codec link follows with the HDMI TX driver.
 
 Signed-off-by: Igor Pecovnik <igor@armbian.com>
 ---
+ arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts | 98 ++++++++++
+ 1 file changed, 98 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-index 2902cce5c..d458c2403 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7-a311d2-khadas-vim4.dts
-@@ -373,6 +373,104 @@ vddcpub: regulator-vddcpu-b {
+@@ -371,6 +371,104 @@ vddcpub: regulator-vddcpu-b {
  		regulator-always-on;
  	};
  
@@ -119,3 +122,4 @@ index 2902cce5c..d458c2403 100644
  &a53_thermal {
 -- 
 Armbian
+

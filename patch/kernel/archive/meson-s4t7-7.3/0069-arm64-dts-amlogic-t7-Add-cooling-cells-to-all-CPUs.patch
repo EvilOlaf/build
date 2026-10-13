@@ -1,7 +1,7 @@
-From e30bf16531c6f264c4e090b38eb404da654f83b7 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 10 Apr 2026 17:31:12 +0200
-Subject: [PATCH 69/91] arm64: dts: amlogic: t7: Add cooling cells to all CPUs
+Subject: arm64: dts: amlogic: t7: Add cooling cells to all CPUs
 
 Add #cooling-cells = <2> to all CPU nodes (both little and big cluster)
 to allow them to be used as cooling devices in thermal zone mappings.
@@ -12,7 +12,7 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index 99d4718e3460..a49d4e5be451 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 @@ -63,6 +63,7 @@ cpu100: cpu@100 {
@@ -80,5 +80,5 @@ index 99d4718e3460..a49d4e5be451 100644
  
  		l2_cache_l: l2-cache-cluster0 {
 -- 
-2.53.0
+Armbian
 

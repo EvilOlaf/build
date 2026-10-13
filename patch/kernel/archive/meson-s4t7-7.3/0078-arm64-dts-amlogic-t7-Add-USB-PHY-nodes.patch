@@ -1,21 +1,21 @@
-From 04c6bae4c6af37f24ec3becadb4218092ad82ea6 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 Date: Fri, 3 Apr 2026 12:20:28 +0200
-Subject: [PATCH 78/91] arm64: dts: amlogic: t7: Add USB PHY nodes
+Subject: arm64: dts: amlogic: t7: Add USB PHY nodes
 
 Add the two USB2 PHY nodes and the USB3 PHY node
 for the Amlogic T7 SoC, using G12A-compatible fallbacks.
 
 Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
- arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 32 +++++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi | 32 ++++++++++
  1 file changed, 32 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index b02114302cb3..9245cf70fdf9 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-@@ -582,6 +582,38 @@ gpio_intc: interrupt-controller@4080 {
+@@ -624,6 +624,38 @@ gpio_intc: interrupt-controller@4080 {
  					<10 11 12 13 14 15 16 17 18 19 20 21>;
  			};
  
@@ -55,5 +55,5 @@ index b02114302cb3..9245cf70fdf9 100644
  				compatible = "amlogic,t7-uart", "amlogic,meson-s4-uart";
  				reg = <0x0 0x78000 0x0 0x18>;
 -- 
-2.53.0
+Armbian
 

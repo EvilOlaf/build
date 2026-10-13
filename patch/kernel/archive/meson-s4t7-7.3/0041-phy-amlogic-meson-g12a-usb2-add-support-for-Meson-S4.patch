@@ -1,17 +1,18 @@
-From 9c7ddaaa86d30cc72a05dba669115f233c1005ce Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: devmfc <devmfc@mvand.net>
 Date: Mon, 2 Feb 2026 10:56:19 +0800
-Subject: [PATCH 41/91] phy: amlogic: meson-g12a-usb2: add support for Meson S4
+Subject: phy: amlogic: meson-g12a-usb2: add support for Meson S4
 
 Add support for Meson S4 SoC family to USB2 phy
 
 Signed-off-by: devmfc <devmfc@mvand.net>
 ---
- drivers/phy/amlogic/phy-meson-g12a-usb2.c | 44 ++++++++++++++++-------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml |  1 +
+ drivers/phy/amlogic/phy-meson-g12a-usb2.c                        | 44 +++++++---
+ 2 files changed, 33 insertions(+), 12 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-index 1a0c436b8..54058d2e6 100644
+index 111111111111..222222222222 100644
 --- a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
 @@ -15,6 +15,7 @@ properties:
@@ -23,7 +24,7 @@ index 1a0c436b8..54058d2e6 100644
    reg:
      maxItems: 1
 diff --git a/drivers/phy/amlogic/phy-meson-g12a-usb2.c b/drivers/phy/amlogic/phy-meson-g12a-usb2.c
-index 66bf0b7ef..69bb48cdc 100644
+index 111111111111..222222222222 100644
 --- a/drivers/phy/amlogic/phy-meson-g12a-usb2.c
 +++ b/drivers/phy/amlogic/phy-meson-g12a-usb2.c
 @@ -72,6 +72,7 @@
@@ -128,3 +129,4 @@ index 66bf0b7ef..69bb48cdc 100644
  MODULE_DEVICE_TABLE(of, phy_meson_g12a_usb2_of_match);
 -- 
 Armbian
+

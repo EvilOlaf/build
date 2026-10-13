@@ -1,7 +1,7 @@
-From 7f09701cf1c0f1b8c6c479072e37529210ae7ffa Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Thu, 9 Apr 2026 14:24:33 +0800
-Subject: [PATCH 82/91] arm64: dts: amlogic: t7: add virtual RTC support
+Subject: arm64: dts: amlogic: t7: add virtual RTC support
 
 Add the Virtual RTC (vrtc) node for Amlogic T7 SoC.
 
@@ -11,7 +11,7 @@ Signed-off-by: Nick Xie <nick@khadas.com>
  1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
-index 6603a91c3eb1..eb5788672946 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/amlogic-t7.dtsi
 @@ -242,6 +242,11 @@ scmi_clk: protocol@14 {
@@ -27,5 +27,5 @@ index 6603a91c3eb1..eb5788672946 100644
  		compatible = "simple-bus";
  		#address-cells = <2>;
 -- 
-2.53.0
+Armbian
 

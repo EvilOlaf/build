@@ -1,17 +1,17 @@
-From 030c86e17250a3abd598be42db2e53ba7847e89e Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Nick Xie <nick@khadas.com>
 Date: Mon, 2 Feb 2026 11:00:40 +0800
-Subject: [PATCH 43/91] arch: arm64: dts: meson-s4: Add USB2 support
+Subject: arch: arm64: dts: meson-s4: Add USB2 support
 
 Add USB2 support to S4 SoC family
 
 Signed-off-by: Nick Xie <nick@khadas.com>
 ---
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 46 +++++++++++++++++++++++
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 46 ++++++++++
  1 file changed, 46 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index 905d230f8d8b..47557ef333e2 100644
+index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 +++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
 @@ -802,6 +802,28 @@ uart_b: serial@7a000 {
@@ -75,5 +75,5 @@ index 905d230f8d8b..47557ef333e2 100644
  
  	tdmif_a: audio-controller-0 {
 -- 
-2.53.0
+Armbian
 
