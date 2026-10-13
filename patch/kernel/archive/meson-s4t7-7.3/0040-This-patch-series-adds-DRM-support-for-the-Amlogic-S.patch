@@ -35,7 +35,7 @@ Signed-off-by: Ao Xu <ao.xu@amlogic.com>
  17 files changed, 1705 insertions(+), 403 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml b/Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml
-index 416fe263ac92..935c83fc4451 100644
+index 416fe263a..935c83fc4 100644
 --- a/Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml
 +++ b/Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml
 @@ -55,6 +55,7 @@ properties:
@@ -47,10 +47,10 @@ index 416fe263ac92..935c83fc4451 100644
    reg:
      maxItems: 1
 diff --git a/Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml b/Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml
-index 3ae45db85ea7..90bba7954489 100644
+index 3ae45db85..48327a869 100644
 --- a/Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml
 +++ b/Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml
-@@ -65,14 +65,13 @@ properties:
+@@ -65,14 +65,21 @@ properties:
            - const: amlogic,meson-gx-vpu
        - enum:
            - amlogic,meson-g12a-vpu # G12A (S905X2, S905Y2, S905D2)
@@ -59,16 +59,24 @@ index 3ae45db85ea7..90bba7954489 100644
    reg:
 -    maxItems: 2
 +    minItems: 2
++    maxItems: 5
  
    reg-names:
 -    items:
 -      - const: vpu
 -      - const: hhi
 +    minItems: 2
++    maxItems: 5
++
++  clocks:
++    maxItems: 2
++
++  clock-names:
++    maxItems: 2
  
    interrupts:
      maxItems: 1
-@@ -116,6 +115,47 @@ required:
+@@ -116,6 +123,49 @@ required:
    - "#size-cells"
    - amlogic,canvas
  
@@ -92,7 +100,7 @@ index 3ae45db85ea7..90bba7954489 100644
 +            - const: vpu
 +            - const: hhi
 +            - const: clkctrl
-+            - const: pwctrl
++            - const: pwrctrl
 +            - const: sysctrl
 +        clocks:
 +          items:
@@ -112,12 +120,14 @@ index 3ae45db85ea7..90bba7954489 100644
 +          items:
 +            - const: vpu
 +            - const: hhi
++        clocks: false
++        clock-names: false
 +
  additionalProperties: false
  
  examples:
 diff --git a/drivers/gpu/drm/meson/meson_crtc.c b/drivers/gpu/drm/meson/meson_crtc.c
-index d70616da8ce2..64c7450b7f68 100644
+index b77d2d24e..64ec1db66 100644
 --- a/drivers/gpu/drm/meson/meson_crtc.c
 +++ b/drivers/gpu/drm/meson/meson_crtc.c
 @@ -28,6 +28,7 @@
@@ -241,7 +251,7 @@ index d70616da8ce2..64c7450b7f68 100644
  					meson_crtc_g12a_enable_osd1_afbc;
  		meson_crtc->disable_osd1_afbc =
 diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
-index 49ff9f1f16d3..b060477b9a10 100644
+index 49ff9f1f1..b060477b9 100644
 --- a/drivers/gpu/drm/meson/meson_drv.c
 +++ b/drivers/gpu/drm/meson/meson_drv.c
 @@ -11,6 +11,7 @@
@@ -440,7 +450,7 @@ index 49ff9f1f16d3..b060477b9a10 100644
  };
  MODULE_DEVICE_TABLE(of, dt_match);
 diff --git a/drivers/gpu/drm/meson/meson_drv.h b/drivers/gpu/drm/meson/meson_drv.h
-index be4b0e4df6e1..236c457f5e2c 100644
+index be4b0e4df..236c457f5 100644
 --- a/drivers/gpu/drm/meson/meson_drv.h
 +++ b/drivers/gpu/drm/meson/meson_drv.h
 @@ -22,6 +22,7 @@ enum vpu_compatible {
@@ -464,7 +474,7 @@ index be4b0e4df6e1..236c457f5e2c 100644
  
  	struct meson_canvas *canvas;
 diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-index fef1702acb14..0057b21a8838 100644
+index fef1702ac..0057b21a8 100644
 --- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
 +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
 @@ -14,6 +14,7 @@
@@ -825,7 +835,7 @@ index fef1702acb14..0057b21a8838 100644
  };
  MODULE_DEVICE_TABLE(of, meson_dw_hdmi_of_table);
 diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.h b/drivers/gpu/drm/meson/meson_dw_hdmi.h
-index 08e1c14e4ea0..66203b59e5e0 100644
+index 08e1c14e4..66203b59e 100644
 --- a/drivers/gpu/drm/meson/meson_dw_hdmi.h
 +++ b/drivers/gpu/drm/meson/meson_dw_hdmi.h
 @@ -8,6 +8,16 @@
@@ -967,7 +977,7 @@ index 08e1c14e4ea0..66203b59e5e0 100644
 +
  #endif /* __MESON_DW_HDMI_H */
 diff --git a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-index 41071d6e05e5..78da592af8da 100644
+index 22cacb166..7345d2e29 100644
 --- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c
 +++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
 @@ -30,6 +30,10 @@
@@ -1002,7 +1012,7 @@ index 41071d6e05e5..78da592af8da 100644
  		regmap_write(priv->hhi, HHI_VDAC_CNTL0, 0);
  		regmap_write(priv->hhi, HHI_VDAC_CNTL1, 8);
 diff --git a/drivers/gpu/drm/meson/meson_encoder_hdmi.c b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-index 1abb0572bb5f..cffa4fd876c9 100644
+index 0c7a72cb5..a70e4ded6 100644
 --- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c
 +++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
 @@ -98,7 +98,7 @@ static void meson_encoder_hdmi_set_vclk(struct meson_encoder_hdmi *encoder_hdmi,
@@ -1056,7 +1066,7 @@ index 1abb0572bb5f..cffa4fd876c9 100644
  	dev_dbg(priv->dev,
  		"%s: vclk:%lluHz phy=%lluHz venc=%lluHz hdmi=%lluHz\n",
  		__func__, phy_freq, vclk_freq, venc_freq, hdmi_freq);
-@@ -449,7 +459,8 @@ int meson_encoder_hdmi_probe(struct meson_drm *priv)
+@@ -447,7 +457,8 @@ int meson_encoder_hdmi_probe(struct meson_drm *priv)
  
  	if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXL) ||
  	    meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXM) ||
@@ -1067,7 +1077,7 @@ index 1abb0572bb5f..cffa4fd876c9 100644
  
  	drm_connector_attach_max_bpc_property(meson_encoder_hdmi->connector, 8, 8);
 diff --git a/drivers/gpu/drm/meson/meson_overlay.c b/drivers/gpu/drm/meson/meson_overlay.c
-index 783572b16963..b46468c77c5a 100644
+index 7047807f1..8993e9172 100644
 --- a/drivers/gpu/drm/meson/meson_overlay.c
 +++ b/drivers/gpu/drm/meson/meson_overlay.c
 @@ -734,7 +734,12 @@ static void meson_overlay_atomic_disable(struct drm_plane *plane,
@@ -1085,7 +1095,7 @@ index 783572b16963..b46468c77c5a 100644
  		writel_relaxed(0, priv->io_base + _REG(VD2_BLEND_SRC_CTRL));
  		writel_relaxed(0, priv->io_base + _REG(VD1_IF0_GEN_REG + 0x17b0));
 diff --git a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
-index f8d0e0874a5d..1394c00beed2 100644
+index 2d88fe87a..bdbeef554 100644
 --- a/drivers/gpu/drm/meson/meson_plane.c
 +++ b/drivers/gpu/drm/meson/meson_plane.c
 @@ -162,7 +162,8 @@ static void meson_plane_atomic_update(struct drm_plane *plane,
@@ -1169,7 +1179,7 @@ index f8d0e0874a5d..1394c00beed2 100644
  
  	ret = drm_universal_plane_init(priv->drm, plane, 0xFF,
 diff --git a/drivers/gpu/drm/meson/meson_registers.h b/drivers/gpu/drm/meson/meson_registers.h
-index 3d73d00a1f4c..4017c3344b3f 100644
+index 3d73d00a1..4017c3344 100644
 --- a/drivers/gpu/drm/meson/meson_registers.h
 +++ b/drivers/gpu/drm/meson/meson_registers.h
 @@ -328,6 +328,22 @@
@@ -1204,7 +1214,7 @@ index 3d73d00a1f4c..4017c3344b3f 100644
  #define		VPP_OSD1_POSTBLEND              BIT(12)
  #define		VPP_OSD2_POSTBLEND              BIT(13)
 diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index dfe0c28a0f05..ab775845bce9 100644
+index dfe0c28a0..ab775845b 100644
 --- a/drivers/gpu/drm/meson/meson_vclk.c
 +++ b/drivers/gpu/drm/meson/meson_vclk.c
 @@ -87,8 +87,11 @@
@@ -2389,7 +2399,7 @@ index dfe0c28a0f05..ab775845bce9 100644
  
  void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
 diff --git a/drivers/gpu/drm/meson/meson_venc.c b/drivers/gpu/drm/meson/meson_venc.c
-index 4abd0c09b442..487499a54289 100644
+index 4abd0c09b..487499a54 100644
 --- a/drivers/gpu/drm/meson/meson_venc.c
 +++ b/drivers/gpu/drm/meson/meson_venc.c
 @@ -68,6 +68,12 @@
@@ -2871,7 +2881,7 @@ index 4abd0c09b442..487499a54289 100644
  	writel_bits_relaxed(VPU_HDMI_ENCI_DATA_TO_HDMI |
  			    VPU_HDMI_ENCP_DATA_TO_HDMI, 0,
 diff --git a/drivers/gpu/drm/meson/meson_venc.h b/drivers/gpu/drm/meson/meson_venc.h
-index 0f59adb1c6db..7cc6841f6330 100644
+index 0f59adb1c..7cc6841f6 100644
 --- a/drivers/gpu/drm/meson/meson_venc.h
 +++ b/drivers/gpu/drm/meson/meson_venc.h
 @@ -54,8 +54,8 @@ void meson_encl_load_gamma(struct meson_drm *priv);
@@ -2886,7 +2896,7 @@ index 0f59adb1c6db..7cc6841f6330 100644
  /* CVBS Timings and Parameters */
  extern struct meson_cvbs_enci_mode meson_cvbs_enci_pal;
 diff --git a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu.c
-index cd399b0b7181..cb3646ccae68 100644
+index cd399b0b7..cb3646cca 100644
 --- a/drivers/gpu/drm/meson/meson_viu.c
 +++ b/drivers/gpu/drm/meson/meson_viu.c
 @@ -425,7 +425,8 @@ void meson_viu_init(struct meson_drm *priv)
@@ -2920,7 +2930,7 @@ index cd399b0b7181..cb3646ccae68 100644
  			  (u32)VIU_OSD_BLEND_REORDER(1, 0) |
  			  (u32)VIU_OSD_BLEND_REORDER(2, 0) |
 diff --git a/drivers/gpu/drm/meson/meson_vpp.c b/drivers/gpu/drm/meson/meson_vpp.c
-index 5df1957c8e41..92e7d26abaa8 100644
+index 5df1957c8..92e7d26ab 100644
 --- a/drivers/gpu/drm/meson/meson_vpp.c
 +++ b/drivers/gpu/drm/meson/meson_vpp.c
 @@ -102,11 +102,13 @@ void meson_vpp_init(struct meson_drm *priv)
@@ -2960,5 +2970,4 @@ index 5df1957c8e41..92e7d26abaa8 100644
  	writel_relaxed(0, priv->io_base + _REG(VPP_OSD_SC_CTRL0));
  	writel_relaxed(0, priv->io_base + _REG(VPP_OSD_VSC_CTRL0));
 -- 
-2.53.0
-
+Armbian

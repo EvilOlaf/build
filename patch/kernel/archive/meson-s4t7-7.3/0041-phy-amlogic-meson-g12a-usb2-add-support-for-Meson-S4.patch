@@ -10,8 +10,20 @@ Signed-off-by: devmfc <devmfc@mvand.net>
  drivers/phy/amlogic/phy-meson-g12a-usb2.c | 44 ++++++++++++++++-------
  1 file changed, 32 insertions(+), 12 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
+index 1a0c436b8..54058d2e6 100644
+--- a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
+@@ -15,6 +15,7 @@ properties:
+     enum:
+       - amlogic,g12a-usb2-phy
+       - amlogic,a1-usb2-phy
++      - amlogic,s4-usb2-phy
+ 
+   reg:
+     maxItems: 1
 diff --git a/drivers/phy/amlogic/phy-meson-g12a-usb2.c b/drivers/phy/amlogic/phy-meson-g12a-usb2.c
-index 66bf0b7ef8ed..69bb48cdcad3 100644
+index 66bf0b7ef..69bb48cdc 100644
 --- a/drivers/phy/amlogic/phy-meson-g12a-usb2.c
 +++ b/drivers/phy/amlogic/phy-meson-g12a-usb2.c
 @@ -72,6 +72,7 @@
@@ -115,5 +127,4 @@ index 66bf0b7ef8ed..69bb48cdcad3 100644
  };
  MODULE_DEVICE_TABLE(of, phy_meson_g12a_usb2_of_match);
 -- 
-2.53.0
-
+Armbian

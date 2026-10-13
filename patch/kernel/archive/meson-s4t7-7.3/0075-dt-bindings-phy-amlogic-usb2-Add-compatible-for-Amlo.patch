@@ -14,16 +14,17 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
  1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-index 1a0c436b87a0..f7cd9d16dd12 100644
+index 54058d2e6..ac8b02f33 100644
 --- a/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-@@ -12,9 +12,14 @@ maintainers:
+@@ -12,10 +12,15 @@ maintainers:
  
  properties:
    compatible:
 -    enum:
 -      - amlogic,g12a-usb2-phy
 -      - amlogic,a1-usb2-phy
+-      - amlogic,s4-usb2-phy
 +    oneOf:
 +      - items:
 +          - enum:
@@ -32,9 +33,9 @@ index 1a0c436b87a0..f7cd9d16dd12 100644
 +      - enum:
 +          - amlogic,g12a-usb2-phy
 +          - amlogic,a1-usb2-phy
++          - amlogic,s4-usb2-phy
  
    reg:
      maxItems: 1
 -- 
-2.53.0
-
+Armbian
