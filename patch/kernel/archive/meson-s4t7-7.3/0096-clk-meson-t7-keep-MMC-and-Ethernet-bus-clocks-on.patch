@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Igor Pecovnik <igor@armbian.com>
+Date: Tue, 13 Oct 2026 00:00:00 +0200
+Subject: [PATCH] clk: meson: t7: keep MMC and Ethernet bus clocks on
+
+The MMC and Ethernet controllers need the MMC APB, NAND and Ethernet
+pipe, and AXI bridge gates, but no device node references them.
+clk_disable_unused() turns them off during boot. eMMC initialisation
+then hangs, and Ethernet transmit times out.
+
+Mark these gates CLK_IGNORE_UNUSED, like the vendor clock driver.
+
+Signed-off-by: Igor Pecovnik <igor@armbian.com>
+---
+--- a/drivers/clk/meson/t7-peripherals.c
++++ b/drivers/clk/meson/t7-peripherals.c
+@@ -945,11 +945,16 @@
+ static T7_SYS_PCLK(sys_cec,		SYS_CLK_EN0_REG0, 16,	0);
+ static T7_SYS_PCLK(sys_gdc,		SYS_CLK_EN0_REG0, 17,	0);
+ static T7_SYS_PCLK(sys_deswarp,		SYS_CLK_EN0_REG0, 18,	0);
+-static T7_SYS_PCLK(sys_ampipe_nand,	SYS_CLK_EN0_REG0, 19,	0);
+-static T7_SYS_PCLK(sys_ampipe_eth,	SYS_CLK_EN0_REG0, 20,	0);
+-static T7_SYS_PCLK(sys_am2axi0,		SYS_CLK_EN0_REG0, 21,	0);
+-static T7_SYS_PCLK(sys_am2axi1,		SYS_CLK_EN0_REG0, 22,	0);
+-static T7_SYS_PCLK(sys_am2axi2,		SYS_CLK_EN0_REG0, 23,	0);
++/*
++ * The MMC and Ethernet controllers need these gates for register and data
++ * access, but no device node references them. Keep them on, like the vendor
++ * clock driver does.
++ */
++static T7_SYS_PCLK(sys_ampipe_nand,	SYS_CLK_EN0_REG0, 19,	CLK_IGNORE_UNUSED);
++static T7_SYS_PCLK(sys_ampipe_eth,	SYS_CLK_EN0_REG0, 20,	CLK_IGNORE_UNUSED);
++static T7_SYS_PCLK(sys_am2axi0,		SYS_CLK_EN0_REG0, 21,	CLK_IGNORE_UNUSED);
++static T7_SYS_PCLK(sys_am2axi1,		SYS_CLK_EN0_REG0, 22,	CLK_IGNORE_UNUSED);
++static T7_SYS_PCLK(sys_am2axi2,		SYS_CLK_EN0_REG0, 23,	CLK_IGNORE_UNUSED);
+ static T7_SYS_PCLK(sys_sd_emmc_a,	SYS_CLK_EN0_REG0, 24,	0);
+ static T7_SYS_PCLK(sys_sd_emmc_b,	SYS_CLK_EN0_REG0, 25,	0);
+ static T7_SYS_PCLK(sys_sd_emmc_c,	SYS_CLK_EN0_REG0, 26,	0);
+@@ -990,7 +995,7 @@
+ static T7_SYS_PCLK(sys_hdmitx_apb,	SYS_CLK_EN0_REG2, 4,	0);
+ static T7_SYS_PCLK(sys_i2c_s_a,		SYS_CLK_EN0_REG2, 5,	0);
+ static T7_SYS_PCLK(sys_hdmirx_pclk,	SYS_CLK_EN0_REG2, 8,	0);
+-static T7_SYS_PCLK(sys_mmc_apb,		SYS_CLK_EN0_REG2, 11,	0);
++static T7_SYS_PCLK(sys_mmc_apb,		SYS_CLK_EN0_REG2, 11,	CLK_IGNORE_UNUSED);
+ static T7_SYS_PCLK(sys_mipi_isp_pclk,	SYS_CLK_EN0_REG2, 17,	0);
+ static T7_SYS_PCLK(sys_rsa,		SYS_CLK_EN0_REG2, 18,	0);
+ static T7_SYS_PCLK(sys_pclk_sys_apb,	SYS_CLK_EN0_REG2, 19,	0);
+-- 
+Armbian

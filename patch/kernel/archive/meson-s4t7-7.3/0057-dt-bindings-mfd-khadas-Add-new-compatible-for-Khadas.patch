@@ -12,9 +12,8 @@ Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
 ---
  Documentation/devicetree/bindings/mfd/khadas,mcu.yaml | 5 +++++
  1 file changed, 5 insertions(+)
-
 diff --git a/Documentation/devicetree/bindings/mfd/khadas,mcu.yaml b/Documentation/devicetree/bindings/mfd/khadas,mcu.yaml
-index 084960fd5a1f..67769ef5d58b 100644
+index c6f91e7bc..a3e4a300e 100644
 --- a/Documentation/devicetree/bindings/mfd/khadas,mcu.yaml
 +++ b/Documentation/devicetree/bindings/mfd/khadas,mcu.yaml
 @@ -18,6 +18,7 @@ properties:
@@ -22,12 +21,12 @@ index 084960fd5a1f..67769ef5d58b 100644
      enum:
        - khadas,mcu # MCU revision is discoverable
 +      - khadas,vim4-mcu
+       - khadas,vim4-mcu # Different MCU variant, not discoverable
  
    "#cooling-cells": # Only needed for boards having FAN control feature
-     const: 2
-@@ -25,6 +26,10 @@ properties:
-   reg:
-     maxItems: 1
+@@ -29,6 +30,10 @@ properties:
+   fan-supply:
+     description: Phandle to the regulator that powers the fan.
  
 +  fan-supply:
 +    description: Phandle to the regulator that powers the fan.
@@ -37,5 +36,4 @@ index 084960fd5a1f..67769ef5d58b 100644
    - compatible
    - reg
 -- 
-2.53.0
-
+Armbian
