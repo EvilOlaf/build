@@ -2,11 +2,12 @@ From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Date: Sat, 9 May 2026 17:09:37 +0800
 Subject: regulator: add acpi support
+
 ---
  drivers/regulator/Makefile                 |   3 +-
- drivers/regulator/core.c                   |  92 ++-
- drivers/regulator/fixed.c                  |  49 ++
- drivers/regulator/fwnode_regulator.c       | 737 +++++++++++++++++++++
+ drivers/regulator/core.c                   |  92 +-
+ drivers/regulator/fixed.c                  |  49 +
+ drivers/regulator/fwnode_regulator.c       | 737 ++++++++++
  drivers/regulator/internal.h               |  10 +
  include/linux/regulator/driver.h           |   7 +
  include/linux/regulator/fwnode_regulator.h |  23 +
@@ -1098,5 +1099,5 @@ index 000000000000..111111111111
 +			      struct fwnode_regulator_match *matches,
 +			      unsigned int num_matches);
 -- 
-Cixtech
+Armbian
 

@@ -2,6 +2,7 @@ From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Date: Thu, 2 Jul 2026 15:40:23 +0800
 Subject: DPTSW-26459: ALSA: hda/realtek: suppress auto-mic on CIX Sky1 boards
+
 CIX Sky1 boards (EVB / Orion O6 / ORAPI 6P) match their realtek fixups by
 model name rather than SSID. The fixups only set pin config and coef
 verbs, leaving the generic parser's auto-mic heuristic enabled. With two
@@ -18,9 +19,8 @@ spec->gen.suppress_auto_mic = true in PRE_PROBE, and chain it after each
 board's _COEF entry, restoring the dual-ADC topology to match 6.6.
 Signed-off-by: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Change-Id: Id385284dc9374af5e65589e280c66515a77b3b19
-
 ---
- sound/hda/codecs/realtek/alc269.c | 36 ++++++++++++++++++++++++++++---
+ sound/hda/codecs/realtek/alc269.c | 36 +++++++++-
  1 file changed, 33 insertions(+), 3 deletions(-)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
@@ -99,5 +99,5 @@ index 111111111111..222222222222 100644
  };
  
 -- 
-Cixtech
+Armbian
 

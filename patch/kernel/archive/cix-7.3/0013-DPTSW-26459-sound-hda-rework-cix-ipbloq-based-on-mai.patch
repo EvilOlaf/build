@@ -2,14 +2,14 @@ From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Date: Wed, 1 Jul 2026 17:07:05 +0800
 Subject: DPTSW-26459: sound: hda: rework cix ipbloq based on mainline code
+
 Move the verb table init to alc269 codec driver so we can use the common
 codec suspend/resume framework.
 Signed-off-by: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Change-Id: I1dd603d5f86e1b1e3bc3b736b7877c9c21673c57
-
 ---
- sound/hda/codecs/realtek/alc269.c  | 144 ++++++++++++++++++
- sound/hda/controllers/cix-ipbloq.c | 228 ++++++++++++++++++++++++++++-
+ sound/hda/codecs/realtek/alc269.c  | 144 ++++++
+ sound/hda/controllers/cix-ipbloq.c | 228 +++++++++-
  2 files changed, 366 insertions(+), 6 deletions(-)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
@@ -533,5 +533,5 @@ index 111111111111..222222222222 100644
  	.probe = cix_ipbloq_hda_probe,
  	.remove = cix_ipbloq_hda_remove,
 -- 
-Cixtech
+Armbian
 

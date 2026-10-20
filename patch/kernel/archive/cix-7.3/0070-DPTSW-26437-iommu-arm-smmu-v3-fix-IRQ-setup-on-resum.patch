@@ -2,6 +2,7 @@ From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Date: Thu, 2 Jul 2026 10:48:41 +0800
 Subject: DPTSW-26437: iommu/arm-smmu-v3: fix IRQ setup on resume from suspend
+
 Resume from suspend fails to re-arm the SMMU event/error interrupts:
   arm-smmu-v3 arm-smmu-v3.0.auto: msi_domain absent - falling back to wired irqs
   genirq: Flags mismatch irq 13 ... (arm-smmu-v3-evtq) vs ... (arm-smmu-v3-evtq)
@@ -26,9 +27,8 @@ the hardware kept its MSI address/data and the Linux IRQs stay
 registered, re-enabling IRQ_CTRL is all resume needs.
 Signed-off-by: Jianfeng Liu <Jianfeng.Liu@cixtech.com>
 Change-Id: Ieb9d0dbdf5e623d786eafe2b46d74604f23ba9ce
-
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 52 +++++++++++++--------
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 52 ++++++----
  1 file changed, 32 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
@@ -130,5 +130,5 @@ index 111111111111..222222222222 100644
  		arm_smmu_device_disable(smmu);
  		return ret;
 -- 
-Cixtech
+Armbian
 
