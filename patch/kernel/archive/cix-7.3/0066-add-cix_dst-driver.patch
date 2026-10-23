@@ -32,7 +32,7 @@ Subject: add cix_dst driver
  drivers/soc/cix/cix_dst/blackbox/platform_ap/rdr_ap_ringbuffer.c            |  203 ++
  drivers/soc/cix/cix_dst/blackbox/platform_ap/rdr_ap_stack.c                 |  275 +++
  drivers/soc/cix/cix_dst/blackbox/platform_ap/rdr_ap_suspend.c               |  285 +++
- drivers/soc/cix/cix_dst/blackbox/rdr_bootcheck.c                            |  348 ++++
+ drivers/soc/cix/cix_dst/blackbox/rdr_bootcheck.c                            |  321 +++
  drivers/soc/cix/cix_dst/blackbox/rdr_cleartext.c                            |  600 ++++++
  drivers/soc/cix/cix_dst/blackbox/rdr_common.c                               |  653 ++++++
  drivers/soc/cix/cix_dst/blackbox/rdr_core.c                                 |  513 +++++
@@ -41,13 +41,13 @@ Subject: add cix_dst driver
  drivers/soc/cix/cix_dst/blackbox/rdr_exception_test.c                       |  110 +
  drivers/soc/cix/cix_dst/blackbox/rdr_field.h                                |   94 +
  drivers/soc/cix/cix_dst/blackbox/rdr_field_core.c                           |  362 ++++
- drivers/soc/cix/cix_dst/blackbox/rdr_inner.h                                |  268 +++
+ drivers/soc/cix/cix_dst/blackbox/rdr_inner.h                                |  269 +++
  drivers/soc/cix/cix_dst/blackbox/rdr_logmonitor_core.c                      |  495 +++++
  drivers/soc/cix/cix_dst/blackbox/rdr_module_core.c                          |  411 ++++
  drivers/soc/cix/cix_dst/blackbox/rdr_print.h                                |   37 +
  drivers/soc/cix/cix_dst/blackbox/rdr_reboot_reason.c                        |   93 +
  drivers/soc/cix/cix_dst/blackbox/rdr_safemem.c                              |  285 +++
- drivers/soc/cix/cix_dst/blackbox/rdr_utils.c                                |  103 +
+ drivers/soc/cix/cix_dst/blackbox/rdr_utils.c                                |  111 +
  drivers/soc/cix/cix_dst/blackbox/rdr_utils.h                                |   13 +
  drivers/soc/cix/cix_dst/boot_postcode.c                                     |  361 ++++
  drivers/soc/cix/cix_dst/cache_exception_monitor/Kconfig                     |   16 +
@@ -128,7 +128,7 @@ Subject: add cix_dst driver
  include/linux/soc/cix/rdr_types.h                                           |   22 +
  include/linux/soc/cix/util.h                                                |  111 +
  include/uapi/linux/perf_event.h                                             |   61 +
- 124 files changed, 21912 insertions(+), 16 deletions(-)
+ 124 files changed, 21894 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/soc/cix/Kconfig b/drivers/soc/cix/Kconfig
 index 111111111111..222222222222 100644
@@ -4043,7 +4043,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/soc/cix/cix_dst/blackbox/rdr_bootcheck.c
-@@ -0,0 +1,348 @@
+@@ -0,0 +1,321 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * rdr_bootcheck.c
@@ -4083,97 +4083,70 @@ index 000000000000..111111111111
 +#define RDR_DONTNEED_SAVE_MEM 0
 +#define PSTORE_PATH "/sys/fs/pstore"
 +
-+/* Max time to wait for userspace init (PID 1) to switch to the real rootfs */
-+#define RDR_ADOPT_ROOT_TIMEOUT_MS 30000
-+#define RDR_ADOPT_ROOT_POLL_MS 200
-+
 +/* Max time to wait for the rootfs to be remounted read-write */
 +#define RDR_RW_WAIT_TIMEOUT_MS 60000
 +#define RDR_RW_WAIT_POLL_MS 200
 +
 +/*
 + * This thread is created during late_initcall_sync, before the kernel execs
-+ * userspace init. On systems that boot via an initramfs, the kthread inherits
-+ * the early (initramfs) rootfs as its filesystem root. When userspace later
-+ * does switch_root to the real rootfs, the kthread keeps the OLD root, so any
-+ * files it writes (e.g. /var/log/cix/bbox/...) land in the discarded initramfs
-+ * and are invisible to userspace.
++ * userspace init.  On systems that boot via an initramfs the kthread inherits
++ * the early rootfs as its filesystem root.  When userspace later does
++ * switch_root to the real rootfs, PID 1 may keep its new root private
++ * (unshare(CLONE_FS)), in which case this kthread keeps the OLD root and any
++ * file it writes (e.g. /var/log/cix/bbox/...) lands in the discarded
++ * initramfs and stays invisible to userspace.
 + *
-+ * The initramfs root is always a memory-backed filesystem (rootfs/ramfs/tmpfs);
-+ * after switch_root PID 1's root is backed by a real filesystem (ext4/erofs/...).
-+ * Detect the switch by checking whether PID 1's root has left the ramfs type,
-+ * then give this kthread a private fs_struct and adopt PID 1's root. After this,
-+ * absolute paths resolve against the real rootfs. If there is no initramfs (our
-+ * own root is already non-ramfs), the fast path returns immediately.
++ * The superblock type cannot identify the switch reliably - after switch_root
++ * the old root is empty and its type may no longer be recognised - so compare
++ * the roots directly: once PID 1's root differs from ours, PID 1 has moved and
++ * we give this kthread a private fs_struct and follow it.  Callers retry this
++ * from their wait loop, so it takes effect as soon as PID 1 switches.
 + */
-+static bool path_is_ramfs(const struct path *root)
++int rdr_adopt_init_root(void)
 +{
-+	struct super_block *sb = root->dentry->d_sb;
-+	const char *t = sb->s_type->name;
-+
-+	return !strcmp(t, "rootfs") || !strcmp(t, "ramfs") || !strcmp(t, "tmpfs");
-+}
-+
-+static int rdr_adopt_init_root(void)
-+{
-+	struct path early = { .mnt = NULL, .dentry = NULL };
++	struct path cur = { .mnt = NULL, .dentry = NULL };
 +	struct path root = { .mnt = NULL, .dentry = NULL };
 +	struct task_struct *initp;
-+	unsigned long deadline;
-+	int ret = -ENOENT;
++	int ret = 0;
 +
-+	get_fs_root(current->fs, &early);
++	get_fs_root(current->fs, &cur);
 +
-+	/* Fast path: no initramfs — our root is already the real rootfs. */
-+	if (!path_is_ramfs(&early)) {
-+		BB_PN("root not ramfs, no initramfs switch needed\n");
-+		path_put(&early);
-+		return 0;
++	rcu_read_lock();
++	initp = pid_task(find_vpid(1), PIDTYPE_PID);
++	if (initp)
++		get_task_struct(initp);
++	rcu_read_unlock();
++	if (!initp) {
++		path_put(&cur);
++		return -ESRCH;
 +	}
 +
-+	deadline = jiffies + msecs_to_jiffies(RDR_ADOPT_ROOT_TIMEOUT_MS);
++	task_lock(initp);
++	if (initp->fs)
++		get_fs_root(initp->fs, &root);
++	task_unlock(initp);
++	put_task_struct(initp);
 +
-+	do {
-+		rcu_read_lock();
-+		initp = pid_task(find_vpid(1), PIDTYPE_PID);
-+		if (initp)
-+			get_task_struct(initp);
-+		rcu_read_unlock();
++	if (!root.dentry) {
++		path_put(&cur);
++		return -ENOENT;
++	}
 +
-+		if (initp) {
-+			task_lock(initp);
-+			if (initp->fs)
-+				get_fs_root(initp->fs, &root);
-+			task_unlock(initp);
-+			put_task_struct(initp);
-+		}
++	if (root.mnt == cur.mnt && root.dentry == cur.dentry)
++		goto out;
 +
-+		/* PID 1 has left the initramfs once its root is no longer ramfs. */
-+		if (root.dentry && !path_is_ramfs(&root)) {
-+			ret = unshare_fs_struct();
-+			if (!ret) {
-+				set_fs_root(current->fs, &root);
-+				set_fs_pwd(current->fs, &root);
-+				BB_PN("adopted PID 1 root for bbox bootcheck\n");
-+			} else {
-+				BB_ERR("unshare_fs_struct failed: %d\n", ret);
-+			}
-+			path_put(&root);
-+			break;
-+		}
-+
-+		if (root.dentry) {
-+			path_put(&root);
-+			root.dentry = NULL;
-+			root.mnt = NULL;
-+		}
-+		msleep(RDR_ADOPT_ROOT_POLL_MS);
-+	} while (time_before(jiffies, deadline));
-+
-+	if (ret)
-+		BB_PN("kept original root (no rootfs switch detected)\n");
-+
-+	path_put(&early);
++	/* Take a private fs_struct first so PID 1 is not moved along with us. */
++	ret = unshare_fs_struct();
++	if (!ret) {
++		set_fs_root(current->fs, &root);
++		set_fs_pwd(current->fs, &root);
++		BB_PN("adopted PID 1 root (%s)\n", current->comm);
++	} else {
++		BB_ERR("unshare_fs_struct failed: %d\n", ret);
++	}
++out:
++	path_put(&root);
++	path_put(&cur);
 +	return ret;
 +}
 +
@@ -4314,13 +4287,13 @@ index 000000000000..111111111111
 +
 +	BB_PR_START();
 +
-+	(void)rdr_dump_init();
-+
 +	/*
-+	 * Make sure our file writes land in the real userspace rootfs, not the
-+	 * early initramfs root this kthread was created with.
++	 * rdr_dump_init() waits for /var/log, which does not exist in the
++	 * initramfs root this kthread inherited.  rdr_wait_partition() adopts
++	 * PID 1's root first, so every path below resolves against the real
++	 * userspace rootfs.
 +	 */
-+	(void)rdr_adopt_init_root();
++	(void)rdr_dump_init();
 +
 +	BB_PN("============wait for fs ready start =============\n");
 +	while (rdr_wait_partition(PSTORE_PATH, RDR_WAIT_PARTITION_TIME,
@@ -7495,7 +7468,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/soc/cix/cix_dst/blackbox/rdr_inner.h
-@@ -0,0 +1,268 @@
+@@ -0,0 +1,269 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
 + * rdr_inner.h
@@ -7696,6 +7669,7 @@ index 000000000000..111111111111
 +void rdr_syserr_list_print(void);
 +
 +int rdr_wait_partition(const char *path, int timeouts, int mode);
++int rdr_adopt_init_root(void);
 +void rdr_get_builddatetime(u8 *out, u32 out_len);
 +u64 rdr_get_tick(void);
 +int rdr_get_suspend_state(void);
@@ -9120,7 +9094,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/drivers/soc/cix/cix_dst/blackbox/rdr_utils.c
-@@ -0,0 +1,103 @@
+@@ -0,0 +1,111 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright 2024 Cix Technology Group Co., Ltd.
@@ -9182,6 +9156,14 @@ index 000000000000..111111111111
 +	timeo = timeouts;
 +
 +	while (1) {
++		/*
++		 * A kthread created before the pivot to the real rootfs keeps
++		 * the old root in its fs_struct, and PID 1 may only move after
++		 * we started waiting, so retry on every pass.  No-op once the
++		 * roots match.
++		 */
++		(void)rdr_adopt_init_root();
++
 +		ret = rdr_vfs_stat(path, &m_stat);
 +		if (ret)
 +			goto delay;
